@@ -9,7 +9,7 @@ package unq.integrador;
  * 
  * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
  */
-public abstract class Usuario {
+public abstract class Usuario implements IUsuario {
     protected String nombre;
     protected int id;
     protected IMuestra miMuestra;
@@ -22,6 +22,7 @@ public abstract class Usuario {
     public Usuario(String nombre, int id) {
         this.nombre = nombre;
         this.id = id;
+        this.miMuestra = null;
     }
 
     /**
@@ -39,14 +40,14 @@ public abstract class Usuario {
      * @param op La opinión misma que se agrega a la muestra
      */
     public void opinarDeMuestra(IMuestra muestra, Opinion op) {
-        muestra.addOpinion(op, this);
+        muestra.agregarOpinion(op);
     }
 
     /**
      * Setter de miMuestra, que cambia el estado de la muestra a una donde solo opinan expertos
      * @param muestra Muestra con al menos una opinión de un experto
      */
-    protected void setMuestraPublicada(IMuestra muestra) {
+    public void setMuestraPublicada(IMuestra muestra) {
         miMuestra = muestra;
     }
 

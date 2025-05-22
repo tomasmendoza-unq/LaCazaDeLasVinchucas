@@ -5,6 +5,6 @@ package unq.integrador;
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public interface IMuestra {
-    public Opinion resultadoActual();
-    public void addOpinion(Opinion op, Usuario user);
+    public String resultadoActual();
+    public void agregarOpinion(Opinion op);
 }

@@ -1,8 +1,5 @@
 package unq.integrador;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * Esta clase representa las muestras libres, que son aquellas en
  * las que todos los usuarios pueden participar o, véase, no participó
@@ -32,22 +29,41 @@ public class MuestraLibre extends Muestra {
      * ocurrencias tiene en la lista de opiniones de la clase
      */
     @Override
-    public Opinion resultadoActual() {
-
-        HashMap<Opinion, Integer> opMap = new HashMap<Opinion, Integer>();
-
+    public String resultadoActual() {
         int maxNum = 0;
         Opinion maxOp = null;
-        for (Opinion op : opiniones) {
-            opMap.put(op, opMap.getOrDefault(op, 0) + 1);
-            if (maxNum < opMap.get(op)) {
-                maxNum = opMap.get(op);
+        for (Opinion op : this.opiniones.keySet()) {
+            if (maxNum < this.opiniones.get(op)) {
+                maxNum = this.opiniones.get(op);
                 maxOp = op;
             }
         }
 
-        return maxOp;
-        // return (maxOp != null) ? maxOp : "No definido"; | quizás tendría que hacer un switch case
+        switch (maxOp) {
+            case VINCHUCA_GUASAYANA:
+                return "Vinchuca Guasayana";
+            
+            case VINCHUCA_INFESTANS:
+                return "Vinchuca Infestans";
+            
+            case VINCHUCA_SORDIDA:
+                return "Vinchuca Sordida";
+            
+            case CHINCHA_FOLIADA:
+                return "Chincha Foliada";
+            
+            case PHTIA_CHINCHE:
+                return "Phtia Chinche";
+            
+            case NINGUNA:
+                return "Ninguna";
+            
+            case IMAGEN_POCO_CLARA:
+                return "Imagen poco clara";
+            
+            default:
+                return "No definido";
+        }
     }
     
     /**
@@ -55,23 +71,18 @@ public class MuestraLibre extends Muestra {
      * la clase muta a MuestraExperto y agrega la opinión dada a una lista vacía en esa clase
      * 
      * @param op una opinión para agregar a la lista
-     * @param user usuario que agrega la opinión
      */
     @Override
-    public void addOpinion(Opinion op, Usuario user) {
-        if(!user.isExperto()) {
-            opiniones.add(op);
-        } else {
-            ArrayList<Opinion> opinionesExpertas = new ArrayList<Opinion>();
-            opinionesExpertas.add(op);
-            
-            this.user.setMuestraPublicada(
-                new MuestraExperto(
-                    this.user, 
-                    this.fotografia, 
-                    this.ubicacion, 
-                    opinionesExpertas)
-                );
-        }
+    public void agregarOpinion(Opinion op) {
+        this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
+    }
+
+    public void cerrarMuestra() {
+        this.user.setMuestraPublicada(
+            new MuestraExperto(
+                this.user, 
+                this.fotografia, 
+                this.ubicacion)
+            );
     }
 }

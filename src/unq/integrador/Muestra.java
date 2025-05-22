@@ -1,6 +1,6 @@
 package unq.integrador;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Esta es la clase abstracta de Muestra, desde esta heredan
@@ -16,10 +16,10 @@ import java.util.ArrayList;
  * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
  */
 public abstract class Muestra implements IMuestra {
-    protected Usuario user;
+    protected IUsuario user;
     protected String fotografia;
     protected String ubicacion;
-    protected ArrayList<Opinion> opiniones;
+    protected HashMap<Opinion, Integer> opiniones;
     
     /**
      * Constructor de la clase Abstracta Muestra
@@ -27,11 +27,11 @@ public abstract class Muestra implements IMuestra {
      * @param fotografia fotografía del usuario que publicó la muestra
      * @param ubicacion ubicación del usuario que publicó la muestra
      */
-    public Muestra(Usuario user, String fotografia, String ubicacion) {
+    public Muestra(IUsuario user, String fotografia, String ubicacion) {
         this.user = user;
         this.fotografia = fotografia;
         this.ubicacion = ubicacion;
-        this.opiniones = new ArrayList<Opinion>();
+        this.opiniones = new HashMap<Opinion, Integer>();
     }
 
     /**
@@ -41,12 +41,12 @@ public abstract class Muestra implements IMuestra {
      * @return La opinión con más votos, que sería la que más 
      * ocurrencias tiene en la lista de opiniones de la clase
      */
-    public abstract Opinion resultadoActual();
+    public abstract String resultadoActual();
 
     /**
      * Agregua una opinión a la lista.
      * 
      * @param op una opinión para agregar a la lista
      */
-    public abstract void addOpinion(Opinion op, Usuario user);
+    public abstract void agregarOpinion(Opinion op);
 }

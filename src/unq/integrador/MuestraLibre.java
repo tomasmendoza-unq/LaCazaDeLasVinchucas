@@ -1,5 +1,7 @@
 package unq.integrador;
 
+import java.util.HashMap;
+
 /**
  * Esta clase representa las muestras libres, que son aquellas en
  * las que todos los usuarios pueden participar o, véase, no participó
@@ -16,7 +18,7 @@ public class MuestraLibre extends Muestra {
      * @param fotografia fotografía del usuario que publicó la muestra
      * @param ubicacion ubicación del usuario que publicó la muestra
      */
-    public MuestraLibre(Usuario user, String fotografia, String ubicacion) {
+    public MuestraLibre(IUsuario user, String fotografia, String ubicacion) {
         super(user, fotografia, ubicacion);
     }
 
@@ -64,6 +66,9 @@ public class MuestraLibre extends Muestra {
             default:
                 return "No definido";
         }
+        /**
+         * Esto todavía no contempla empates
+         */
     }
     
     /**
@@ -73,16 +78,31 @@ public class MuestraLibre extends Muestra {
      * @param op una opinión para agregar a la lista
      */
     @Override
-    public void agregarOpinion(Opinion op) {
-        this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
+    public void agregarOpinion(Opinion op, boolean esExperto) {
+        if (!esExperto) {
+            this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
+        } else {
+            this.cerrarMuestraCon(op);
+        }
     }
 
-    public void cerrarMuestra() {
+    /**
+     * Método para cambiar la muestra del usuario que la publicó por una
+     * muestra en la que solo opinan expertos.
+     * 
+     * @param op Opinión que se agrega al diccionario de la muestra de expertos.
+     */
+    public void cerrarMuestraCon(Opinion op) {
+        HashMap<Opinion, Integer> opiniones = new HashMap<Opinion, Integer>();
+        
+        opiniones.put(op, 1);
+
         this.user.setMuestraPublicada(
             new MuestraExperto(
                 this.user, 
                 this.fotografia, 
-                this.ubicacion)
+                this.ubicacion,
+                opiniones)
             );
     }
 }

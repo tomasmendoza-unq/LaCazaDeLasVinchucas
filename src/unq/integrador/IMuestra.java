@@ -6,5 +6,5 @@ package unq.integrador;
  */
 public interface IMuestra {
     public String resultadoActual();
-    public void agregarOpinion(Opinion op);
+    public void agregarOpinion(Opinion op, boolean esExperto);
 }

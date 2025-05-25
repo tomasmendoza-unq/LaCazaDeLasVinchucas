@@ -4,15 +4,13 @@ import java.util.HashMap;
 
 /**
  * Esta es la clase abstracta de Muestra, desde esta heredan
- * MuestraLibre, MuestraExperto y MuestraCerrada.
+ * MuestraLibre, MuestraExperto y MuestraVerificada.
  * Conoce a su usuario para poder pasar de tipo de muestra
- * La fotografía es un String porque no se me ocurrió un tipo adecuado para eso
+ * La fotografía es un String porque no encontré mejor representación
  * La ubicación es un String MOMENTÁNEAMENTE porque la implementación de Ubicación todavía no es mi sección
- * También tiene una ArrayList de opiniones (Un Enum), que contiene todas las opiniones de usuarios
- * 
- * Aunque estoy pensando en cambiarlo en un HashMap para beneficiarme de la cantidad usandola como valor y
- * las claves como tipo de opinión, así quedan mejor addOpinion y resultado actual
- * 
+ * También tiene una HashMap de opiniones (Un Enum), que contiene todas las opiniones de usuarios como claves
+ * y como valores la cantidad de opiniones de esa clave.
+
  * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
  */
 public abstract class Muestra implements IMuestra {
@@ -38,15 +36,15 @@ public abstract class Muestra implements IMuestra {
      * Método para conseguir el resultado actual de opiniones,
      * en esta clase es abstracto porque cada tipo de muestra lo calcula distinto
      * 
-     * @return La opinión con más votos, que sería la que más 
+     * @return La opinión con más votos, que sería la que más
      * ocurrencias tiene en la lista de opiniones de la clase
      */
     public abstract String resultadoActual();
 
     /**
-     * Agregua una opinión a la lista.
+     * Agregua una opinión al diccionario.
      * 
      * @param op una opinión para agregar a la lista
      */
-    public abstract void agregarOpinion(Opinion op);
+    public abstract void agregarOpinion(Opinion op, boolean esExperto);
 }

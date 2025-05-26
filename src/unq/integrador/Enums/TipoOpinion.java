@@ -1,5 +1,5 @@
 package unq.integrador.Enums;
 
-public enum Opinion {
+public enum TipoOpinion {
 	Vinchuca;
 }

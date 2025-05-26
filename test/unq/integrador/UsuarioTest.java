@@ -4,8 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unq.integrador.Exceptions.OpinionRepetidaException;
-import unq.integrador.Enums.Opinion;
+import unq.integrador.Enums.TipoOpinion;
 import unq.integrador.Impls.Usuario;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,15 +19,15 @@ public class UsuarioTest {
 	IUsuarioRango rango;
 	IMuestra muestra;
 	IBaseDeMuestras baseDeMuestras;
-	Opinion opinion;
+	IOpinion opinion;
 	
 	@BeforeEach
 	public void setUp() {
 		muestra = mock(IMuestra.class);
 		baseDeMuestras = mock(IBaseDeMuestras.class);
 		rango = mock(IUsuarioRango.class);
-		usuario = new Usuario(baseDeMuestras,rango);
-		opinion = Opinion.Vinchuca;
+		usuario = new Usuario(baseDeMuestras,rango, LocalDate.of(2003, 12 , 03));
+		opinion = mock(IOpinion.class);
 	}
 	
 	@Test

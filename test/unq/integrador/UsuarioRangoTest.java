@@ -2,7 +2,7 @@ package unq.integrador;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unq.integrador.Enums.Opinion;
+import unq.integrador.Enums.TipoOpinion;
 import unq.integrador.Exceptions.MuestraException;
 import unq.integrador.Impls.UsuarioBasico;
 import unq.integrador.Impls.UsuarioExperto;
@@ -18,14 +18,14 @@ public class UsuarioRangoTest {
     UsuarioBasico usuarioBasico;
     IMuestra muestra;
     IBaseDeMuestras baseDeMuestras;
-    Opinion opinion;
+    IOpinion opinion;
 
     @BeforeEach
     public void setUp() {
         muestra = mock(IMuestra.class);
         usuarioBasico = new UsuarioBasico();
         usuarioExperto = new UsuarioExperto();
-        opinion = Opinion.Vinchuca;
+        opinion = mock(IOpinion.class);
     }
 
 

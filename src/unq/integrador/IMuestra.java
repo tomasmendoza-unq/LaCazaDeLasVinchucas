@@ -1,10 +1,12 @@
 package unq.integrador;
 
-import unq.integrador.Enums.Opinion;
+import java.time.LocalDate;
 
 public interface IMuestra {
 	
-	void agregarOpinionBasico(Opinion opinion);
+	void agregarOpinionBasico(IOpinion opinion);
 
-	void agregarOpinionExperto(Opinion opinion);
+	void agregarOpinionExperto(IOpinion opinion);
+
+	LocalDate getFecha();
 }

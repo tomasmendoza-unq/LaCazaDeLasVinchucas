@@ -10,6 +10,7 @@ public class MuestraVerificada extends Muestra {
     private Opinion resultado;
     
     /**
+     * Constructor de MuestaVerificada
      * 
      * @param user Usuario que publicó la muestra
      * @param fotografia Fotografía sobre la que se opina
@@ -56,16 +57,31 @@ public class MuestraVerificada extends Muestra {
     }
 
     /**
+     * Método que lanza una excepción porque nadie puede opinar en una muestra verificada.
      * 
-     * @param op Opinión que se agregaría
-     * @param esExperto condición para agregar la opinión o cambiar la muestra
+     * @param op Una opinión que ya no se agrega porque la muestra está verificada.
      */
     @Override
-    public void agregarOpinion(Opinion op, boolean esExperto) {
+    public void agregarOpinionBasico(Opinion op) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'agregarOpinion'");
 
         // Lanzar excepción porque en las muestras verificadas no se puede agregar opiniones
     }
+    
+    /**
+     * Método que lanza una excepción porque nadie puede opinar en una muestra verificada.
+     * 
+     * @param op Una opinión que ya no se agrega porque la muestra está verificada.
+     */
+    @Override
+    public void agregarOpinionExperto(Opinion op) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'agregarOpinion'");
+
+        // Lanzar excepción porque en las muestras verificadas no se puede agregar opiniones
+    }
+
+
     
 }

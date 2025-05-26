@@ -18,6 +18,8 @@ public abstract class Muestra implements IMuestra {
     protected String fotografia;
     protected String ubicacion;
     protected HashMap<Opinion, Integer> opiniones;
+    // Fecha de creación
+    // BBDD de Muestras
     
     /**
      * Constructor de la clase Abstracta Muestra
@@ -42,9 +44,16 @@ public abstract class Muestra implements IMuestra {
     public abstract String resultadoActual();
 
     /**
-     * Agregua una opinión al diccionario.
+     * Agregua una opinión de un usuario básico al diccionario.
      * 
      * @param op una opinión para agregar a la lista
      */
-    public abstract void agregarOpinion(Opinion op, boolean esExperto);
+    public abstract void agregarOpinionBasico(Opinion op);
+    
+    /**
+     * Agregua una opinión de un usuario experto al diccionario.
+     * 
+     * @param op una opinión para agregar a la lista
+     */
+    public abstract void agregarOpinionExperto(Opinion op);
 }

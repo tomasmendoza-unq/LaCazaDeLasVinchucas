@@ -1,7 +1,5 @@
 package unq.integrador;
 
-import java.util.HashMap;
-
 /**
  * Esta clase representa las muestras libres, que son aquellas en
  * las que todos los usuarios pueden participar o, véase, no participó
@@ -34,41 +32,42 @@ public class MuestraLibre extends Muestra {
     public String resultadoActual() {
         int maxNum = 0;
         Opinion maxOp = null;
-        for (Opinion op : this.opiniones.keySet()) {
-            if (maxNum < this.opiniones.get(op)) {
-                maxNum = this.opiniones.get(op);
-                maxOp = op;
+
+        // Se comprueva si no existen dos opiniones con la misma cantidad
+        Integer max1 = null;
+        Integer max2 = null;
+
+        for (Integer n : this.opiniones.values()) {
+            if (max1 == null || n > max1) {
+                max2 = max1;
+                max1 = n;
+            } else if (max2 == null || n > max2) {
+                max2 = n;
             }
         }
 
-        switch (maxOp) {
-            case VINCHUCA_GUASAYANA:
-                return "Vinchuca Guasayana";
-            
-            case VINCHUCA_INFESTANS:
-                return "Vinchuca Infestans";
-            
-            case VINCHUCA_SORDIDA:
-                return "Vinchuca Sordida";
-            
-            case CHINCHA_FOLIADA:
-                return "Chincha Foliada";
-            
-            case PHTIA_CHINCHE:
-                return "Phtia Chinche";
-            
-            case NINGUNA:
-                return "Ninguna";
-            
-            case IMAGEN_POCO_CLARA:
-                return "Imagen poco clara";
-            
-            default:
-                return "No definido";
+        // Se consigue la opinión que tenga la ocurrencia más alta
+        // Si no existen dos opiniones con la misma cantidad.
+        if (max1 != max2) {
+            for (Opinion op : this.opiniones.keySet()) {
+                if (maxNum < this.opiniones.get(op)) {
+                    maxNum = this.opiniones.get(op);
+                    maxOp = op;
+                }
+            }
         }
-        /**
-         * Esto todavía no contempla empates
-         */
+
+        // Si existiera un empate o el diccionario está vacío, retorna "No definido"
+        // Caso contrario, dependiendo de la Opinión en maxOp, retorna cualquiera del switch
+        return (maxOp == null) ? "No definido" : switch (maxOp) {
+            case VINCHUCA_GUASAYANA -> "Vinchuca Guasayana";
+            case VINCHUCA_INFESTANS -> "Vinchuca Infestans";
+            case VINCHUCA_SORDIDA   -> "Vinchuca Sordida";
+            case CHINCHA_FOLIADA    -> "Chincha Foliada";
+            case PHTIA_CHINCHE      -> "Phtia Chinche";
+            case NINGUNA            -> "Ninguna";
+            case IMAGEN_POCO_CLARA  -> "Imagen poco clara";
+        };
     }
     
     /**
@@ -78,31 +77,14 @@ public class MuestraLibre extends Muestra {
      * @param op una opinión para agregar a la lista
      */
     @Override
-    public void agregarOpinion(Opinion op, boolean esExperto) {
-        if (!esExperto) {
-            this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
-        } else {
-            this.cerrarMuestraCon(op);
-        }
+    public void agregarOpinionBasico(Opinion op) {
+        this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
     }
 
-    /**
-     * Método para cambiar la muestra del usuario que la publicó por una
-     * muestra en la que solo opinan expertos.
-     * 
-     * @param op Opinión que se agrega al diccionario de la muestra de expertos.
-     */
-    public void cerrarMuestraCon(Opinion op) {
-        HashMap<Opinion, Integer> opiniones = new HashMap<Opinion, Integer>();
-        
-        opiniones.put(op, 1);
-
-        this.user.setMuestraPublicada(
-            new MuestraExperto(
-                this.user, 
-                this.fotografia, 
-                this.ubicacion,
-                opiniones)
-            );
+    @Override
+    public void agregarOpinionExperto(Opinion op) {
+        MuestraExperto muestra = new MuestraExperto(user, fotografia, ubicacion);
+        muestra.agregarOpinionExperto(op);
+        this.user.setMuestraPublicada(muestra);
     }
 }

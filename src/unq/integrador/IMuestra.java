@@ -1,9 +1,10 @@
 package unq.integrador;
 
+import unq.integrador.Enums.Opinion;
+
 public interface IMuestra {
+	
+	void agregarOpinionBasico(Opinion opinion);
 
-	public void agregarOpinion(Opinion opinion);
-
-	public void cerrarMuestra();
-
+	void agregarOpinionExperto(Opinion opinion);
 }

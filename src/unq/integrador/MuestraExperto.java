@@ -23,6 +23,10 @@ public class MuestraExperto extends Muestra {
         super(user, fotografia, ubicacion);
         this.opiniones = opiniones;
     }
+    
+    public MuestraExperto(IUsuario user, String fotografia, String ubicacion) {
+        super(user, fotografia, ubicacion);
+    }
 
     /**
      * Método para conseguir la opinión con más votos
@@ -68,41 +72,29 @@ public class MuestraExperto extends Muestra {
     }
 
     /**
-     * Agregua una opinión a la lista en caso de que sea usuario experto,
-     * si fuera usuario básico tiraría una excepción.
+     * Agregua una opinión al diccionario de opiniones,
      * Si alguna opinión tiene 2 votos, significa que la votaron 2 expertos
      * por ende, la muestra queda verificada y cambia por MuestraVerificada.
      * 
      * @param op una opinión para agregar a la lista
-     * @param esExperto condición para agregar al diccionario de opiniones
      */
     @Override
-    public void agregarOpinion(Opinion op, boolean esExperto) {
-        if (esExperto) {
-            this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
-            
-            if (this.opiniones.get(op) == 2) {
-                this.cerrarMuestraCon(op);
-            }
-        } /*else {
-            // lanzar excepción
-        }*/
+    public void agregarOpinionExperto(Opinion op) {
+        this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
+        
+        if (this.opiniones.get(op) == 2) {
+            this.user.setMuestraPublicada(new MuestraVerificada(user, fotografia, ubicacion, op));
+        }
     }
 
     /**
-     * Método para cambiar la muestra del usuario por otra versión.
-     * En este caso cambia a MuestraVerificada.
+     * Lanza una excepción porque los usuarios básicos no pueden
+     * opinar en las muestras que ya opinaron expertos.
      * 
-     * @param op opinión que sería el resultado de todas las opiniones
+     * @param op una opinión que no le sucede nada.
      */
-    private void cerrarMuestraCon(Opinion op) {
-        this.user.setMuestraPublicada(
-            new MuestraVerificada(
-                this.user, 
-                this.fotografia, 
-                this.ubicacion,
-                op)
-            );
+    @Override
+    public void agregarOpinionBasico(Opinion op) {
+        // Lanzar excepción
     }
-
 }

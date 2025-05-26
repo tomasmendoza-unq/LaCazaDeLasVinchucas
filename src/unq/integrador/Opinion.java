@@ -12,3 +12,9 @@ public enum Opinion {
     NINGUNA,
     IMAGEN_POCO_CLARA
 }
+
+/**
+ * Cambiar este enum por una clase que tenga como atributos
+ * tipo, que recibe un enum de TiposDeOpiniones
+ * fecha, que es un localDate
+ */

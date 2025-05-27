@@ -27,7 +27,7 @@ public class MuestraLibreTest {
         muestra.agregarOpinionBasico(Opinion.VINCHUCA_INFESTANS);
         assertEquals("Vinchuca Infestans", muestra.resultadoActual());
         
-        // Se agregan 2 opinión, pero el resultado más actual sigue siendo la chincha  
+        // Se agregan 2 opinión, pero el resultado actual sigue siendo la chincha  
         muestra.agregarOpinionBasico(Opinion.VINCHUCA_INFESTANS);
         muestra.agregarOpinionBasico(Opinion.IMAGEN_POCO_CLARA);
         assertEquals("Vinchuca Infestans", muestra.resultadoActual());

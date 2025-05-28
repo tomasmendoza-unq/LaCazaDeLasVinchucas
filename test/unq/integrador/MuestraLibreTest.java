@@ -44,4 +44,47 @@ public class MuestraLibreTest {
         muestra.agregarOpinionBasico(Opinion.IMAGEN_POCO_CLARA);
         assertEquals("No definido", muestra.resultadoActual());
     }
+
+    @Test
+    public void testResultadoActualEsVinchucaGuasayana() {
+        muestra.agregarOpinionBasico(Opinion.VINCHUCA_GUASAYANA);
+        assertEquals("Vinchuca Guasayana", muestra.resultadoActual());
+    }
+
+    @Test
+    public void testResultadoActualEsVinchucaInfestans() {
+        muestra.agregarOpinionBasico(Opinion.VINCHUCA_INFESTANS);
+        assertEquals("Vinchuca Infestans", muestra.resultadoActual());
+    }
+    
+    @Test
+    public void testResultadoActualEsVinchucaSordida() {
+        muestra.agregarOpinionBasico(Opinion.VINCHUCA_SORDIDA);
+        assertEquals("Vinchuca Sordida", muestra.resultadoActual());
+    }
+    
+    @Test
+    public void testResultadoActualEsChinchaFoliada() {
+        muestra.agregarOpinionBasico(Opinion.CHINCHA_FOLIADA);
+        assertEquals("Chincha Foliada", muestra.resultadoActual());
+    }
+    
+    @Test
+    public void testResultadoActualEsPhtiaChinche() {
+        muestra.agregarOpinionBasico(Opinion.PHTIA_CHINCHE);
+        assertEquals("Phtia Chinche", muestra.resultadoActual());
+    }
+
+    @Test
+    public void testResultadoActualEsNinguna() {
+        muestra.agregarOpinionBasico(Opinion.NINGUNA);
+        assertEquals("Ninguna", muestra.resultadoActual());
+    }
+
+    @Test
+    public void testResultadoActualEsImagenPocoClara() {
+        muestra.agregarOpinionBasico(Opinion.IMAGEN_POCO_CLARA);
+        assertEquals("Imagen poco clara", muestra.resultadoActual());
+    }
+
 }

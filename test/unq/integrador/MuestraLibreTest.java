@@ -50,7 +50,7 @@ public class MuestraLibreTest {
         muestra.agregarOpinionBasico(Opinion.VINCHUCA_INFESTANS);
         muestra.agregarOpinionBasico(Opinion.VINCHUCA_INFESTANS);
         muestra.agregarOpinionBasico(Opinion.IMAGEN_POCO_CLARA);
-        muestra.agregarOpinionBasico(Opinion.NINGUNA);
+        muestra.agregarOpinionBasico(Opinion.IMAGEN_POCO_CLARA);
         muestra.agregarOpinionBasico(Opinion.NINGUNA);
         assertEquals("No definido", muestra.resultadoActual());
     }

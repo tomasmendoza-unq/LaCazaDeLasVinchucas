@@ -46,6 +46,16 @@ public class MuestraLibreTest {
     }
 
     @Test
+    public void testResultadoActualConEmpateAmpliado() {
+        muestra.agregarOpinionBasico(Opinion.VINCHUCA_INFESTANS);
+        muestra.agregarOpinionBasico(Opinion.VINCHUCA_INFESTANS);
+        muestra.agregarOpinionBasico(Opinion.IMAGEN_POCO_CLARA);
+        muestra.agregarOpinionBasico(Opinion.NINGUNA);
+        muestra.agregarOpinionBasico(Opinion.NINGUNA);
+        assertEquals("No definido", muestra.resultadoActual());
+    }
+
+    @Test
     public void testResultadoActualEsVinchucaGuasayana() {
         muestra.agregarOpinionBasico(Opinion.VINCHUCA_GUASAYANA);
         assertEquals("Vinchuca Guasayana", muestra.resultadoActual());
@@ -87,4 +97,9 @@ public class MuestraLibreTest {
         assertEquals("Imagen poco clara", muestra.resultadoActual());
     }
 
+    @Test
+    public void testAgregarOpinionExpertoEntoncesCambiaElTipoDeMuestra() {
+        muestra.agregarOpinionExperto(Opinion.NINGUNA);
+        verify(owner).setMuestraPublicada(any(MuestraExperto.class));
+    }
 }

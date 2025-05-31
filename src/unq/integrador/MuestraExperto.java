@@ -1,7 +1,5 @@
 package unq.integrador;
 
-import java.util.HashMap;
-
 /**
  * Esta clase representa las muestras en las que solo pueden opinar expertos.
  * Además, si opinaron expertos en esta clase, ninguno tiene más de 1 coincidencia en la
@@ -16,14 +14,7 @@ public class MuestraExperto extends Muestra {
      * @param user usuario que publicó la muestra
      * @param fotografia fotografía del usuario que publicó la muestra
      * @param ubicacion ubicación del usuario que publicó la muestra
-     * @param opiniones un diccionario (Opinion, Integer) para las opiniones de usuarios, 
-     * donde opinion es la clave y el Integer representa la cantidad de votos que tiene dicha opinion
      */
-    public MuestraExperto(IUsuario user, String fotografia, String ubicacion, HashMap<Opinion, Integer> opiniones) {
-        super(user, fotografia, ubicacion);
-        this.opiniones = opiniones;
-    }
-    
     public MuestraExperto(IUsuario user, String fotografia, String ubicacion) {
         super(user, fotografia, ubicacion);
     }
@@ -95,6 +86,6 @@ public class MuestraExperto extends Muestra {
      */
     @Override
     public void agregarOpinionBasico(Opinion op) {
-        // Lanzar excepción
+        throw new SinAccesoAMuestraException("Un usuario básico no puede opinar en una muestra con opiniones de expertos");
     }
 }

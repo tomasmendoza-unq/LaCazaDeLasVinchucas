@@ -11,12 +11,10 @@ import org.junit.jupiter.api.function.Executable;
 public class MuestraVerificadaTest {
     private IMuestra muestra;
     private IUsuario owner;
-    // private Opinion op;
 
     @BeforeEach
     public void setUp() {
-        owner   = mock(IUsuario.class);
-        // muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.class);
+        owner = mock(IUsuario.class);
     }
     
     @Test
@@ -75,7 +73,7 @@ public class MuestraVerificadaTest {
         muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.NINGUNA);
         Executable accion = () -> muestra.agregarOpinionExperto(mock(Opinion.class));
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
-
+        
         assertEquals("Los usuarios no pueden opinar en una muestra verificada", exception.getMessage());
     }
 }

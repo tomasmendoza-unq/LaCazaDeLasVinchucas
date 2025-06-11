@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class MuestraExpertoTest {
     private IMuestra muestra;
@@ -72,9 +73,9 @@ public class MuestraExpertoTest {
 
     @Test
     public void testAgregarOpinionBasicoLanzaExcepcion() {
-        SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, () -> {
-            muestra.agregarOpinionBasico(mock(Opinion.class));
-        });
+
+        Executable accion = () -> muestra.agregarOpinionBasico(mock(Opinion.class));
+        SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
 
         assertEquals("Un usuario básico no puede opinar en una muestra con opiniones de expertos", exception.getMessage());
     }

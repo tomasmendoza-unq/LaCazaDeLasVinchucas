@@ -31,6 +31,7 @@ public class MuestraExperto extends Muestra {
             return "No definido";
         } else {
             Opinion resultado = null;
+
             for (Opinion op : this.opiniones.keySet()) {
                 resultado = op;
             }
@@ -51,13 +52,12 @@ public class MuestraExperto extends Muestra {
                 case PHTIA_CHINCHE:
                     return "Phtia Chinche";
                 
-                case NINGUNA:
-                    return "Ninguna";
-                
                 case IMAGEN_POCO_CLARA:
                     return "Imagen poco clara";
+                    
                 default:
-                    return "No definida";
+                    return "Ninguna";
+                    
             }
         }
     }

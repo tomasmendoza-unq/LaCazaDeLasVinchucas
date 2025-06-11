@@ -45,14 +45,12 @@ public class MuestraVerificada extends Muestra {
             case PHTIA_CHINCHE:
                 return "Phtia Chinche";
             
-            case NINGUNA:
-                return "Ninguna";
-            
             case IMAGEN_POCO_CLARA:
                 return "Imagen poco clara";
             
             default:
-                return "No definido";
+                return "Ninguna";
+            
         }
     }
 
@@ -63,10 +61,7 @@ public class MuestraVerificada extends Muestra {
      */
     @Override
     public void agregarOpinionBasico(Opinion op) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarOpinion'");
-
-        // Lanzar excepción porque en las muestras verificadas no se puede agregar opiniones
+        throw new SinAccesoAMuestraException("Los usuarios no pueden opinar en una muestra verificada");
     }
     
     /**
@@ -76,10 +71,7 @@ public class MuestraVerificada extends Muestra {
      */
     @Override
     public void agregarOpinionExperto(Opinion op) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarOpinion'");
-
-        // Lanzar excepción porque en las muestras verificadas no se puede agregar opiniones
+        throw new SinAccesoAMuestraException("Los usuarios no pueden opinar en una muestra verificada");
     }
 
 

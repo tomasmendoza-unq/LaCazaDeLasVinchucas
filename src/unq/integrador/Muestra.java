@@ -1,5 +1,6 @@
 package unq.integrador;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,7 +18,8 @@ public abstract class Muestra implements IMuestra {
     protected IUsuario user;
     protected String fotografia;
     protected String ubicacion;
-    protected HashMap<Opinion, Integer> opiniones;
+    protected HashMap<TipoOpinion, Integer> opiniones;
+    protected ArrayList<String> historial;
     // Fecha de creación
     // BBDD de Muestras
     
@@ -31,7 +33,8 @@ public abstract class Muestra implements IMuestra {
         this.user = user;
         this.fotografia = fotografia;
         this.ubicacion = ubicacion;
-        this.opiniones = new HashMap<Opinion, Integer>();
+        this.opiniones = new HashMap<TipoOpinion, Integer>();
+        this.historial = new ArrayList<String>();
     }
 
     /**
@@ -56,4 +59,21 @@ public abstract class Muestra implements IMuestra {
      * @param op una opinión para agregar a la lista
      */
     public abstract void agregarOpinionExperto(Opinion op);
+
+    public String getFotografia() {
+        return this.fotografia;
+    }
+
+    public String getUbicacion() {
+        return this.ubicacion;
+    }
+
+    public int getIDUsuario() {
+        return this.user.getID();
+    }
+
+    public void agregarAlHistorial(int id, Opinion op) {
+        String log = id + " opinó: " + op.getTipo() + "en la fecha: " + op.getFechaDeCreacion();
+        this.historial.add(log);
+    }
 }

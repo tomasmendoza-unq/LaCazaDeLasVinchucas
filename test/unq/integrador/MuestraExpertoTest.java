@@ -52,15 +52,15 @@ public class MuestraExpertoTest {
     }
 
     @Test
-    public void testResultadoActualEsNinguna() {
-        muestra.agregarOpinionExperto(Opinion.NINGUNA);
-        assertEquals("Ninguna", muestra.resultadoActual());
-    }
-
-    @Test
     public void testResultadoActualEsImagenPocoClara() {
         muestra.agregarOpinionExperto(Opinion.IMAGEN_POCO_CLARA);
         assertEquals("Imagen poco clara", muestra.resultadoActual());
+    }
+    
+    @Test
+    public void testResultadoActualEsNinguna() {
+        muestra.agregarOpinionExperto(Opinion.NINGUNA);
+        assertEquals("Ninguna", muestra.resultadoActual());
     }
     
     @Test

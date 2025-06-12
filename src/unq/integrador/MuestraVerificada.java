@@ -7,7 +7,7 @@ package unq.integrador;
  * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
  */
 public class MuestraVerificada extends Muestra {
-    private Opinion resultado;
+    private TipoOpinion resultado;
     
     /**
      * Constructor de MuestaVerificada
@@ -17,7 +17,7 @@ public class MuestraVerificada extends Muestra {
      * @param ubicacion Ubicación de donde fue la muestra
      * @param op Opinión que ganó la discución de la foto y por ende responde al resultado
      */
-    public MuestraVerificada(IUsuario user, String fotografia, String ubicacion, Opinion op) {
+    public MuestraVerificada(IUsuario user, String fotografia, String ubicacion, TipoOpinion op) {
         super(user, fotografia, ubicacion);
         this.resultado = op;
     }
@@ -29,29 +29,7 @@ public class MuestraVerificada extends Muestra {
      */
     @Override
     public String resultadoActual() {
-        switch (this.resultado) {
-            case VINCHUCA_GUASAYANA:
-                return "Vinchuca Guasayana";
-            
-            case VINCHUCA_INFESTANS:
-                return "Vinchuca Infestans";
-            
-            case VINCHUCA_SORDIDA:
-                return "Vinchuca Sordida";
-            
-            case CHINCHA_FOLIADA:
-                return "Chincha Foliada";
-            
-            case PHTIA_CHINCHE:
-                return "Phtia Chinche";
-            
-            case IMAGEN_POCO_CLARA:
-                return "Imagen poco clara";
-            
-            default:
-                return "Ninguna";
-            
-        }
+        return this.resultado.imprimirTipo();
     }
 
     /**

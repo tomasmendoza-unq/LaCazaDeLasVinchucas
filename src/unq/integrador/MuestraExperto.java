@@ -30,35 +30,13 @@ public class MuestraExperto extends Muestra {
         if(this.opiniones.values().size() > 1) {
             return "No definido";
         } else {
-            Opinion resultado = null;
+            TipoOpinion resultado = null;
 
-            for (Opinion op : this.opiniones.keySet()) {
+            for (TipoOpinion op : this.opiniones.keySet()) {
                 resultado = op;
             }
 
-            switch (resultado) {
-                case VINCHUCA_GUASAYANA:
-                    return "Vinchuca Guasayana";
-                
-                case VINCHUCA_INFESTANS:
-                    return "Vinchuca Infestans";
-                
-                case VINCHUCA_SORDIDA:
-                    return "Vinchuca Sordida";
-                
-                case CHINCHA_FOLIADA:
-                    return "Chincha Foliada";
-                
-                case PHTIA_CHINCHE:
-                    return "Phtia Chinche";
-                
-                case IMAGEN_POCO_CLARA:
-                    return "Imagen poco clara";
-                    
-                default:
-                    return "Ninguna";
-                    
-            }
+            return resultado.imprimirTipo();
         }
     }
 
@@ -71,10 +49,10 @@ public class MuestraExperto extends Muestra {
      */
     @Override
     public void agregarOpinionExperto(Opinion op) {
-        this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
+        this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);
         
-        if (this.opiniones.get(op) == 2) {
-            this.user.setMuestraPublicada(new MuestraVerificada(user, fotografia, ubicacion, op));
+        if (this.opiniones.get(op.getTipo()) == 2) {
+            this.user.setMuestraPublicada(new MuestraVerificada(user, fotografia, ubicacion, op.getTipo()));
         }
     }
 

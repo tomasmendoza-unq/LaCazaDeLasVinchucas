@@ -19,50 +19,50 @@ public class MuestraVerificadaTest {
     
     @Test
     public void testResultadoActualEsVinchucaGuasayana() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.VINCHUCA_GUASAYANA);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.VINCHUCA_GUASAYANA);
         assertEquals("Vinchuca Guasayana", muestra.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaInfestans() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.VINCHUCA_INFESTANS);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.VINCHUCA_INFESTANS);
         assertEquals("Vinchuca Infestans", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsVinchucaSordida() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.VINCHUCA_SORDIDA);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.VINCHUCA_SORDIDA);
         assertEquals("Vinchuca Sordida", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsChinchaFoliada() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.CHINCHA_FOLIADA);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.CHINCHA_FOLIADA);
         assertEquals("Chincha Foliada", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsPhtiaChinche() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.PHTIA_CHINCHE);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.PHTIA_CHINCHE);
         assertEquals("Phtia Chinche", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsImagenPocoClara() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.IMAGEN_POCO_CLARA);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.IMAGEN_POCO_CLARA);
         assertEquals("Imagen poco clara", muestra.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsNinguna() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.NINGUNA);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.NINGUNA);
         assertEquals("Ninguna", muestra.resultadoActual());
     }
     
     @Test
     public void testAgregarUnaOpinionBasicaLanzaExcepcion() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.NINGUNA);
-        Executable accion = () -> muestra.agregarOpinionBasico(Opinion.NINGUNA);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.NINGUNA);
+        Executable accion = () -> muestra.agregarOpinionBasico(new Opinion(TipoOpinion.NINGUNA));
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
         
         assertEquals("Los usuarios no pueden opinar en una muestra verificada", exception.getMessage());
@@ -70,7 +70,7 @@ public class MuestraVerificadaTest {
     
     @Test
     public void testAgregarUnaOpinionExpertoLanzaExcepcion() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", Opinion.NINGUNA);
+        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", TipoOpinion.NINGUNA);
         Executable accion = () -> muestra.agregarOpinionExperto(mock(Opinion.class));
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
         

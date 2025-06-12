@@ -23,51 +23,50 @@ public class MuestraExpertoTest {
     
     @Test
     public void testResultadoActualEsVinchucaGuasayana() {
-        muestra.agregarOpinionExperto(Opinion.VINCHUCA_GUASAYANA);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_GUASAYANA));
         assertEquals("Vinchuca Guasayana", muestra.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaInfestans() {
-        muestra.agregarOpinionExperto(Opinion.VINCHUCA_INFESTANS);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
         assertEquals("Vinchuca Infestans", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsVinchucaSordida() {
-        muestra.agregarOpinionExperto(Opinion.VINCHUCA_SORDIDA);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_SORDIDA));
         assertEquals("Vinchuca Sordida", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsChinchaFoliada() {
-        muestra.agregarOpinionExperto(Opinion.CHINCHA_FOLIADA);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.CHINCHA_FOLIADA));
         assertEquals("Chincha Foliada", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsPhtiaChinche() {
-        muestra.agregarOpinionExperto(Opinion.PHTIA_CHINCHE);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.PHTIA_CHINCHE));
         assertEquals("Phtia Chinche", muestra.resultadoActual());
     }
 
     @Test
+    public void testResultadoActualEsNinguna() {
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        assertEquals("Ninguna", muestra.resultadoActual());
+    }
+
+    @Test
     public void testResultadoActualEsImagenPocoClara() {
-        muestra.agregarOpinionExperto(Opinion.IMAGEN_POCO_CLARA);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
         assertEquals("Imagen poco clara", muestra.resultadoActual());
     }
     
     @Test
-    public void testResultadoActualEsNinguna() {
-        muestra.agregarOpinionExperto(Opinion.NINGUNA);
-        assertEquals("Ninguna", muestra.resultadoActual());
-    }
-    
-    @Test
     public void testHayEmpateEntoncesNoEstaDefinido() {
-        
-        muestra.agregarOpinionExperto(Opinion.IMAGEN_POCO_CLARA);
-        muestra.agregarOpinionExperto(Opinion.NINGUNA);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
         assertEquals("No definido", muestra.resultadoActual());
     }
 
@@ -82,8 +81,8 @@ public class MuestraExpertoTest {
 
     @Test
     public void testAgrearDosOpinionesExpertasIgualesVerificaLaMuestra() {
-        muestra.agregarOpinionExperto(Opinion.NINGUNA);
-        muestra.agregarOpinionExperto(Opinion.NINGUNA);
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
         verify(owner).setMuestraPublicada(any(MuestraVerificada.class));
     }
 }

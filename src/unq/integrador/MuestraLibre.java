@@ -31,7 +31,7 @@ public class MuestraLibre extends Muestra {
     @Override
     public String resultadoActual() {
         int maxNum = 0;
-        Opinion maxOp = null;
+        TipoOpinion maxOp = null;
 
         // Se comprueva si no existen dos opiniones con la misma cantidad
         Integer max1 = null;
@@ -49,7 +49,7 @@ public class MuestraLibre extends Muestra {
         // Se consigue la opinión que tenga la ocurrencia más alta
         // Si no existen dos opiniones con la misma cantidad.
         if (max1 != max2) {
-            for (Opinion op : this.opiniones.keySet()) {
+            for (TipoOpinion op : this.opiniones.keySet()) {
                 if (maxNum < this.opiniones.get(op)) {
                     maxNum = this.opiniones.get(op);
                     maxOp = op;
@@ -59,17 +59,9 @@ public class MuestraLibre extends Muestra {
 
         // Si existiera un empate o el diccionario está vacío, retorna "No definido"
         // Caso contrario, dependiendo de la Opinión en maxOp, retorna cualquiera del switch
-        return (maxOp == null) ? "No definido" : switch (maxOp) {
-            case VINCHUCA_GUASAYANA -> "Vinchuca Guasayana";
-            case VINCHUCA_INFESTANS -> "Vinchuca Infestans";
-            case VINCHUCA_SORDIDA   -> "Vinchuca Sordida";
-            case CHINCHA_FOLIADA    -> "Chincha Foliada";
-            case PHTIA_CHINCHE      -> "Phtia Chinche";
-            case NINGUNA            -> "Ninguna";
-            case IMAGEN_POCO_CLARA  -> "Imagen poco clara";
-        };
+        return (maxOp == null) ? "No definido" : maxOp.imprimirTipo();
     }
-    
+
     /**
      * Agregua una opinión al diccionario de Opiniones, agregando 1 al valor que estaba
      * o setteandolo en 1 si no existía.
@@ -78,7 +70,7 @@ public class MuestraLibre extends Muestra {
      */
     @Override
     public void agregarOpinionBasico(Opinion op) {
-        this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
+        this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);
     }
 
     /**

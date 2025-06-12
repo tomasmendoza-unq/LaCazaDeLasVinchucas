@@ -71,16 +71,22 @@ public class MuestraLibre extends Muestra {
     }
     
     /**
-     * Agregua una opinión a la lista en caso de que sea usuario normal, si es experto
-     * la clase muta a MuestraExperto y agrega la opinión dada a una lista vacía en esa clase
+     * Agregua una opinión al diccionario de Opiniones, agregando 1 al valor que estaba
+     * o setteandolo en 1 si no existía.
      * 
-     * @param op una opinión para agregar a la lista
+     * @param op una opinión para agregar al diccionario
      */
     @Override
     public void agregarOpinionBasico(Opinion op) {
         this.opiniones.put(op, this.opiniones.getOrDefault(op, 0) + 1);
     }
 
+    /**
+     * Crea una nueva muestra que es para expertos y agrega la opinión que llegó
+     * Además, cambia su instancia en el usuario para que tenga la muestra actualizada.
+     * 
+     * @param op Una opinión que se agrega al diccionario de la nueva Muestra 
+     */
     @Override
     public void agregarOpinionExperto(Opinion op) {
         MuestraExperto muestra = new MuestraExperto(user, fotografia, ubicacion);

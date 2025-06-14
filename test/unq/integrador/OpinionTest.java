@@ -1,7 +1,6 @@
 package unq.integrador;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 
 import java.time.LocalDate;
 

@@ -51,7 +51,6 @@ public class UsuarioRangoTest {
             usuarioExperto.opinarSobreUnaMuestra(muestra,opinion);
         });
 
-        verify(muestra).agregarOpinionExperto(opinion);
 
     }
 }

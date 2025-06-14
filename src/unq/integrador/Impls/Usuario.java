@@ -24,11 +24,13 @@ public  class Usuario implements IUsuario {
 	}
 
 	public void opinarSobreUnaMuestra(IMuestra muestra, IOpinion opinion) {
-           participanteState.opinarSobreUnaMuestra(muestra,opinion);
+		participanteState.opinarSobreUnaMuestra(muestra,opinion);
+		opinionList.add(opinion);
     }
 
 	public void enviarMuestra(IMuestra muesta) {
 		bdm.agregarMuestra(muesta);
+		publicaciones.add(muesta);
 	}
 
 	public void determinarRango(){
@@ -43,25 +45,25 @@ public  class Usuario implements IUsuario {
 		return new UsuarioExperto();
 	}
 
-	private boolean subeDeRango() {
-		return this.opionesNecesarias() && this.publicacionesNecesarias();
+	public boolean subeDeRango() {
+		return this.opinionesNecesarias() && this.publicacionesNecesarias();
 	}
 
-	private boolean publicacionesNecesarias() {
+	protected boolean publicacionesNecesarias() {
 		return this.publicacionesDentroDeLos30Dias().count() >=10;
 	}
 
-	private Stream<IMuestra> publicacionesDentroDeLos30Dias() {
+	protected Stream<IMuestra> publicacionesDentroDeLos30Dias() {
 		return publicaciones.stream()
 				.filter(iMuestra -> iMuestra.getFecha().isAfter(LocalDate.now().minusDays(30)));
 	}
 
 
-	private boolean opionesNecesarias() {
+	protected boolean opinionesNecesarias() {
 		return this.opionesHechasDentroDeLos30Dias().count() >=20;
 	}
 
-	private Stream<IOpinion> opionesHechasDentroDeLos30Dias() {
+	protected Stream<IOpinion> opionesHechasDentroDeLos30Dias() {
 		return  opinionList.stream()
 				.filter(iOpinion -> iOpinion.getFecha().isAfter(LocalDate.now().minusDays(30)));
 	}

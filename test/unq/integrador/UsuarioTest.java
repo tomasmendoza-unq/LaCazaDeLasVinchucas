@@ -8,9 +8,10 @@ import unq.integrador.Enums.TipoOpinion;
 import unq.integrador.Impls.Usuario;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UsuarioTest {
@@ -56,6 +57,73 @@ public class UsuarioTest {
 
 		verify(rango, times(2)).opinarSobreUnaMuestra(muestra,opinion);
 
+	}
+
+	@Test
+	public void usuarioSubeDeRangoCuandoTieneMasDe10PublicacionesY20OpinionesEn30Dias() {
+
+		assertFalse(usuario.subeDeRango());
+
+		for (int i = 0; i < 10; i++) {
+			IMuestra muestra = mock(IMuestra.class);
+			when(muestra.getFecha()).thenReturn(LocalDate.now().minusDays(5));
+			usuario.enviarMuestra(muestra);
+		}
+
+		for (int i = 0; i < 20; i++) {
+			IOpinion opinion = mock(IOpinion.class);
+			when(opinion.getFecha()).thenReturn(LocalDate.now().minusDays(3));
+			usuario.opinarSobreUnaMuestra(muestra, opinion);
+		}
+
+		assertTrue(usuario.subeDeRango());
+
+		usuario.determinarRango();
+	}
+
+	@Test
+	public void usuarioNoSubeDeRangoCuandoNoCumpleCondiciones() {
+
+		for (int i = 0; i < 5; i++) {
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
+			usuario.enviarMuestra(muestraMock);
+		}
+
+		for (int i = 0; i < 10; i++) {
+			IOpinion opinionMock = mock(IOpinion.class);
+			when(opinionMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
+			usuario.opinarSobreUnaMuestra(mock(IMuestra.class), opinionMock);
+		}
+
+		assertFalse(usuario.subeDeRango());
+
+		usuario.determinarRango();
+
+	}
+
+	@Test
+	public void usuarioNoSubeDeRangoConOpinionesSuficientesPeroNoPublicaciones() {
+
+		for (int i = 0; i < 20; i++) {
+			IOpinion opinionMock = mock(IOpinion.class);
+			when(opinionMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
+			usuario.opinarSobreUnaMuestra(mock(IMuestra.class), opinionMock);
+		}
+
+		assertFalse(usuario.subeDeRango());
+	}
+
+	@Test
+	public void usuarioNoSubeDeRangoConPublicacionesSuficientesPeroNoOpiniones() {
+
+		for (int i = 0; i < 10; i++) {
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
+			usuario.enviarMuestra(muestraMock);
+		}
+
+		assertFalse(usuario.subeDeRango());
 	}
 
 }

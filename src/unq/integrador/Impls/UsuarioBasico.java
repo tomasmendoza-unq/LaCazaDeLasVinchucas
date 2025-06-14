@@ -7,6 +7,8 @@ import unq.integrador.IUsuarioRango;
 public class UsuarioBasico implements IUsuarioRango {
 
 
+
+
     @Override
     public void opinarSobreUnaMuestra(IMuestra muestra, IOpinion opinion) {
         muestra.agregarOpinionBasico(opinion);

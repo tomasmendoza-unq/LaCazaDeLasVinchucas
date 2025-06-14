@@ -1,0 +1,16 @@
+
+/out/
+/bin/
+/.idea/
+/*.iml
+
+
+.DS_Store
+Thumbs.db
+
+
+*.iws
+*.ipr
+
+
+*.log

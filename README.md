@@ -23,6 +23,6 @@ Cobertura de tests 95% obligatorio. Utilizando como parámetro el plugin de cobe
 
 ## Entregables
 1. Un diseño de la solución completa utilizando diagrama de clases UML.
-2. Documentación en un archivo PDF uq eincluya una portada con los nombres y direcciones de e-mail de los integrantes, las decisiones de diseño, detalles de implementación que merzcan ser explicados, patrones de diseño utilizados y los roles según la definición de Gamma et. al.
+2. Documentación en un archivo PDF que incluya una portada con los nombres y direcciones de e-mail de los integrantes, las decisiones de diseño, detalles de implementación que merzcan ser explicados, patrones de diseño utilizados y los roles según la definición de Gamma et. al.
 3. Implementación completa en lenguaje JAVA que incluya test de unidad cono un 95% de cobertura.
 4. Todo lo anterior debe estar alojado en un repositorio de acceso público donde se pueda realizar un seguimiento del trabajo, La participación de las personas integrantes del grupo debe ser equitativa de acuerdo a los commits realizados en el repositorio.

@@ -5,15 +5,23 @@ import unq.integrador.Enums.TipoOpinion;
 import java.time.LocalDate;
 
 public class Opinion {
-    private LocalDate localDate;
-    private TipoOpinion tipoOpinion;
-
-    public Opinion(LocalDate localDate, TipoOpinion tipoOpinion) {
-        this.localDate = localDate;
-        this.tipoOpinion = tipoOpinion;
+    private TipoOpinion tipo;
+    private LocalDate fechaDeCreacion;
+    
+    public Opinion(TipoOpinion tipo) {
+        this.tipo = tipo;
+        this.fechaDeCreacion = LocalDate.now();
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    public TipoOpinion getTipo() {
+        return this.tipo;
+    }
+    
+    public String imprimirTipo() {
+        return tipo.imprimirTipo();
+    }
+
+    public LocalDate getFechaDeCreacion() {
+        return this.fechaDeCreacion;
     }
 }

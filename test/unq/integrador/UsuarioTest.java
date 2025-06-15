@@ -4,12 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unq.integrador.Exceptions.OpinionRepetidaException;
-import unq.integrador.Enums.TipoOpinion;
+import unq.integrador.Impls.Opinion;
 import unq.integrador.Impls.Usuario;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,21 +18,21 @@ public class UsuarioTest {
 	IUsuarioRango rango;
 	IMuestra muestra;
 	IBaseDeMuestras baseDeMuestras;
-	IOpinion opinion;
+	Opinion opinion;
 	
 	@BeforeEach
 	public void setUp() {
 		muestra = mock(IMuestra.class);
 		baseDeMuestras = mock(IBaseDeMuestras.class);
 		rango = mock(IUsuarioRango.class);
-		usuario = new Usuario(baseDeMuestras,rango, LocalDate.of(2003, 12 , 03));
-		opinion = mock(IOpinion.class);
+		usuario = new Usuario(baseDeMuestras,rango, LocalDate.of(2003, 12 , 03), 10);
+		opinion = mock(Opinion.class);
 	}
 	
 	@Test
 	public void usuarioUnaMuestra() {
-		usuario.enviarMuestra(muestra);
-		verify(baseDeMuestras).agregarMuestra(muestra);
+		usuario.enviarMuestra("10", "22");
+		verify(baseDeMuestras).agregarMuestra(any(IMuestra.class));
 	}
 	
 	@Test
@@ -65,35 +63,32 @@ public class UsuarioTest {
 		assertFalse(usuario.subeDeRango());
 
 		for (int i = 0; i < 10; i++) {
-			IMuestra muestra = mock(IMuestra.class);
-			when(muestra.getFecha()).thenReturn(LocalDate.now().minusDays(5));
-			usuario.enviarMuestra(muestra);
+			usuario.enviarMuestra("asd", "22");
 		}
 
 		for (int i = 0; i < 20; i++) {
-			IOpinion opinion = mock(IOpinion.class);
-			when(opinion.getFecha()).thenReturn(LocalDate.now().minusDays(3));
-			usuario.opinarSobreUnaMuestra(muestra, opinion);
+			Opinion opinion = mock(Opinion.class);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now().minusDays(3));
+			usuario.opinarSobreUnaMuestra(muestraMock, opinion);
 		}
 
 		assertTrue(usuario.subeDeRango());
 
 		usuario.determinarRango();
 	}
-
 	@Test
 	public void usuarioNoSubeDeRangoCuandoNoCumpleCondiciones() {
 
 		for (int i = 0; i < 5; i++) {
-			IMuestra muestraMock = mock(IMuestra.class);
-			when(muestraMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
-			usuario.enviarMuestra(muestraMock);
+			usuario.enviarMuestra("asd", "22");
 		}
 
 		for (int i = 0; i < 10; i++) {
-			IOpinion opinionMock = mock(IOpinion.class);
-			when(opinionMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
-			usuario.opinarSobreUnaMuestra(mock(IMuestra.class), opinionMock);
+			Opinion opinion = mock(Opinion.class);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now().minusDays(3));
+			usuario.opinarSobreUnaMuestra(muestraMock, opinion);
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -106,9 +101,10 @@ public class UsuarioTest {
 	public void usuarioNoSubeDeRangoConOpinionesSuficientesPeroNoPublicaciones() {
 
 		for (int i = 0; i < 20; i++) {
-			IOpinion opinionMock = mock(IOpinion.class);
-			when(opinionMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
-			usuario.opinarSobreUnaMuestra(mock(IMuestra.class), opinionMock);
+			Opinion opinion = mock(Opinion.class);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now().minusDays(3));
+			usuario.opinarSobreUnaMuestra(muestraMock, opinion);
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -118,12 +114,15 @@ public class UsuarioTest {
 	public void usuarioNoSubeDeRangoConPublicacionesSuficientesPeroNoOpiniones() {
 
 		for (int i = 0; i < 10; i++) {
-			IMuestra muestraMock = mock(IMuestra.class);
-			when(muestraMock.getFecha()).thenReturn(LocalDate.now().minusDays(5));
-			usuario.enviarMuestra(muestraMock);
+			usuario.enviarMuestra("asd", "22");
 		}
 
 		assertFalse(usuario.subeDeRango());
+	}
+
+	@Test
+	public void usuarioObtieneSuId(){
+		assertEquals(10, usuario.getID());
 	}
 
 }

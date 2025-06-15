@@ -2,10 +2,11 @@ package unq.integrador;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unq.integrador.Exceptions.MuestraException;
-import unq.integrador.Impls.Opinion;
-import unq.integrador.Impls.UsuarioBasico;
-import unq.integrador.Impls.UsuarioExperto;
+
+import unq.integrador.error.MuestraException;
+import unq.integrador.impls.Opinion;
+import unq.integrador.impls.UsuarioBasico;
+import unq.integrador.impls.UsuarioExperto;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;

@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.Enums;
 
 public enum TipoOpinion {
     VINCHUCA_INFESTANS(){

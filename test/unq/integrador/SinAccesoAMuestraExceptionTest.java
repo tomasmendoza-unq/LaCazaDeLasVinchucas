@@ -3,12 +3,13 @@ package unq.integrador;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import unq.integrador.Exceptions.SinAccesoAMuestraException;
 
 public class SinAccesoAMuestraExceptionTest {
     
     @Test
     public void testConstructorSinParametros() {
-        assertThrows(SinAccesoAMuestraException.class, () -> { 
+        assertThrows(SinAccesoAMuestraException.class, () -> {
             throw new SinAccesoAMuestraException(); });
     }
 

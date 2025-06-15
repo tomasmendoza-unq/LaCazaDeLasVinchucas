@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.Exceptions;
 
 public class SinAccesoAMuestraException extends RuntimeException {
     public SinAccesoAMuestraException() {

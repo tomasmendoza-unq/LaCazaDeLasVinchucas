@@ -1,4 +1,6 @@
-package unq.integrador;
+package unq.integrador.Impls;
+
+import unq.integrador.Enums.TipoOpinion;
 
 import java.time.LocalDate;
 

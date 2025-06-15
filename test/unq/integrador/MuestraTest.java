@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import unq.integrador.Impls.MuestraLibre;
 
 public class MuestraTest {
     private IMuestra muestra;

@@ -5,6 +5,10 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import unq.integrador.Enums.TipoOpinion;
+import unq.integrador.Impls.MuestraExperto;
+import unq.integrador.Impls.MuestraLibre;
+import unq.integrador.Impls.Opinion;
 
 public class MuestraLibreTest {
     private IMuestra muestra;

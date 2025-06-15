@@ -1,5 +1,9 @@
 package unq.integrador;
 
+import unq.integrador.Enums.TipoOpinion;
+import unq.integrador.Impls.Opinion;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,6 +24,7 @@ public abstract class Muestra implements IMuestra {
     protected String ubicacion;
     protected HashMap<TipoOpinion, Integer> opiniones;
     protected ArrayList<String> historial;
+    protected LocalDate fechaCreacion;
     // Fecha de creación
     // BBDD de Muestras
     
@@ -35,6 +40,7 @@ public abstract class Muestra implements IMuestra {
         this.ubicacion = ubicacion;
         this.opiniones = new HashMap<TipoOpinion, Integer>();
         this.historial = new ArrayList<String>();
+        this.fechaCreacion = LocalDate.now();
     }
 
     /**
@@ -75,5 +81,9 @@ public abstract class Muestra implements IMuestra {
     public void agregarAlHistorial(int id, Opinion op) {
         String log = id + " opinó: " + op.getTipo() + "en la fecha: " + op.getFechaDeCreacion();
         this.historial.add(log);
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
     }
 }

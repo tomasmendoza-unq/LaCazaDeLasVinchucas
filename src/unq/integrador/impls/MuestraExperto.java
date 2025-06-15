@@ -58,16 +58,15 @@ public class MuestraExperto extends Muestra {
     @Override
     public void agregarOpinionExperto(Opinion op) {
         this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);
+
         this.agregarAlHistorial(op);
+
         if (this.opiniones.get(op.getTipo()) == 2) {
-            this.user.setMuestraPublicada(
-                new MuestraVerificada(
-                    this.user, 
-                    this.fotografia, 
-                    this.ubicacion,
-                    this.historial, 
-                    op.getTipo())
-            );
+            this.user.quitarMuestra(this);
+
+            MuestraVerificada muestra = new MuestraVerificada(this.user, this.fotografia, this.ubicacion, this.historial, op.getTipo());
+
+            this.user.agregarMuestraPublicada(muestra);
         }
     }
 

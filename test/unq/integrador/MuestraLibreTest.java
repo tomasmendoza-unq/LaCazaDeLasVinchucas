@@ -106,6 +106,7 @@ public class MuestraLibreTest {
     @Test
     public void testAgregarOpinionExpertoEntoncesCambiaElTipoDeMuestra() {
         muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
-        verify(owner).setMuestraPublicada(any(MuestraExperto.class));
+        verify(owner).quitarMuestra(any(MuestraLibre.class));
+        verify(owner).agregarMuestraPublicada(any(MuestraExperto.class));
     }
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 /out/
 /bin/
@@ -15,6 +14,6 @@ Thumbs.db
 
 
 *.log
-=======
+
 .idea/
->>>>>>> main
+

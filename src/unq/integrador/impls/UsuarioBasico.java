@@ -19,6 +19,7 @@ public class UsuarioBasico implements IUsuarioRango {
      */
     @Override
     public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) {
+        opinion.setCategoria("Básico");
         muestra.agregarOpinionBasico(opinion);
     }
 }

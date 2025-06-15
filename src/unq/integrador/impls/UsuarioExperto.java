@@ -19,6 +19,7 @@ public class UsuarioExperto implements IUsuarioRango {
      */
 	@Override
 	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) {
+        opinion.setCategoria("Experto");
 		muestra.agregarOpinionExperto(opinion);
 	}
 }

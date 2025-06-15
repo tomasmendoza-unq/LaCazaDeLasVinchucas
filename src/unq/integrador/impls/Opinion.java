@@ -12,6 +12,8 @@ import unq.integrador.enums.TipoOpinion;
 public class Opinion {
     private TipoOpinion tipo;
     private LocalDate fechaDeCreacion;
+    private int idUsuario;
+    private String categoria;
     
     /**
      * Constructor de las opiniones
@@ -20,6 +22,8 @@ public class Opinion {
     public Opinion(TipoOpinion tipo) {
         this.tipo = tipo;
         this.fechaDeCreacion = LocalDate.now();
+        this.idUsuario = -1;
+        this.categoria = null;
     }
 
     /**
@@ -47,5 +51,41 @@ public class Opinion {
      */
     public LocalDate getFechaDeCreacion() {
         return this.fechaDeCreacion;
+    }
+
+    /**
+     * Getter del ID del usuario que publicó la opinión
+     * 
+     * @return El ID de un usuario que publicó una opinión concreta
+     */
+    public int getID() {
+        return this.idUsuario;
+    }
+
+    /**
+     * Setter de id para cambiar el valor por default
+     * 
+     * @param id Representa el id del usuario
+     */
+    public void setID(int id) {
+        this.idUsuario = id;
+    }
+    
+    /**
+     * Getter de la categoría de quien proporciona la opinión
+     * 
+     * @return Categoría del usuario que publicó una opinión
+     */
+    public String getCategoria() {
+        return this.categoria;
+    }
+
+    /**
+     * Setter de la categoría del usuario en la opinión para cambiar el valor por default
+     * 
+     * @param categoria Representa la categoría del usuario que publicó
+     */
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

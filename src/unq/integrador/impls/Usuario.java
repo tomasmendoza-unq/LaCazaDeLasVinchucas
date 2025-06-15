@@ -42,6 +42,7 @@ public class Usuario implements IUsuario {
 	 * @param opinion Opinión que será agregada a la muestra
 	 */
 	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) {
+		opinion.setID(this.id);
 		this.rango.opinarSobreUnaMuestra(muestra,opinion);
 		this.opinionList.add(opinion);
     }

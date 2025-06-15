@@ -113,6 +113,16 @@ public class Usuario implements IUsuario {
 		this.publicaciones.add(muestra);
 	}
 
+	/*
+	* 	Metodo para verificar si publico una muestra dada
+	*
+	* @param muestra que representa la muestra a verificar
+	* */
+	@Override
+	public boolean publicoEstaMuestra(IMuestra muestra){
+		return publicaciones.contains(muestra);
+	}
+
 	/**
 	 * Getter de id del usuario
 	 * 

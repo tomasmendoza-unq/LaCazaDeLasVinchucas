@@ -125,4 +125,12 @@ public class UsuarioTest {
 		assertEquals(10, usuario.getID());
 	}
 
+	@Test
+	public void usuarioEliminaYAgregaMuestra(){
+		usuario.agregarMuestraPublicada(muestra);
+		assertTrue(usuario.publicoEstaMuestra(muestra));
+		usuario.quitarMuestra(muestra);
+		assertFalse(usuario.publicoEstaMuestra(muestra));
+	}
+
 }

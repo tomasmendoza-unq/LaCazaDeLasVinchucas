@@ -14,5 +14,5 @@ public interface IUsuario {
     public void quitarMuestra(IMuestra muestra);
     public void agregarMuestraPublicada(IMuestra muestra);
     public int getID();
-
+    public boolean publicoEstaMuestra(IMuestra muestra);
 }

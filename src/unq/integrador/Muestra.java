@@ -25,8 +25,6 @@ public abstract class Muestra implements IMuestra {
     protected HashMap<TipoOpinion, Integer> opiniones;
     protected ArrayList<String> historial;
     protected LocalDate fechaCreacion;
-    // Fecha de creación
-    // BBDD de Muestras
     
     /**
      * Constructor de la clase Abstracta Muestra
@@ -66,24 +64,50 @@ public abstract class Muestra implements IMuestra {
      */
     public abstract void agregarOpinionExperto(Opinion op);
 
+    /**
+     * Getter de la fotografía de la muestra
+     * 
+     * @return Un string que representa la fotografía
+     */
     public String getFotografia() {
         return this.fotografia;
     }
 
+    /**
+     * Getter de la ubicación de la muestra
+     * 
+     * @return Ubicación de la muestra
+     */
     public String getUbicacion() {
         return this.ubicacion;
     }
 
+    /**
+     * Getter del ID del usuario que publicó la muestra
+     * 
+     * @return ID del usuario
+     */
     public int getIDUsuario() {
         return this.user.getID();
     }
+    
+    /**
+     * Getter de la fecha de creación de la muestra
+     * 
+     * @return la fecha de creación de la muestra
+     */
+    public LocalDate getFechaCreacion() {
+        return this.fechaCreacion;
+    }
 
+    /**
+     * Método para agregar un registro al historial de opiniones realizadas en la muestra
+     * 
+     * @param op Opinión que se añade a la muestra
+     * @deprecated
+     */
     public void agregarAlHistorial(int id, Opinion op) {
         String log = id + " opinó: " + op.getTipo() + "en la fecha: " + op.getFechaDeCreacion();
         this.historial.add(log);
-    }
-
-    public LocalDate getFechaCreacion() {
-        return fechaCreacion;
     }
 }

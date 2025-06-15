@@ -95,13 +95,22 @@ public class Usuario implements IUsuario {
 	}
 
 	/**
-	 * Método para cambiar el tipo de muestra
-	 * @param muestra Muestra que se cambia por
-	 * @deprecated 
+	 * Método para quitar una muestra de la lista de publicaciones
+	 *
+	 * @param muestra que representa la muestra a quitar
 	 */
 	@Override
-	public void setMuestraPublicada(IMuestra muestra) {
-		publicaciones.add(muestra);
+	public void quitarMuestra(IMuestra muestra) {
+		this.publicaciones.remove(muestra);
+	}
+	/**
+	 * Método para agregar una muestra a la lista de publicaciones
+	 *
+	 * @param muestra que representa la muestra que se agrega
+	 */
+	@Override
+	public void agregarMuestraPublicada(IMuestra muestra) {
+		this.publicaciones.add(muestra);
 	}
 
 	/**

@@ -88,8 +88,9 @@ public class MuestraExpertoTest {
 
     @Test
     public void testAgrearDosOpinionesExpertasIgualesVerificaLaMuestra() {
+
         muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
         muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
-        verify(owner).setMuestraPublicada(any(MuestraVerificada.class));
+        verify(owner).quitarMuestra(any(MuestraExperto.class)); verify(owner).agregarMuestraPublicada(any(MuestraVerificada.class));
     }
 }

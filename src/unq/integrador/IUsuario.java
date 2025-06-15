@@ -11,7 +11,8 @@ public interface IUsuario {
     public void enviarMuestra(String fotografia, String ubicacion);
     public void determinarRango();
     public boolean subeDeRango();
-    public void setMuestraPublicada(IMuestra muestra);
+    public void quitarMuestra(IMuestra muestra);
+    public void agregarMuestraPublicada(IMuestra muestra);
     public int getID();
 
 }

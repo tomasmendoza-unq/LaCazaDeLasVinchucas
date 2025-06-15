@@ -86,8 +86,11 @@ public class MuestraLibre extends Muestra {
      */
     @Override
     public void agregarOpinionExperto(Opinion op) {
+        this.user.quitarMuestra(this);
+
         MuestraExperto muestra = new MuestraExperto(this.user, this.fotografia, this.ubicacion, this.historial);
         muestra.agregarOpinionExperto(op);
-        this.user.setMuestraPublicada(muestra);
+
+        this.user.agregarMuestraPublicada(muestra);
     }
 }

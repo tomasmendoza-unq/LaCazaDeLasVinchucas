@@ -3,9 +3,9 @@ package unq.integrador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import unq.integrador.Exceptions.OpinionRepetidaException;
-import unq.integrador.Impls.Opinion;
-import unq.integrador.Impls.Usuario;
+import unq.integrador.error.OpinionRepetidaException;
+import unq.integrador.impls.Opinion;
+import unq.integrador.impls.Usuario;
 
 import java.time.LocalDate;
 
@@ -25,7 +25,7 @@ public class UsuarioTest {
 		muestra = mock(IMuestra.class);
 		baseDeMuestras = mock(IBaseDeMuestras.class);
 		rango = mock(IUsuarioRango.class);
-		usuario = new Usuario(baseDeMuestras,rango, LocalDate.of(2003, 12 , 03), 10);
+		usuario = new Usuario(baseDeMuestras,rango, 10);
 		opinion = mock(Opinion.class);
 	}
 	

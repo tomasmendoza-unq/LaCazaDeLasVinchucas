@@ -1,8 +1,8 @@
-package unq.integrador.Impls;
-
-import unq.integrador.Enums.TipoOpinion;
+package unq.integrador.impls;
 
 import java.time.LocalDate;
+
+import unq.integrador.enums.TipoOpinion;
 
 public class Opinion {
     private TipoOpinion tipo;

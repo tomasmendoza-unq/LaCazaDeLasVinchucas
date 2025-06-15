@@ -6,8 +6,9 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unq.integrador.Enums.TipoOpinion;
-import unq.integrador.Impls.Opinion;
+
+import unq.integrador.impls.Opinion;
+import unq.integrador.enums.TipoOpinion;
 
 public class OpinionTest {
     private Opinion op;

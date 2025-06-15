@@ -1,4 +1,4 @@
-package unq.integrador.Exceptions;
+package unq.integrador.error;
 
 public class OpinionRepetidaException extends RuntimeException {
 }

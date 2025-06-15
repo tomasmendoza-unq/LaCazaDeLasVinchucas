@@ -1,4 +1,4 @@
-package unq.integrador.Impls;
+package unq.integrador.impls;
 
 import unq.integrador.*;
 
@@ -14,12 +14,10 @@ public class Usuario implements IUsuario {
 	private IUsuarioRango participanteState;
 	private List<Opinion> opinionList;
 	private List<IMuestra> publicaciones;
-	private LocalDate fechaDeCreacion;
 	
-	public Usuario(IBaseDeMuestras bdm, IUsuarioRango state, LocalDate fechaDeCreacion, int id) {
+	public Usuario(IBaseDeMuestras bdm, IUsuarioRango state, int id) {
 		this.bdm = bdm;
 		this.participanteState = state;
-		this.fechaDeCreacion = fechaDeCreacion;
 		opinionList = new ArrayList<>();
 		publicaciones = new ArrayList<>();
 		this.id = id;

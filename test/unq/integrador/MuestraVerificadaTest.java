@@ -7,10 +7,11 @@ import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import unq.integrador.Enums.TipoOpinion;
-import unq.integrador.Exceptions.SinAccesoAMuestraException;
-import unq.integrador.Impls.MuestraVerificada;
-import unq.integrador.Impls.Opinion;
+
+import unq.integrador.impls.MuestraVerificada;
+import unq.integrador.impls.Opinion;
+import unq.integrador.enums.TipoOpinion;
+import unq.integrador.error.SinAccesoAMuestraException;
 
 public class MuestraVerificadaTest {
     private IMuestra muestra;

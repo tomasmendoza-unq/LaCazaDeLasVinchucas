@@ -1,8 +1,8 @@
-package unq.integrador.Impls;
+package unq.integrador.impls;
 
 import unq.integrador.*;
-import unq.integrador.Enums.TipoOpinion;
-import unq.integrador.Exceptions.SinAccesoAMuestraException;
+import unq.integrador.enums.TipoOpinion;
+import unq.integrador.error.SinAccesoAMuestraException;
 
 /**
  * Esta clase representa las muestras en las que solo pueden opinar expertos.

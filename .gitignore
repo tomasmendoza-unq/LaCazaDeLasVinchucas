@@ -3,17 +3,16 @@
 /bin/
 /.idea/
 /*.iml
+/report/
+/lib/
+/.vscode/
 
 
 .DS_Store
 Thumbs.db
 
-
 *.iws
 *.ipr
-
-
 *.log
-
 .idea/
-
+*.exec

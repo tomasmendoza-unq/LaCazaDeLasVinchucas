@@ -1,7 +1,7 @@
 package unq.integrador;
 
-import unq.integrador.Enums.TipoOpinion;
-import unq.integrador.Impls.Opinion;
+import unq.integrador.impls.Opinion;
+import unq.integrador.enums.TipoOpinion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

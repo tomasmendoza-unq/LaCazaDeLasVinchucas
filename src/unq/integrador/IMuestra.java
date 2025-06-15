@@ -1,8 +1,8 @@
 package unq.integrador;
 
-import unq.integrador.Impls.Opinion;
-
 import java.time.LocalDate;
+
+import unq.integrador.impls.Opinion;
 
 /**
  * Interfaz de Muestra

@@ -1,7 +1,7 @@
-package unq.integrador.Impls;
+package unq.integrador.impls;
 
 import unq.integrador.*;
-import unq.integrador.Enums.TipoOpinion;
+import unq.integrador.enums.TipoOpinion;
 
 /**
  * Esta clase representa las muestras libres, que son aquellas en

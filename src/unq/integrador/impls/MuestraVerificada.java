@@ -1,5 +1,7 @@
 package unq.integrador.impls;
 
+import java.util.ArrayList;
+
 import unq.integrador.IUsuario;
 import unq.integrador.Muestra;
 import unq.integrador.enums.TipoOpinion;
@@ -20,10 +22,12 @@ public class MuestraVerificada extends Muestra {
      * @param user Usuario que publicó la muestra
      * @param fotografia Fotografía sobre la que se opina
      * @param ubicacion Ubicación de donde fue la muestra
+     * @param historial Representa el historial de votaciones de la muestra
      * @param op Opinión que ganó la discución de la foto y por ende responde al resultado
      */
-    public MuestraVerificada(IUsuario user, String fotografia, String ubicacion, TipoOpinion op) {
+    public MuestraVerificada(IUsuario user, String fotografia, String ubicacion, ArrayList<String> historial, TipoOpinion op) {
         super(user, fotografia, ubicacion);
+        this.historial = historial;
         this.resultado = op;
     }
 

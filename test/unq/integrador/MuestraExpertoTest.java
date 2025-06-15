@@ -6,25 +6,26 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import unq.integrador.impls.MuestraExperto;
-import unq.integrador.impls.MuestraVerificada;
-import unq.integrador.impls.Opinion;
+import unq.integrador.impls.*;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
 
 public class MuestraExpertoTest {
     private IMuestra muestra;
     private IUsuario owner;
-
+    private ArrayList<String> historial;
 
     @BeforeEach
     public void setUp() {
         owner = mock(IUsuario.class);
-        muestra = new MuestraExperto(owner, "Foto", "Calle 123");
+        historial = new ArrayList<String>();
+        muestra = new MuestraExperto(owner, "Foto", "Calle 123", historial);
     }
     
     @Test

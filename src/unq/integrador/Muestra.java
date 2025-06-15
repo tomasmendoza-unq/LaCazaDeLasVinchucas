@@ -104,10 +104,23 @@ public abstract class Muestra implements IMuestra {
      * Método para agregar un registro al historial de opiniones realizadas en la muestra
      * 
      * @param op Opinión que se añade a la muestra
-     * @deprecated
      */
-    public void agregarAlHistorial(int id, Opinion op) {
-        String log = id + " opinó: " + op.getTipo() + "en la fecha: " + op.getFechaDeCreacion();
+    public void agregarAlHistorial(Opinion op) {
+        String log = 
+            "Usuario " + op.getID() +
+            " opinó: " + op.imprimirTipo() +
+            ", en la fecha: " + op.getFechaDeCreacion().toString() +
+            ", con categoría: " + op.getCategoria();
         this.historial.add(log);
+    }
+
+    /**
+     * Método para obtener algún registro del historial
+     * 
+     * @param n Que representa una posición posible entre los registros del historial
+     * @return Un registro que representa quien votó, cuando, su categoría y cual fue su voto
+     */
+    public String verRegistroN(int n) {
+        return this.historial.get(n-1);
     }
 }

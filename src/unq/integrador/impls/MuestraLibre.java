@@ -71,9 +71,11 @@ public class MuestraLibre extends Muestra {
      * 
      * @param op una opinión para agregar al diccionario
      */
+    
     @Override
     public void agregarOpinionBasico(Opinion op) {
         this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);
+        this.agregarAlHistorial(op);
     }
 
     /**
@@ -84,7 +86,7 @@ public class MuestraLibre extends Muestra {
      */
     @Override
     public void agregarOpinionExperto(Opinion op) {
-        MuestraExperto muestra = new MuestraExperto(user, fotografia, ubicacion);
+        MuestraExperto muestra = new MuestraExperto(this.user, this.fotografia, this.ubicacion, this.historial);
         muestra.agregarOpinionExperto(op);
         this.user.setMuestraPublicada(muestra);
     }

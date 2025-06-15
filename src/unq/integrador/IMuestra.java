@@ -16,4 +16,6 @@ public interface IMuestra {
     public String getUbicacion();
     public int getIDUsuario();
     public LocalDate getFechaCreacion();
+    public void agregarAlHistorial(Opinion op);
+    public String verRegistroN(int n);
 }

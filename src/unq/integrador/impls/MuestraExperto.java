@@ -1,5 +1,7 @@
 package unq.integrador.impls;
 
+import java.util.ArrayList;
+
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
@@ -18,9 +20,11 @@ public class MuestraExperto extends Muestra {
      * @param user usuario que publicó la muestra
      * @param fotografia fotografía del usuario que publicó la muestra
      * @param ubicacion ubicación del usuario que publicó la muestra
+     * @param historial Representa el historial de votaciones de la muestra
      */
-    public MuestraExperto(IUsuario user, String fotografia, String ubicacion) {
+    public MuestraExperto(IUsuario user, String fotografia, String ubicacion, ArrayList<String> historial) {
         super(user, fotografia, ubicacion);
+        this.historial = historial;
     }
 
     /**
@@ -54,9 +58,16 @@ public class MuestraExperto extends Muestra {
     @Override
     public void agregarOpinionExperto(Opinion op) {
         this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);
-        
+        this.agregarAlHistorial(op);
         if (this.opiniones.get(op.getTipo()) == 2) {
-            this.user.setMuestraPublicada(new MuestraVerificada(user, fotografia, ubicacion, op.getTipo()));
+            this.user.setMuestraPublicada(
+                new MuestraVerificada(
+                    this.user, 
+                    this.fotografia, 
+                    this.ubicacion,
+                    this.historial, 
+                    op.getTipo())
+            );
         }
     }
 

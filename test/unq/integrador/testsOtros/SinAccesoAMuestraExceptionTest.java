@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.testsOtros;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.testsMuestras;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -6,6 +6,8 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import unq.integrador.IMuestra;
+import unq.integrador.IUsuario;
 import unq.integrador.impls.MuestraExperto;
 import unq.integrador.impls.MuestraLibre;
 import unq.integrador.impls.Opinion;

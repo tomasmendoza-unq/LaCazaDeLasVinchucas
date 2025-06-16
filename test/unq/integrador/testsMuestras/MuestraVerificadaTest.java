@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.testsMuestras;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import unq.integrador.IMuestra;
+import unq.integrador.IUsuario;
 import unq.integrador.impls.MuestraVerificada;
 import unq.integrador.impls.Opinion;
 import unq.integrador.enums.TipoOpinion;

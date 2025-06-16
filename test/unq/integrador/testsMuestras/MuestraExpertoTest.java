@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.testsMuestras;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import unq.integrador.IMuestra;
+import unq.integrador.IUsuario;
 import unq.integrador.impls.*;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;

@@ -10,7 +10,7 @@ import unq.integrador.impls.BaseDeMuestras;
 
 import static org.mockito.Mockito.*;
 
-public class BaseDeDatosTest {
+public class BaseDeMuestrasTest {
 
     IBaseDeMuestras baseDeMuestras;
     IMuestra muestra;
@@ -33,8 +33,8 @@ public class BaseDeDatosTest {
         when(zonaDeCobertura.contieneUbicacion(ubicacionMuestra)).thenReturn(false);
         when(zonaDeCobertura2.contieneUbicacion(ubicacionMuestra)).thenReturn(true);
 
-        baseDeMuestras.agregarZonaDeCobertura(zonaDeCobertura);
-        baseDeMuestras.agregarZonaDeCobertura(zonaDeCobertura2);
+        baseDeMuestras.RegistrarZona(zonaDeCobertura);
+        baseDeMuestras.RegistrarZona(zonaDeCobertura2);
 
         baseDeMuestras.cargarMuestra(muestra);
 

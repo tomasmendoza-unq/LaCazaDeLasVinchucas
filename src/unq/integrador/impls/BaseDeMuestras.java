@@ -24,7 +24,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
         this.zonasPertenecientesA(muestra.getUbicacion()).forEach(zonaDeCobertura -> zonaDeCobertura.cargarMuestra(muestra));
     }
 
-    public void agregarZonaDeCobertura(IZonaDeCobertura zonaDeCobertura){
+    public void RegistrarZona(IZonaDeCobertura zonaDeCobertura){
         zonaDeCoberturas.add(zonaDeCobertura);
     }
 

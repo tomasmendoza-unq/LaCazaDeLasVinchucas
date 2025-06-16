@@ -7,5 +7,5 @@ package unq.integrador;
  */
 public interface IBaseDeMuestras {
 	public void cargarMuestra(IMuestra muestra) ;
-	public void agregarZonaDeCobertura(IZonaDeCobertura zonaDeCobertura);
+	public void RegistrarZona(IZonaDeCobertura zonaDeCobertura);
 }

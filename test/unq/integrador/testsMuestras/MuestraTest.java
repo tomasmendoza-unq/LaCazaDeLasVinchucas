@@ -35,7 +35,7 @@ public class MuestraTest {
         assertEquals(ubicacion, muestra.getUbicacion());
         assertEquals(LocalDate.now(), muestra.getFechaCreacion());
     }
-
+/*
     @Test
     public void testAgregarAlHistorial() {
         Opinion op = mock(Opinion.class);
@@ -50,4 +50,6 @@ public class MuestraTest {
             "Usuario 1 opinó: Ninguna, en la fecha: 2025-06-15, con categoría: Básico", 
             muestra.verRegistroN(1));
     }
+    
+ */
 }

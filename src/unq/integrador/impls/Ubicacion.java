@@ -50,7 +50,7 @@ public class Ubicacion implements IUbicacion{
 
     public List<IMuestra> muestrasAMenosDe(List<IMuestra> muestras, double distancia) {
         List<IMuestra> muestrasCercanas = muestras.stream()
-                                            .filter(m -> this.distanciaA(m.ubicacion()) < distancia)
+                                            .filter(m -> this.distanciaA(m.getUbicacion()) < distancia)
                                             .toList();
         
         return muestrasCercanas;

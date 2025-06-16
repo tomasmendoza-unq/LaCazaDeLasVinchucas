@@ -73,10 +73,10 @@ public class UbicacionTest {
 
   @Test
   public void hayMuestrasAMenosDistanciaDeLaDada(){
-    when(muestra1.ubicacion()).thenReturn(ubicacion2);
-    when(muestra2.ubicacion()).thenReturn(ubicacion3);
-    when(muestra3.ubicacion()).thenReturn(ubicacion4);
-    when(muestra4.ubicacion()).thenReturn(ubicacion5);
+    when(muestra1.getUbicacion()).thenReturn(ubicacion2);
+    when(muestra2.getUbicacion()).thenReturn(ubicacion3);
+    when(muestra3.getUbicacion()).thenReturn(ubicacion4);
+    when(muestra4.getUbicacion()).thenReturn(ubicacion5);
 
     List<IMuestra> muestras = Arrays.asList(muestra1, muestra2, muestra3, muestra4);
 
@@ -88,10 +88,10 @@ public class UbicacionTest {
 
   @Test
   public void noHayMuestrasAMenosDistanciaDeLaDada(){
-    when(muestra1.ubicacion()).thenReturn(ubicacion2);
-    when(muestra2.ubicacion()).thenReturn(ubicacion3);
-    when(muestra3.ubicacion()).thenReturn(ubicacion4);
-    when(muestra4.ubicacion()).thenReturn(ubicacion5);
+    when(muestra1.getUbicacion()).thenReturn(ubicacion2);
+    when(muestra2.getUbicacion()).thenReturn(ubicacion3);
+    when(muestra3.getUbicacion()).thenReturn(ubicacion4);
+    when(muestra4.getUbicacion()).thenReturn(ubicacion5);
 
     List<IMuestra> muestras = Arrays.asList(muestra1, muestra2, muestra3, muestra4);
 

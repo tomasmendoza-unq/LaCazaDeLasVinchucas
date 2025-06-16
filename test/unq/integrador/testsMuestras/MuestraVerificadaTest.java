@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import unq.integrador.IMuestra;
+import unq.integrador.IUbicacion;
 import unq.integrador.IUsuario;
 import unq.integrador.impls.MuestraVerificada;
 import unq.integrador.impls.Opinion;
@@ -21,58 +22,60 @@ public class MuestraVerificadaTest {
     private IMuestra muestra;
     private IUsuario owner;
     private ArrayList<String> historial;
+    private IUbicacion ubicacion;
 
     @BeforeEach
     public void setUp() {
         historial = new ArrayList<String>();
+        ubicacion = mock(IUbicacion.class);
         owner = mock(IUsuario.class);
     }
     
     @Test
     public void testResultadoActualEsVinchucaGuasayana() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.VINCHUCA_GUASAYANA);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.VINCHUCA_GUASAYANA);
         assertEquals("Vinchuca Guasayana", muestra.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaInfestans() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.VINCHUCA_INFESTANS);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.VINCHUCA_INFESTANS);
         assertEquals("Vinchuca Infestans", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsVinchucaSordida() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.VINCHUCA_SORDIDA);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.VINCHUCA_SORDIDA);
         assertEquals("Vinchuca Sordida", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsChinchaFoliada() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.CHINCHA_FOLIADA);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.CHINCHA_FOLIADA);
         assertEquals("Chincha Foliada", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsPhtiaChinche() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.PHTIA_CHINCHE);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.PHTIA_CHINCHE);
         assertEquals("Phtia Chinche", muestra.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsImagenPocoClara() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.IMAGEN_POCO_CLARA);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.IMAGEN_POCO_CLARA);
         assertEquals("Imagen poco clara", muestra.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsNinguna() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.NINGUNA);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.NINGUNA);
         assertEquals("Ninguna", muestra.resultadoActual());
     }
     
     @Test
     public void testAgregarUnaOpinionBasicaLanzaExcepcion() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.NINGUNA);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.NINGUNA);
         Executable accion = () -> muestra.agregarOpinionBasico(new Opinion(TipoOpinion.NINGUNA));
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
         
@@ -81,7 +84,7 @@ public class MuestraVerificadaTest {
     
     @Test
     public void testAgregarUnaOpinionExpertoLanzaExcepcion() {
-        muestra = new MuestraVerificada(owner, "Foto", "Calle 123", historial, TipoOpinion.NINGUNA);
+        muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.NINGUNA);
         Executable accion = () -> muestra.agregarOpinionExperto(mock(Opinion.class));
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
         

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unq.integrador.IMuestra;
+import unq.integrador.IUbicacion;
 import unq.integrador.IUsuario;
 import unq.integrador.impls.MuestraExperto;
 import unq.integrador.impls.MuestraLibre;
@@ -16,11 +17,13 @@ import unq.integrador.enums.TipoOpinion;
 public class MuestraLibreTest {
     private IMuestra muestra;
     private IUsuario owner;
+    private IUbicacion ubicacion;
 
     @BeforeEach
     public void setUp() {
         owner   = mock(IUsuario.class);
-        muestra = new MuestraLibre(owner, "Foto", "Calle 123");
+        ubicacion = mock(IUbicacion.class);
+        muestra = new MuestraLibre(owner, "Foto", ubicacion );
     }
 
     @Test

@@ -13,7 +13,7 @@ public interface IMuestra {
     public void agregarOpinionBasico(Opinion op);
     public void agregarOpinionExperto(Opinion op);
     public String getFotografia();
-    public String getUbicacion();
+    public IUbicacion getUbicacion();
     public int getIDUsuario();
     public LocalDate getFechaCreacion();
     public void agregarAlHistorial(Opinion op);

@@ -6,5 +6,6 @@ package unq.integrador;
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public interface IBaseDeMuestras {
-	public void agregarMuestra(IMuestra muestra) ;
+	public void cargarMuestra(IMuestra muestra) ;
+	public void agregarZonaDeCobertura(IZonaDeCobertura zonaDeCobertura);
 }

@@ -48,5 +48,10 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
         return distanciaA <= (this.getRadioEnKm() + zonaDeCobertura.getRadioEnKm());
     }
 
+    @Override
+    public boolean contieneUbicacion(IUbicacion ubicacionMuestra) {
+        return epicentro.distanciaA(ubicacionMuestra) <= radioEnKm;
+    }
+
 
 }

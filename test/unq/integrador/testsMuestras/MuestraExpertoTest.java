@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import unq.integrador.IMuestra;
+import unq.integrador.IUbicacion;
 import unq.integrador.IUsuario;
 import unq.integrador.impls.*;
 import unq.integrador.enums.TipoOpinion;
@@ -21,13 +22,15 @@ import unq.integrador.error.SinAccesoAMuestraException;
 public class MuestraExpertoTest {
     private IMuestra muestra;
     private IUsuario owner;
+    private IUbicacion ubicacion;
     private ArrayList<String> historial;
 
     @BeforeEach
     public void setUp() {
         owner = mock(IUsuario.class);
         historial = new ArrayList<String>();
-        muestra = new MuestraExperto(owner, "Foto", "Calle 123", historial);
+        ubicacion = mock(IUbicacion.class);
+        muestra = new MuestraExperto(owner, "Foto", ubicacion, historial);
     }
     
     @Test

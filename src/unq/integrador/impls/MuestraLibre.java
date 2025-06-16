@@ -19,7 +19,7 @@ public class MuestraLibre extends Muestra {
      * @param fotografia fotografía del usuario que publicó la muestra
      * @param ubicacion ubicación del usuario que publicó la muestra
      */
-    public MuestraLibre(IUsuario user, String fotografia, String ubicacion) {
+    public MuestraLibre(IUsuario user, String fotografia, IUbicacion ubicacion) {
         super(user, fotografia, ubicacion);
     }
 

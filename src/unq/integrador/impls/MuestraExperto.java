@@ -22,7 +22,7 @@ public class MuestraExperto extends Muestra {
      * @param ubicacion ubicación del usuario que publicó la muestra
      * @param historial Representa el historial de votaciones de la muestra
      */
-    public MuestraExperto(IUsuario user, String fotografia, String ubicacion, ArrayList<String> historial) {
+    public MuestraExperto(IUsuario user, String fotografia, IUbicacion ubicacion, ArrayList<String> historial) {
         super(user, fotografia, ubicacion);
         this.historial = historial;
     }

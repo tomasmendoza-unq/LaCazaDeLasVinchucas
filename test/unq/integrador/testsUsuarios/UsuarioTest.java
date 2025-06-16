@@ -3,10 +3,7 @@ package unq.integrador.testsUsuarios;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import unq.integrador.IBaseDeMuestras;
-import unq.integrador.IMuestra;
-import unq.integrador.IUsuario;
-import unq.integrador.IUsuarioRango;
+import unq.integrador.*;
 import unq.integrador.error.OpinionRepetidaException;
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Usuario;
@@ -22,11 +19,13 @@ public class UsuarioTest {
 	IUsuarioRango rango;
 	IMuestra muestra;
 	IBaseDeMuestras baseDeMuestras;
+	IUbicacion ubicacion;
 	Opinion opinion;
 	
 	@BeforeEach
 	public void setUp() {
 		muestra = mock(IMuestra.class);
+		ubicacion = mock(IUbicacion.class);
 		baseDeMuestras = mock(IBaseDeMuestras.class);
 		rango = mock(IUsuarioRango.class);
 		usuario = new Usuario(baseDeMuestras,rango, 10);
@@ -35,8 +34,8 @@ public class UsuarioTest {
 	
 	@Test
 	public void usuarioUnaMuestra() {
-		usuario.enviarMuestra("10", "22");
-		verify(baseDeMuestras).agregarMuestra(any(IMuestra.class));
+		usuario.enviarMuestra("10", ubicacion);
+		verify(baseDeMuestras).cargarMuestra(any(IMuestra.class));
 	}
 	
 	@Test
@@ -67,7 +66,7 @@ public class UsuarioTest {
 		assertFalse(usuario.subeDeRango());
 
 		for (int i = 0; i < 10; i++) {
-			usuario.enviarMuestra("asd", "22");
+			usuario.enviarMuestra("asd", ubicacion);
 		}
 
 		for (int i = 0; i < 20; i++) {
@@ -85,7 +84,7 @@ public class UsuarioTest {
 	public void usuarioNoSubeDeRangoCuandoNoCumpleCondiciones() {
 
 		for (int i = 0; i < 5; i++) {
-			usuario.enviarMuestra("asd", "22");
+			usuario.enviarMuestra("asd", ubicacion);
 		}
 
 		for (int i = 0; i < 10; i++) {
@@ -118,7 +117,7 @@ public class UsuarioTest {
 	public void usuarioNoSubeDeRangoConPublicacionesSuficientesPeroNoOpiniones() {
 
 		for (int i = 0; i < 10; i++) {
-			usuario.enviarMuestra("asd", "22");
+			usuario.enviarMuestra("asd", ubicacion);
 		}
 
 		assertFalse(usuario.subeDeRango());

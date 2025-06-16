@@ -6,4 +6,5 @@ public interface IZonaDeCobertura {
     public double getRadioEnKm();
     public void cargarMuestra(IMuestra muestra);
     public boolean seSolapaCon(IZonaDeCobertura zonaDeCobertura);
+    boolean contieneUbicacion(IUbicacion ubicacionMuestra);
 }

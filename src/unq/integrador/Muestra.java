@@ -21,7 +21,7 @@ import java.util.HashMap;
 public abstract class Muestra implements IMuestra {
     protected IUsuario user;
     protected String fotografia;
-    protected String ubicacion;
+    protected IUbicacion ubicacion;
     protected HashMap<TipoOpinion, Integer> opiniones;
     protected ArrayList<String> historial;
     protected LocalDate fechaCreacion;
@@ -32,7 +32,7 @@ public abstract class Muestra implements IMuestra {
      * @param fotografia fotografía del usuario que publicó la muestra
      * @param ubicacion ubicación del usuario que publicó la muestra
      */
-    public Muestra(IUsuario user, String fotografia, String ubicacion) {
+    public Muestra(IUsuario user, String fotografia, IUbicacion ubicacion) {
         this.user = user;
         this.fotografia = fotografia;
         this.ubicacion = ubicacion;
@@ -78,7 +78,7 @@ public abstract class Muestra implements IMuestra {
      * 
      * @return Ubicación de la muestra
      */
-    public String getUbicacion() {
+    public IUbicacion getUbicacion() {
         return this.ubicacion;
     }
 

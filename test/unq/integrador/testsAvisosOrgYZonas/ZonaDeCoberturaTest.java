@@ -17,12 +17,14 @@ public class ZonaDeCoberturaTest {
     IZonaDeCobertura zonaDeCobertura1;
     IZonaDeCobertura zonaDeCobertura2;
     IMuestra muestra;
+    IUbicacion ubicacionMuestra;
 
     @BeforeEach
     public void setUp(){
         epicentro1 = mock(IUbicacion.class);
         zonaDeCobertura1 = new ZonaDeCobertura(epicentro1, "Ezpeleta",10);
         epicentro2 = mock(IUbicacion.class);
+        ubicacionMuestra = mock(IUbicacion.class);
         zonaDeCobertura2 = new ZonaDeCobertura(epicentro2, "Berazategui",30);
     }
 
@@ -59,6 +61,22 @@ public class ZonaDeCoberturaTest {
         spyZona.cargarMuestra(muestra);
 
         verify(spyZona).cargarMuestra(muestra);
+    }
+
+    @Test
+    public void zona1ContieneLaUbicacionDeLaMuestra(){
+        when(epicentro1.distanciaA(ubicacionMuestra)).thenReturn(5d);
+
+        assertTrue(zonaDeCobertura1.contieneUbicacion(ubicacionMuestra));
+        verify(epicentro1).distanciaA(ubicacionMuestra);
+    }
+
+    @Test
+    public void zona2NoContieneLaUbicacionDeLaMuestra(){
+        when(epicentro2.distanciaA(ubicacionMuestra)).thenReturn(90d);
+
+        assertFalse(zonaDeCobertura2.contieneUbicacion(ubicacionMuestra));
+        verify(epicentro2).distanciaA(ubicacionMuestra);
     }
 
 }

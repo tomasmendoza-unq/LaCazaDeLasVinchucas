@@ -5,6 +5,7 @@ import unq.integrador.IUbicacion;
 import unq.integrador.IZonaDeCobertura;
 import unq.integrador.Muestra;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ZonaDeCobertura implements IZonaDeCobertura {
@@ -14,6 +15,12 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
     private String nombreDeCobertura;
     private List<IMuestra> muestras;
 
+    public ZonaDeCobertura(IUbicacion epicentro, String nombreDeCobertura, double radioEnKm) {
+        this.epicentro = epicentro;
+        this.muestras = new ArrayList<>();
+        this.nombreDeCobertura = nombreDeCobertura;
+        this.radioEnKm = radioEnKm;
+    }
 
     @Override
     public String getNombreDeCobertura() {

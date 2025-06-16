@@ -1,8 +1,12 @@
-package unq.integrador;
+package unq.integrador.testsUsuarios;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import unq.integrador.IBaseDeMuestras;
+import unq.integrador.IMuestra;
+import unq.integrador.IUsuario;
+import unq.integrador.IUsuarioRango;
 import unq.integrador.error.OpinionRepetidaException;
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Usuario;

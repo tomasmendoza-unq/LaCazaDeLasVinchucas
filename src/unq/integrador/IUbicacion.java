@@ -2,6 +2,11 @@ package unq.integrador;
 
 import java.util.List;
 
+/**
+ * Interfaz de las ubicaciones del sistema
+ * 
+ * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
+ */
 public interface IUbicacion {
     public double getLatitud();
     public double getLongitud();

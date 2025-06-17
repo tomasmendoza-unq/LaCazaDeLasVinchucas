@@ -2,6 +2,11 @@ package unq.integrador;
 
 import unq.integrador.enums.TipoOrganizacion;
 
+/**
+ * Interfaz de las Organizaciones
+ * 
+ * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
+ */
 public interface IOrganizacion {
   public IUbicacion getUbicacion();
   public TipoOrganizacion getTipo();

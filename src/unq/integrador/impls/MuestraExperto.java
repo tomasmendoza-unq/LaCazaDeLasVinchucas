@@ -1,36 +1,38 @@
 package unq.integrador.impls;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
 
 /**
- * Esta clase representa las muestras en las que solo pueden opinar expertos.
- * Además, si opinaron expertos en esta clase, ninguno tiene más de 1 coincidencia en la
- * misma opinión.
+ * Esta clase representa el estado de las muestras en las que solo pueden
+ * opinar usuarios de categoría 'Experto'.
+ * 
+ * Además, si dos expertos coinciden en voto en la muestra, esta cambiará a estar verificada.
  * 
  * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
  */
-public class MuestraExperto extends Muestra {
+public class MuestraExperto implements IEstadoDeMuestra {
+    private HashMap<TipoOpinion, Integer> opiniones;
+    private IMuestra muestra;
 
     /**
      * Constructor de la clase MuestraExperto
-     * @param user usuario que publicó la muestra
-     * @param fotografia fotografía del usuario que publicó la muestra
-     * @param ubicacion ubicación del usuario que publicó la muestra
-     * @param historial Representa el historial de votaciones de la muestra
+     * @param muestra Una muestra a la que se le retornará el resultado de opiniones y
+     * cambiará el estado según lo amerite.
      */
-    public MuestraExperto(IUsuario user, String fotografia, IUbicacion ubicacion, ArrayList<String> historial) {
-        super(user, fotografia, ubicacion);
-        this.historial = historial;
+    public MuestraExperto(IMuestra muestra) {
+        this.opiniones = new HashMap<>();
+        this.muestra = muestra;
     }
 
     /**
      * Método para conseguir la opinión con más votos
      *
-     * @return retorna el resultado actual que sería la clave del diccionario con el valor más alto
+     * @return Un String con el resultado actual que sería 
+     * la clave del diccionario con el valor más alto
      */
     @Override
     public String resultadoActual() {
@@ -49,24 +51,21 @@ public class MuestraExperto extends Muestra {
     }
 
     /**
-     * Agregua una opinión al diccionario de opiniones,
+     * Agregua una opinión al diccionario de opiniones.
+     * 
      * Si alguna opinión tiene 2 votos, significa que la votaron 2 expertos
      * por ende, la muestra queda verificada y cambia por MuestraVerificada.
      * 
-     * @param op una opinión para agregar a la lista
+     * @param op una opinión para agregar a la muestra
      */
     @Override
     public void agregarOpinionExperto(Opinion op) {
-        this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);
+        TipoOpinion tipo = op.getTipo();
+        this.opiniones.put(tipo, this.opiniones.getOrDefault(tipo, 0) + 1);
 
-        this.agregarAlHistorial(op);
-
-        if (this.opiniones.get(op.getTipo()) == 2) {
-            this.user.quitarMuestra(this);
-
-            MuestraVerificada muestra = new MuestraVerificada(this.user, this.fotografia, this.ubicacion, this.historial, op.getTipo());
-
-            this.user.agregarMuestraPublicada(muestra);
+        if (this.opiniones.get(tipo) == 2) {            
+            MuestraVerificada muestraNueva = new MuestraVerificada(tipo);
+            this.muestra.setEstado(muestraNueva);
         }
     }
 
@@ -74,7 +73,7 @@ public class MuestraExperto extends Muestra {
      * Lanza una excepción porque los usuarios básicos no pueden
      * opinar en las muestras que ya opinaron expertos.
      * 
-     * @param op una opinión que no le sucede nada.
+     * @param op una opinión.
      */
     @Override
     public void agregarOpinionBasico(Opinion op) {

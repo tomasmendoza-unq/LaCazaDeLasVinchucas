@@ -54,7 +54,7 @@ public class Usuario implements IUsuario {
 	 * @param ubicacion Representa la ubicación en la que se mandó la muestra
 	 */
 	public void enviarMuestra(String fotografia, IUbicacion ubicacion) {
-		MuestraLibre muestra = new MuestraLibre(this, fotografia, ubicacion);
+		IMuestra muestra = new Muestra(this.id, fotografia, ubicacion);
 		this.bdm.cargarMuestra(muestra);
 		this.publicaciones.add(muestra);
 	}

@@ -1,10 +1,6 @@
 package unq.integrador.impls;
 
-import java.util.ArrayList;
-
-import unq.integrador.IUbicacion;
-import unq.integrador.IUsuario;
-import unq.integrador.Muestra;
+import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
 
@@ -14,28 +10,22 @@ import unq.integrador.error.SinAccesoAMuestraException;
  * 
  * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
  */
-public class MuestraVerificada extends Muestra {
+public class MuestraVerificada implements IEstadoDeMuestra {
     private TipoOpinion resultado;
     
     /**
      * Constructor de MuestaVerificada
      * 
-     * @param user Usuario que publicó la muestra
-     * @param fotografia Fotografía sobre la que se opina
-     * @param ubicacion Ubicación de donde fue la muestra
-     * @param historial Representa el historial de votaciones de la muestra
-     * @param op Opinión que ganó la discución de la foto y por ende responde al resultado
+     * @param op Tipo de opinión que ganó la discución de la fotografía
      */
-    public MuestraVerificada(IUsuario user, String fotografia, IUbicacion ubicacion, ArrayList<String> historial, TipoOpinion op) {
-        super(user, fotografia, ubicacion);
-        this.historial = historial;
+    public MuestraVerificada(TipoOpinion op) {
         this.resultado = op;
     }
 
     /**
      * Método para conseguir la opinión con más votos.
      * 
-     * @return retorna el resultado actual que sería la clave del diccionario con el valor más alto
+     * @return Un String con la opinión verificada por expertos
      */
     @Override
     public String resultadoActual() {

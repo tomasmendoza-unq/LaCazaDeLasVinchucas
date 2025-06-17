@@ -21,7 +21,8 @@ public class BaseDeMuestras implements IBaseDeMuestras {
     @Override
     public void cargarMuestra(IMuestra muestra) {
         muestrasRegistradas.add(muestra);
-        this.zonasPertenecientesA(muestra.getUbicacion()).forEach(zonaDeCobertura -> zonaDeCobertura.cargarMuestra(muestra));
+        this.zonasPertenecientesA(muestra.getUbicacion())
+            .forEach(zonaDeCobertura -> zonaDeCobertura.cargarMuestra(muestra));
     }
 
     public void RegistrarZona(IZonaDeCobertura zonaDeCobertura){
@@ -29,6 +30,8 @@ public class BaseDeMuestras implements IBaseDeMuestras {
     }
 
     private List<IZonaDeCobertura> zonasPertenecientesA(IUbicacion ubicacionMuestra){
-        return zonaDeCoberturas.stream().filter(zonaDeCobertura -> zonaDeCobertura.contieneUbicacion(ubicacionMuestra)).toList();
+        return zonaDeCoberturas.stream()
+            .filter(zonaDeCobertura -> zonaDeCobertura.contieneUbicacion(ubicacionMuestra))
+            .toList();
     }
 }

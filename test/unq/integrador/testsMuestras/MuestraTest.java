@@ -7,10 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unq.integrador.IBaseDeMuestras;
-import unq.integrador.IMuestra;
-import unq.integrador.IUbicacion;
-import unq.integrador.Muestra;
+import unq.integrador.*;
 import unq.integrador.impls.Opinion;
 
 public class MuestraTest {
@@ -52,5 +49,4 @@ public class MuestraTest {
 
         verify(baseDeMuestras).cargarMuestraVerificada(muestra);
     }
-    
 }

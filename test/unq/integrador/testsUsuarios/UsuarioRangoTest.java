@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import unq.integrador.IBaseDeMuestras;
 import unq.integrador.IMuestra;
-import unq.integrador.error.MuestraException;
+import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.UsuarioBasico;
 import unq.integrador.impls.UsuarioExperto;
@@ -35,9 +35,9 @@ public class UsuarioRangoTest {
     @Test
     public void UsuarioBasicoOpinaSobreUnaMuestraExperto() {
 
-        doThrow(new MuestraException()).when(muestra).agregarOpinionBasico(opinion);
+        doThrow(new SinAccesoAMuestraException()).when(muestra).agregarOpinionBasico(opinion);
 
-        assertThrows(MuestraException.class, () -> {
+        assertThrows(SinAccesoAMuestraException.class, () -> {
             usuarioBasico.opinarSobreUnaMuestra(muestra,opinion);
         });
 
@@ -48,9 +48,9 @@ public class UsuarioRangoTest {
     @Test
     public void UsuarioExpertoOpinaSobreUnaMuestraCerrada() {
 
-        doThrow(new MuestraException()).when(muestra).agregarOpinionExperto(opinion);
+        doThrow(new SinAccesoAMuestraException()).when(muestra).agregarOpinionExperto(opinion);
 
-        assertThrows(MuestraException.class, () -> {
+        assertThrows(SinAccesoAMuestraException.class, () -> {
             usuarioExperto.opinarSobreUnaMuestra(muestra,opinion);
         });
 

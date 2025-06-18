@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
-import unq.integrador.error.OpinionRepetidaException;
+import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Usuario;
-
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -51,7 +49,7 @@ public class UsuarioTest {
 	@Test
 	public void usuarioOpinaSobreUnaMuestraDosVeces() {
 		doNothing()
-				.doThrow(new OpinionRepetidaException())
+				.doThrow(new SinAccesoAMuestraException())
 				.when(rango).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
 						op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
 								op.getID() == usuario.getId()
@@ -59,7 +57,7 @@ public class UsuarioTest {
 
 		usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
 
-		assertThrows(OpinionRepetidaException.class, () -> {
+		assertThrows(SinAccesoAMuestraException.class, () -> {
 			usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
 		});
 

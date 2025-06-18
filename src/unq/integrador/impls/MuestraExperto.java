@@ -65,6 +65,7 @@ public class MuestraExperto implements IEstadoDeMuestra {
 
         if (this.opiniones.get(tipo) == 2) {            
             MuestraVerificada muestraNueva = new MuestraVerificada(tipo);
+            muestra.cargarMuestraVerificada();
             this.muestra.setEstado(muestraNueva);
         }
     }

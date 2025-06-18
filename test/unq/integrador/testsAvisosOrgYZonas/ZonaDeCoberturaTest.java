@@ -71,6 +71,19 @@ public class ZonaDeCoberturaTest {
     }
 
     @Test
+    public void zona1NotificaQueSeVerificoUnaMuestraYNotificaSoloAOrg1(){
+
+        zonaDeCobertura1.registrarOrganizacion(organizacion1);
+        zonaDeCobertura1.registrarOrganizacion(organizacion2);
+        zonaDeCobertura1.eliminarOrganizacion(organizacion2);
+        zonaDeCobertura1.notificarNuevaMuestraVerificada(muestra);
+
+
+        verify(organizacion1).recibirNotificacionValidacion(zonaDeCobertura1, muestra);
+        verify(organizacion2, never()).recibirNotificacionValidacion(zonaDeCobertura1,muestra);
+    }
+
+    @Test
     public void zona1ContieneLaUbicacionDeLaMuestra(){
         when(epicentro1.distanciaA(ubicacionMuestra)).thenReturn(5d);
 

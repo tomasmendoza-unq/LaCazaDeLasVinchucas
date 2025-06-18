@@ -80,7 +80,10 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
         organizacionesInteresadas.forEach(organizacion -> organizacion.recibirNotificacionMuestra(this, muestra));
     }
 
-
+    @Override
+    public void notificarNuevaMuestraVerificada(IMuestra muestra){
+        organizacionesInteresadas.forEach(organizacion -> organizacion.recibirNotificacionValidacion(this,muestra));
+    }
 
     /**
      * Método que indica si una zona de cobertura se solapa con otra

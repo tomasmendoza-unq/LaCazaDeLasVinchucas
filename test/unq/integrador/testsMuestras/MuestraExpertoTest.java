@@ -92,5 +92,6 @@ public class MuestraExpertoTest {
         estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
         estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
         verify(muestra).setEstado(any(MuestraVerificada.class));
+        verify(muestra).cargarMuestraVerificada();
     }
 }

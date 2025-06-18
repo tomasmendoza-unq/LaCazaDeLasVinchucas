@@ -7,6 +7,7 @@ public interface IZonaDeCobertura {
     public IUbicacion getEpicentro();
     public double getRadioEnKm();
     public void cargarMuestra(IMuestra muestra);
+    void notificarNuevaMuestraVerificada(IMuestra muestra);
     public boolean seSolapaCon(IZonaDeCobertura zonaDeCobertura);
     boolean contieneUbicacion(IUbicacion ubicacionMuestra);
     void registrarOrganizacion(IOrganizacion organizacion);

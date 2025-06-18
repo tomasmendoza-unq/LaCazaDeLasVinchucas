@@ -44,6 +44,25 @@ public class BaseDeMuestrasTest {
         verify(zonaDeCobertura, never()).cargarMuestra(muestra);
         verify(zonaDeCobertura2).cargarMuestra(muestra);
 
+    }
+
+    @Test
+    public void seVerificaUnaMuestra(){
+        when(muestra.getUbicacion()).thenReturn(ubicacionMuestra);
+        when(zonaDeCobertura.contieneUbicacion(ubicacionMuestra)).thenReturn(false);
+        when(zonaDeCobertura2.contieneUbicacion(ubicacionMuestra)).thenReturn(true);
+
+        baseDeMuestras.RegistrarZona(zonaDeCobertura);
+        baseDeMuestras.RegistrarZona(zonaDeCobertura2);
+
+        baseDeMuestras.cargarMuestraVerificada(muestra);
+
+        verify(muestra).getUbicacion();
+        verify(zonaDeCobertura).contieneUbicacion(ubicacionMuestra);
+        verify(zonaDeCobertura2).contieneUbicacion(ubicacionMuestra);
+        verify(zonaDeCobertura, never()).notificarNuevaMuestraVerificada(muestra);
+        verify(zonaDeCobertura2).notificarNuevaMuestraVerificada(muestra);
 
     }
+
 }

@@ -14,6 +14,7 @@ public interface IMuestra {
     public void agregarOpinionExperto(Opinion op);
     public String getFotografia();
     public IUbicacion getUbicacion();
+    public void cargarMuestraVerificada();
     public int getIDUsuario();
     public LocalDate getFechaCreacion();
     public void agregarAlHistorial(Opinion op, String categoria);

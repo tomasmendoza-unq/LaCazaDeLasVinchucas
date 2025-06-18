@@ -6,96 +6,91 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.IMuestra;
-import unq.integrador.IUbicacion;
-import unq.integrador.IUsuario;
-import unq.integrador.impls.*;
+import unq.integrador.impls.MuestraExperto;
+import unq.integrador.impls.MuestraVerificada;
+import unq.integrador.impls.Opinion;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
 
 public class MuestraExpertoTest {
+    private IEstadoDeMuestra estado;
     private IMuestra muestra;
-    private IUsuario owner;
-    private IUbicacion ubicacion;
-    private ArrayList<String> historial;
 
     @BeforeEach
     public void setUp() {
-        owner = mock(IUsuario.class);
-        historial = new ArrayList<String>();
-        ubicacion = mock(IUbicacion.class);
-        muestra = new MuestraExperto(owner, "Foto", ubicacion, historial);
+        muestra = mock(IMuestra.class);
+        estado = new MuestraExperto(muestra);
     }
     
     @Test
     public void testResultadoActualEsVinchucaGuasayana() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_GUASAYANA));
-        assertEquals("Vinchuca Guasayana", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_GUASAYANA));
+        assertEquals("Vinchuca Guasayana", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaInfestans() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
-        assertEquals("Vinchuca Infestans", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
+        assertEquals("Vinchuca Infestans", estado.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsVinchucaSordida() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_SORDIDA));
-        assertEquals("Vinchuca Sordida", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_SORDIDA));
+        assertEquals("Vinchuca Sordida", estado.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsChinchaFoliada() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.CHINCHA_FOLIADA));
-        assertEquals("Chincha Foliada", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.CHINCHA_FOLIADA));
+        assertEquals("Chincha Foliada", estado.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsPhtiaChinche() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.PHTIA_CHINCHE));
-        assertEquals("Phtia Chinche", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.PHTIA_CHINCHE));
+        assertEquals("Phtia Chinche", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsNinguna() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
-        assertEquals("Ninguna", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        assertEquals("Ninguna", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsImagenPocoClara() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
-        assertEquals("Imagen poco clara", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        assertEquals("Imagen poco clara", estado.resultadoActual());
     }
     
     @Test
     public void testHayEmpateEntoncesNoEstaDefinido() {
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
-        assertEquals("No definido", muestra.resultadoActual());
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        assertEquals("No definido", estado.resultadoActual());
     }
 
     @Test
     public void testAgregarOpinionBasicoLanzaExcepcion() {
 
-        Executable accion = () -> muestra.agregarOpinionBasico(mock(Opinion.class));
+        Executable accion = () -> estado.agregarOpinionBasico(mock(Opinion.class));
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
 
         assertEquals("Un usuario básico no puede opinar en una muestra con opiniones de expertos", exception.getMessage());
     }
 
     @Test
-    public void testAgrearDosOpinionesExpertasIgualesVerificaLaMuestra() {
+    public void testAgrearDosOpinionesExpertasIgualesVerificaLaestado() {
 
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
-        muestra.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
-        verify(owner).quitarMuestra(any(MuestraExperto.class)); verify(owner).agregarMuestraPublicada(any(MuestraVerificada.class));
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        verify(muestra).setEstado(any(MuestraVerificada.class));
     }
 }

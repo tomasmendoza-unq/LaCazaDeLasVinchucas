@@ -16,6 +16,7 @@ public interface IMuestra {
     public IUbicacion getUbicacion();
     public int getIDUsuario();
     public LocalDate getFechaCreacion();
-    public void agregarAlHistorial(Opinion op);
+    public void agregarAlHistorial(Opinion op, String categoria);
     public String verRegistroN(int n);
+    public void setEstado(IEstadoDeMuestra estado);
 }

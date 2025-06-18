@@ -1,68 +1,78 @@
 package unq.integrador;
 
+import unq.integrador.impls.MuestraLibre;
 import unq.integrador.impls.Opinion;
-import unq.integrador.enums.TipoOpinion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
- * Esta es la clase abstracta de Muestra, desde esta heredan
- * MuestraLibre, MuestraExperto y MuestraVerificada.
- * Conoce a su usuario para poder pasar de tipo de muestra
- * La fotografía es un String porque no encontré mejor representación
- * La ubicación es un String MOMENTÁNEAMENTE porque la implementación de Ubicación todavía no es mi sección
- * También tiene una HashMap de opiniones (Un Enum), que contiene todas las opiniones de usuarios como claves
- * y como valores la cantidad de opiniones de esa clave.
-
- * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
+ * Clase que representa las muestras de insectos del sistema.
+ * 
+ * Estas muestras conocen el ID de su usuario, la fotografía del insecto,
+ * la ubicación en la que fue tomada la muestra. También recuerdan la fecha en la
+ * que fueron creadas, las personas que opinaron sobre la muestra y tiene un estado
+ * que va cambiando dependiendo quien opine.
+ * 
+ * @author Díaz Marcos, Mendoza Tomas, Monteros Dario.
  */
-public abstract class Muestra implements IMuestra {
-    protected IUsuario user;
-    protected String fotografia;
-    protected IUbicacion ubicacion;
-    protected HashMap<TipoOpinion, Integer> opiniones;
-    protected ArrayList<String> historial;
-    protected LocalDate fechaCreacion;
+public class Muestra implements IMuestra {
+    private int userID;
+    private String fotografia;
+    private IUbicacion ubicacion;
+    private ArrayList<String> historial;
+    private LocalDate fechaCreacion;
+    private IEstadoDeMuestra estado;
     
     /**
      * Constructor de la clase Abstracta Muestra
-     * @param user usuario que publicó la muestra
-     * @param fotografia fotografía del usuario que publicó la muestra
-     * @param ubicacion ubicación del usuario que publicó la muestra
+     * @param id Representa el ID del usuario que publicó la muestra
+     * @param fotografia Representa la fotografía del usuario que publicó la muestra
+     * @param ubicacion Representa la ubicación de donde se publicó la muestra
      */
-    public Muestra(IUsuario user, String fotografia, IUbicacion ubicacion) {
-        this.user = user;
-        this.fotografia = fotografia;
-        this.ubicacion = ubicacion;
-        this.opiniones = new HashMap<TipoOpinion, Integer>();
-        this.historial = new ArrayList<String>();
-        this.fechaCreacion = LocalDate.now();
+    public Muestra(int id, String fotografia, IUbicacion ubicacion) {
+        this.userID         = id;
+        this.fotografia     = fotografia;
+        this.ubicacion      = ubicacion;
+        this.fechaCreacion  = LocalDate.now();
+        this.historial      = new ArrayList<String>();
+        this.estado         = new MuestraLibre(this);
     }
 
     /**
-     * Método para conseguir el resultado actual de opiniones,
-     * en esta clase es abstracto porque cada tipo de muestra lo calcula distinto
+     * Método para conseguir el resultado actual de opiniones
      * 
+     * @see IEstadoDeMuestra
      * @return La opinión con más votos, que sería la que más
-     * ocurrencias tiene en la lista de opiniones de la clase
+     * ocurrencias tiene entre los votos del resto de usuarios
      */
-    public abstract String resultadoActual();
+    public String resultadoActual() {
+        return this.estado.resultadoActual();
+    }
 
     /**
-     * Agregua una opinión de un usuario básico al diccionario.
+     * Agregua una opinión de un usuario básico a la muestra.
+     * Además agrega esa interación en el historial.
      * 
-     * @param op una opinión para agregar a la lista
+     * @param op una opinión para agregar a la muestra
+     * @see IEstadoDeMuestra
      */
-    public abstract void agregarOpinionBasico(Opinion op);
+    public void agregarOpinionBasico(Opinion op) {
+        this.estado.agregarOpinionBasico(op);
+        this.agregarAlHistorial(op, "Básico");
+    }
     
     /**
-     * Agregua una opinión de un usuario experto al diccionario.
+     * Agregua una opinión de un usuario experto a la muestra.
+     * Además agrega esa interación en el historial.
      * 
-     * @param op una opinión para agregar a la lista
+     * @param op una opinión para agregar a la muestra
+     * @see IEstadoDeMuestra
      */
-    public abstract void agregarOpinionExperto(Opinion op);
+    public void agregarOpinionExperto(Opinion op) {
+        this.estado.agregarOpinionExperto(op);
+        this.agregarAlHistorial(op, "Experto");
+    }
 
     /**
      * Getter de la fotografía de la muestra
@@ -88,7 +98,7 @@ public abstract class Muestra implements IMuestra {
      * @return ID del usuario
      */
     public int getIDUsuario() {
-        return this.user.getID();
+        return this.userID;
     }
     
     /**
@@ -104,23 +114,29 @@ public abstract class Muestra implements IMuestra {
      * Método para agregar un registro al historial de opiniones realizadas en la muestra
      * 
      * @param op Opinión que se añade a la muestra
+     * @param categoria Categoría a la que pertenece el usuario que opinó
      */
-    public void agregarAlHistorial(Opinion op) {
+    public void agregarAlHistorial(Opinion op, String categoria) {
         String log = 
             "Usuario " + op.getID() +
             " opinó: " + op.imprimirTipo() +
             ", en la fecha: " + op.getFechaDeCreacion().toString() +
-            ", con categoría: " + op.getCategoria();
+            ", con categoría: " + categoria;
+        
         this.historial.add(log);
     }
 
     /**
      * Método para obtener algún registro del historial
      * 
-     * @param n Que representa una posición posible entre los registros del historial
-     * @return Un registro que representa quien votó, cuando, su categoría y cual fue su voto
+     * @param n Representa una posición posible entre los registros del historial
+     * @return Un String que contiene quien votó, cuando, su categoría y cual fue su voto
      */
     public String verRegistroN(int n) {
         return this.historial.get(n-1);
+    }
+
+    public void setEstado(IEstadoDeMuestra estado) {
+        this.estado = estado;
     }
 }

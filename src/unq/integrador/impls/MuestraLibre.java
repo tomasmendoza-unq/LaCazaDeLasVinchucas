@@ -1,5 +1,7 @@
 package unq.integrador.impls;
 
+import java.util.HashMap;
+
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
 
@@ -11,16 +13,18 @@ import unq.integrador.enums.TipoOpinion;
  * @author Díaz Marcos, Mendoza Tomás, Monteros Dario
  */
 
-public class MuestraLibre extends Muestra {
-
+public class MuestraLibre implements IEstadoDeMuestra {
+    private HashMap<TipoOpinion, Integer> opiniones;
+    private IMuestra muestra;
     /**
      * Constructor de la clase MuestraLibre
      * @param user usuario que publicó la muestra
      * @param fotografia fotografía del usuario que publicó la muestra
      * @param ubicacion ubicación del usuario que publicó la muestra
      */
-    public MuestraLibre(IUsuario user, String fotografia, IUbicacion ubicacion) {
-        super(user, fotografia, ubicacion);
+    public MuestraLibre(IMuestra muestra) {
+        this.opiniones = new HashMap<>();
+        this.muestra = muestra;
     }
 
     /**
@@ -75,22 +79,18 @@ public class MuestraLibre extends Muestra {
     @Override
     public void agregarOpinionBasico(Opinion op) {
         this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);
-        this.agregarAlHistorial(op);
     }
 
     /**
-     * Crea una nueva muestra que es para expertos y agrega la opinión que llegó
-     * Además, cambia su instancia en el usuario para que tenga la muestra actualizada.
+     * Si un experto opina, la muestra muta y solo pueden opinar expertos.
+     * Entonces crea a la muestra se le cambia el estado.
      * 
-     * @param op Una opinión que se agrega al diccionario de la nueva Muestra 
+     * @param op Una opinión que se agrega al diccionario de la nueva muestra 
      */
     @Override
     public void agregarOpinionExperto(Opinion op) {
-        this.user.quitarMuestra(this);
-
-        MuestraExperto muestra = new MuestraExperto(this.user, this.fotografia, this.ubicacion, this.historial);
-        muestra.agregarOpinionExperto(op);
-
-        this.user.agregarMuestraPublicada(muestra);
+        MuestraExperto nuevoEstado = new MuestraExperto(this.muestra);
+        nuevoEstado.agregarOpinionExperto(op);
+        this.muestra.setEstado(nuevoEstado);
     }
 }

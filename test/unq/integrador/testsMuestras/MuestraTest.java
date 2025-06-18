@@ -39,8 +39,6 @@ public class MuestraTest {
         when(op.getID()).thenReturn(1);
         when(op.imprimirTipo()).thenReturn("Ninguna");
         when(op.getFechaDeCreacion()).thenReturn(LocalDate.now());
-        // when(op.getCategoria()).thenReturn("Básico");
-
         muestra.agregarOpinionBasico(op);
 
         assertEquals(

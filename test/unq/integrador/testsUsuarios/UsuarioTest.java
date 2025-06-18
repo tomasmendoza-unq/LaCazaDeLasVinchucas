@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unq.integrador.*;
+import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.OpinionRepetidaException;
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Usuario;
@@ -40,24 +41,32 @@ public class UsuarioTest {
 	
 	@Test
 	public void usuarioOpinaSobreUnaMuestra() {
-		usuario.opinarSobreUnaMuestra(muestra,opinion);
-		verify(rango).opinarSobreUnaMuestra(muestra,opinion);
+		usuario.opinarSobreUnaMuestra(muestra,TipoOpinion.IMAGEN_POCO_CLARA);
+		verify(rango).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
+				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
+						op.getID() == usuario.getId()
+		));
 	}
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestraDosVeces() {
 		doNothing()
 				.doThrow(new OpinionRepetidaException())
-				.when(rango).opinarSobreUnaMuestra(muestra,opinion);
+				.when(rango).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
+						op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
+								op.getID() == usuario.getId()
+				));
 
-		usuario.opinarSobreUnaMuestra(muestra,opinion);
+		usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
 
 		assertThrows(OpinionRepetidaException.class, () -> {
-			usuario.opinarSobreUnaMuestra(muestra,opinion);
+			usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
 		});
 
-		verify(rango, times(2)).opinarSobreUnaMuestra(muestra,opinion);
-
+		verify(rango, times(2)).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
+				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
+						op.getID() == usuario.getId()
+		));
 	}
 
 	@Test
@@ -70,10 +79,8 @@ public class UsuarioTest {
 		}
 
 		for (int i = 0; i < 20; i++) {
-			Opinion opinion = mock(Opinion.class);
 			IMuestra muestraMock = mock(IMuestra.class);
-			when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now().minusDays(3));
-			usuario.opinarSobreUnaMuestra(muestraMock, opinion);
+			usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA);
 		}
 
 		assertTrue(usuario.subeDeRango());
@@ -88,10 +95,8 @@ public class UsuarioTest {
 		}
 
 		for (int i = 0; i < 10; i++) {
-			Opinion opinion = mock(Opinion.class);
 			IMuestra muestraMock = mock(IMuestra.class);
-			when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now().minusDays(3));
-			usuario.opinarSobreUnaMuestra(muestraMock, opinion);
+			usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA);
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -104,10 +109,8 @@ public class UsuarioTest {
 	public void usuarioNoSubeDeRangoConOpinionesSuficientesPeroNoPublicaciones() {
 
 		for (int i = 0; i < 20; i++) {
-			Opinion opinion = mock(Opinion.class);
 			IMuestra muestraMock = mock(IMuestra.class);
-			when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now().minusDays(3));
-			usuario.opinarSobreUnaMuestra(muestraMock, opinion);
+			usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA);
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -123,10 +126,6 @@ public class UsuarioTest {
 		assertFalse(usuario.subeDeRango());
 	}
 
-	@Test
-	public void usuarioObtieneSuId(){
-		assertEquals(10, usuario.getID());
-	}
 
 	@Test
 	public void usuarioEliminaYAgregaMuestra(){

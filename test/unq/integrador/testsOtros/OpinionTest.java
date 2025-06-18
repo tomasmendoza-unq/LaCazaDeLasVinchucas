@@ -1,6 +1,7 @@
 package unq.integrador.testsOtros;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
 
@@ -17,7 +18,7 @@ public class OpinionTest {
     @BeforeEach
     public void setUp() {
         tp = TipoOpinion.NINGUNA;
-        op = new Opinion(tp);
+        op = new Opinion(tp, any(int.class));
     }
 
     @Test

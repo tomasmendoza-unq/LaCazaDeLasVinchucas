@@ -3,8 +3,8 @@ package unq.integrador.testsMuestras;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,59 +21,71 @@ import unq.integrador.error.SinAccesoAMuestraException;
 public class MuestraExpertoTest {
     private IEstadoDeMuestra estado;
     private IMuestra muestra;
+    private Opinion op1;
+    private Opinion op2;
 
     @BeforeEach
     public void setUp() {
+        op1 = mock(Opinion.class);
+        op2 = mock(Opinion.class);
         muestra = mock(IMuestra.class);
         estado = new MuestraExperto(muestra);
     }
-    
+
     @Test
     public void testResultadoActualEsVinchucaGuasayana() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_GUASAYANA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_GUASAYANA);
+        estado.agregarOpinionExperto(op1);
         assertEquals("Vinchuca Guasayana", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaInfestans() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_INFESTANS);
+        estado.agregarOpinionExperto(op1);
         assertEquals("Vinchuca Infestans", estado.resultadoActual());
     }
-    
+
     @Test
     public void testResultadoActualEsVinchucaSordida() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.VINCHUCA_SORDIDA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_SORDIDA);
+        estado.agregarOpinionExperto(op1);
         assertEquals("Vinchuca Sordida", estado.resultadoActual());
     }
-    
+
     @Test
     public void testResultadoActualEsChinchaFoliada() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.CHINCHA_FOLIADA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.CHINCHA_FOLIADA);
+        estado.agregarOpinionExperto(op1);
         assertEquals("Chincha Foliada", estado.resultadoActual());
     }
-    
+
     @Test
     public void testResultadoActualEsPhtiaChinche() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.PHTIA_CHINCHE));
+        when(op1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
+        estado.agregarOpinionExperto(op1);
         assertEquals("Phtia Chinche", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsNinguna() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.NINGUNA);
+        estado.agregarOpinionExperto(op1);
         assertEquals("Ninguna", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsImagenPocoClara() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
+        estado.agregarOpinionExperto(op1);
         assertEquals("Imagen poco clara", estado.resultadoActual());
     }
-    
     @Test
     public void testHayEmpateEntoncesNoEstaDefinido() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
+        when(op2.getTipo()).thenReturn(TipoOpinion.NINGUNA);
+        estado.agregarOpinionExperto(op1);
+        estado.agregarOpinionExperto(op2);
         assertEquals("No definido", estado.resultadoActual());
     }
 
@@ -88,9 +100,10 @@ public class MuestraExpertoTest {
 
     @Test
     public void testAgrearDosOpinionesExpertasIgualesVerificaLaestado() {
-
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.NINGUNA);
+        when(op2.getTipo()).thenReturn(TipoOpinion.NINGUNA);
+        estado.agregarOpinionExperto(op1);
+        estado.agregarOpinionExperto(op2);
         verify(muestra).setEstado(any(MuestraVerificada.class));
         verify(muestra).cargarMuestraVerificada();
     }

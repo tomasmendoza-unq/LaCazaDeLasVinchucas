@@ -136,7 +136,23 @@ public class Muestra implements IMuestra {
         return this.historial.get(n-1);
     }
 
+    /**
+     * Setter del estado de la muestra
+     * 
+     * @param estado Un estado nuevo por el que cambiar el anterior
+     */
     public void setEstado(IEstadoDeMuestra estado) {
         this.estado = estado;
+    }
+
+    /**
+     * Método para indicar si la muestra está verificada
+     * 
+     * @return Un bool indicando si está verificada la muestra
+     * @see IEstadoDeMuestra
+     */
+    @Override
+    public boolean esVerificada() {
+        return estado.esVerificada();
     }
 }

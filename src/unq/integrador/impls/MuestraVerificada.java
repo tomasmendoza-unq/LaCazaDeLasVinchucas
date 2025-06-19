@@ -52,6 +52,13 @@ public class MuestraVerificada implements IEstadoDeMuestra {
         throw new SinAccesoAMuestraException("Los usuarios no pueden opinar en una muestra verificada");
     }
 
-
-    
+    /**
+     * Método para indicar que la muestra está verificada
+     * 
+     * @return True porque la muestra ya fue votada por dos expertos con la misma opinión
+     */
+    @Override
+    public boolean esVerificada() {
+        return true;
+    }
 }

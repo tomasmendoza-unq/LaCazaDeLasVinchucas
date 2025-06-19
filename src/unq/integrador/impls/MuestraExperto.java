@@ -79,4 +79,14 @@ public class MuestraExperto implements IEstadoDeMuestra {
     public void agregarOpinionBasico(Opinion op) {
         throw new SinAccesoAMuestraException("Un usuario básico no puede opinar en una muestra con opiniones de expertos");
     }
+
+    /**
+     * Método para indicar que la muestra no está verificada
+     * 
+     * @return False porque la muestra sigue siendo votada 
+     */
+    @Override
+    public boolean esVerificada() {
+        return false;
+    }
 }

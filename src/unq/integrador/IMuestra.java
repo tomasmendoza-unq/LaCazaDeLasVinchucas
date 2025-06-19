@@ -19,4 +19,5 @@ public interface IMuestra {
     public void agregarAlHistorial(Opinion op, String categoria);
     public String verRegistroN(int n);
     public void setEstado(IEstadoDeMuestra estado);
+    public boolean esVerificada();
 }

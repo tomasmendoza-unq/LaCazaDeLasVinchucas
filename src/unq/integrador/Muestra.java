@@ -23,6 +23,7 @@ public class Muestra implements IMuestra {
     private ArrayList<String> historial;
     private LocalDate fechaCreacion;
     private IEstadoDeMuestra estado;
+    LocalDate fechaUltimaVotacion;
     
     /**
      * Constructor de la clase Abstracta Muestra
@@ -60,6 +61,7 @@ public class Muestra implements IMuestra {
     public void agregarOpinionBasico(Opinion op) {
         this.estado.agregarOpinionBasico(op);
         this.agregarAlHistorial(op, "Básico");
+        this.fechaUltimaVotacion = op.getFechaDeCreacion();
     }
     
     /**
@@ -72,6 +74,7 @@ public class Muestra implements IMuestra {
     public void agregarOpinionExperto(Opinion op) {
         this.estado.agregarOpinionExperto(op);
         this.agregarAlHistorial(op, "Experto");
+        this.fechaUltimaVotacion = op.getFechaDeCreacion();
     }
 
     /**
@@ -155,4 +158,14 @@ public class Muestra implements IMuestra {
     public boolean esVerificada() {
         return estado.esVerificada();
     }
+
+    /**
+     * Getter de la fecha de la última votación que se realizó en la muestra
+     * 
+     * @return LocalDate con la fecha de la última votación
+     */
+    @Override
+    public LocalDate getFechaUltimaVotacion() {
+        return this.fechaUltimaVotacion;
+    }  
 }

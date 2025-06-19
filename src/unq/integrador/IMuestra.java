@@ -20,4 +20,5 @@ public interface IMuestra {
     public String verRegistroN(int n);
     public void setEstado(IEstadoDeMuestra estado);
     public boolean esVerificada();
+    public LocalDate getFechaUltimaVotacion();
 }

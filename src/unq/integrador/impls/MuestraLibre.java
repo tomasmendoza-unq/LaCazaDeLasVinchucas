@@ -83,4 +83,14 @@ public class MuestraLibre implements IEstadoDeMuestra {
         nuevoEstado.agregarOpinionExperto(op);
         this.muestra.setEstado(nuevoEstado);
     }
+
+    /**
+     * Método para indicar que la muestra no está verificada
+     * 
+     * @return False porque la muestra sigue siendo votada 
+     */
+    @Override
+    public boolean esVerificada() {
+        return false;
+    }
 }

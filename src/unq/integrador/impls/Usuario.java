@@ -1,6 +1,7 @@
 package unq.integrador.impls;
 
 import unq.integrador.*;
+import unq.integrador.enums.Lapso;
 import unq.integrador.enums.TipoOpinion;
 
 import java.time.LocalDate;
@@ -173,5 +174,78 @@ public class Usuario implements IUsuario {
 
 	public int getId() {
 		return id;
+	}
+
+	/**
+	 * Método para conseguir una lista de muestras que concuerden con el filtro pasado
+	 * 
+	 * @param filtro Un filtro de muestras para aplicar
+	 * @return Una lista de IMuestra que cumplen el filtro
+	 */
+	public List<IMuestra> buscarMuestra(FiltroMuestras filtro) {
+		return bdm.filtrarMuestras(filtro);
+	}
+
+	/**
+	 * Método para crear un filtro indicando el nivel de verificación que debería tener la muestra
+	 * 
+	 * @param nivel Un booleano que indica si se quiere que la muestra esté verificada o no
+	 * @return Un filtro con el criterio dado
+	 */
+	public FiltroMuestras crearFiltroParaNivelDeVerificacion(boolean nivel) {
+		return nivel 
+		? new FiltroMuestras(f -> f.esVerificada()) // Para muestras verificadas
+		: new FiltroMuestras(f -> !f.esVerificada()); // Para muestras votadas
+	}
+
+	/**
+	 * Método para crear un filtro indicando desde una fecha que muestras se quieren.
+	 * Si las que se crearon después, antes o ese mismo día
+	 * 
+	 * @param lapso Un lapso que indica a que momento corresponde la búsqueda
+	 * @param fecha Una fecha que indica desde donde se tiene en cuenta el filtro 
+	 * @return Un filtro con el criterio dado
+	 */
+	public FiltroMuestras crearFiltroParaFechaDeCreacion(Lapso lapso, LocalDate fecha) {
+		switch (lapso) {
+			case DESPUES:
+				return new FiltroMuestras(f -> f.getFechaCreacion().isAfter(fecha));
+			case ANTES:
+				return new FiltroMuestras(f -> f.getFechaCreacion().isBefore(fecha));
+			default:
+				return new FiltroMuestras(f -> f.getFechaCreacion().equals(fecha));
+		}
+	}
+
+	/**
+	 * Método para crear un filtro indicando desde una fecha que muestras se 
+	 * quieren en base a la última votación que recibieron e indicando si
+	 * se crearon después, antes o ese mismo día.
+	 * 
+	 * @param lapso Un lapso que indica a que momento corresponde la búsqueda
+	 * @param fecha Una fecha que indica desde donde se tiene en cuenta el filtro 
+	 * @return Un filtro con el criterio dado
+	 */
+	public FiltroMuestras crearFiltroParaFechaDeUltimaVotacion(Lapso lapso, LocalDate fecha) {
+		switch (lapso) {
+			case DESPUES:
+				return new FiltroMuestras(f -> f.getFechaUltimaVotacion().isAfter(fecha));
+			case ANTES:
+				return new FiltroMuestras(f -> f.getFechaUltimaVotacion().isBefore(fecha));
+			default:
+				return new FiltroMuestras(f -> f.getFechaUltimaVotacion().equals(fecha));
+		}
+	}
+
+	/**
+	 * Método para crear un filtro basado en el insecto que se registra en la muestra
+	 * 
+	 * @param tipo Un tipo de opinión que se pueda llegar a dar en la muestra.
+	 * @return Un filtro con el criterio dado
+	 */
+	public FiltroMuestras crearFiltroParaInsectoDetectado(TipoOpinion tipo) {
+		return new FiltroMuestras(
+			f -> f.resultadoActual().equalsIgnoreCase(tipo.imprimirTipo())
+			);
 	}
 }

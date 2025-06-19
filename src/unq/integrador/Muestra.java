@@ -24,6 +24,7 @@ public class Muestra implements IMuestra {
     private LocalDate fechaCreacion;
     private IEstadoDeMuestra estado;
     private IBaseDeMuestras bdm;
+    LocalDate fechaUltimaVotacion;
     
     /**
      * Constructor de la clase Abstracta Muestra
@@ -62,6 +63,7 @@ public class Muestra implements IMuestra {
     public void agregarOpinionBasico(Opinion op) {
         this.estado.agregarOpinionBasico(op);
         this.agregarAlHistorial(op, "Básico");
+        this.fechaUltimaVotacion = op.getFechaDeCreacion();
     }
     
     /**
@@ -74,6 +76,7 @@ public class Muestra implements IMuestra {
     public void agregarOpinionExperto(Opinion op) {
         this.estado.agregarOpinionExperto(op);
         this.agregarAlHistorial(op, "Experto");
+        this.fechaUltimaVotacion = op.getFechaDeCreacion();
     }
 
     /**
@@ -143,7 +146,33 @@ public class Muestra implements IMuestra {
         return this.historial.get(n-1);
     }
 
+    /**
+     * Setter del estado de la muestra
+     * 
+     * @param estado Un estado nuevo por el que cambiar el anterior
+     */
     public void setEstado(IEstadoDeMuestra estado) {
         this.estado = estado;
     }
+
+    /**
+     * Método para indicar si la muestra está verificada
+     * 
+     * @return Un bool indicando si está verificada la muestra
+     * @see IEstadoDeMuestra
+     */
+    @Override
+    public boolean esVerificada() {
+        return estado.esVerificada();
+    }
+
+    /**
+     * Getter de la fecha de la última votación que se realizó en la muestra
+     * 
+     * @return LocalDate con la fecha de la última votación
+     */
+    @Override
+    public LocalDate getFechaUltimaVotacion() {
+        return this.fechaUltimaVotacion;
+    }  
 }

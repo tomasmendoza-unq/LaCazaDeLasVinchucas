@@ -1,5 +1,9 @@
 package unq.integrador;
 
+import java.util.List;
+
+import unq.integrador.impls.FiltroMuestras;
+
 /**
  * Interfaz de la base de muestras
  * 
@@ -8,4 +12,5 @@ package unq.integrador;
 public interface IBaseDeMuestras {
 	public void cargarMuestra(IMuestra muestra) ;
 	public void RegistrarZona(IZonaDeCobertura zonaDeCobertura);
+	public List<IMuestra> filtrarMuestras(FiltroMuestras filtro);
 }

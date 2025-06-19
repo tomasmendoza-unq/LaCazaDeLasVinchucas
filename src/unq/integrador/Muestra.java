@@ -23,6 +23,7 @@ public class Muestra implements IMuestra {
     private ArrayList<String> historial;
     private LocalDate fechaCreacion;
     private IEstadoDeMuestra estado;
+    private IBaseDeMuestras bdm;
     LocalDate fechaUltimaVotacion;
     
     /**
@@ -31,13 +32,14 @@ public class Muestra implements IMuestra {
      * @param fotografia Representa la fotografía del usuario que publicó la muestra
      * @param ubicacion Representa la ubicación de donde se publicó la muestra
      */
-    public Muestra(int id, String fotografia, IUbicacion ubicacion) {
+    public Muestra(int id, String fotografia, IUbicacion ubicacion,IBaseDeMuestras bdm) {
         this.userID         = id;
         this.fotografia     = fotografia;
         this.ubicacion      = ubicacion;
         this.fechaCreacion  = LocalDate.now();
         this.historial      = new ArrayList<String>();
         this.estado         = new MuestraLibre(this);
+        this.bdm = bdm;
     }
 
     /**
@@ -93,6 +95,11 @@ public class Muestra implements IMuestra {
      */
     public IUbicacion getUbicacion() {
         return this.ubicacion;
+    }
+
+    @Override
+    public void cargarMuestraVerificada() {
+        bdm.cargarMuestraVerificada(this);
     }
 
     /**

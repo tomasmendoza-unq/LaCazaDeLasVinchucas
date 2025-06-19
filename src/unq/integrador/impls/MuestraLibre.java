@@ -37,38 +37,28 @@ public class MuestraLibre implements IEstadoDeMuestra {
      */
     @Override
     public String resultadoActual() {
-        int maxNum = 0;
-        TipoOpinion maxOp = null;
+        if (opiniones.isEmpty()) {
+            return "No definido";
+        }
 
-        // Se comprueva si no existen dos opiniones con la misma cantidad
-        Integer max1 = null;
-        Integer max2 = null;
+        int max = opiniones.values().stream().max(Integer::compareTo).orElse(0);
 
-        for (Integer n : this.opiniones.values()) {
-            if (max1 == null || n > max1) {
-                max2 = max1;
-                max1 = n;
-            } else if (max2 == null || n > max2) {
-                max2 = n;
+        // contar cuántas opiniones tienen la cantidad máxima
+        long cantidadMaximos = opiniones.values().stream().filter(v -> v == max).count();
+
+        if (cantidadMaximos > 1) {
+            return "No definido";
+        }
+
+        // obtener la única clave con valor máximo
+        for (TipoOpinion op : opiniones.keySet()) {
+            if (opiniones.get(op) == max) {
+                return op.imprimirTipo();
             }
         }
 
-        // Se consigue la opinión que tenga la ocurrencia más alta
-        // Si no existen dos opiniones con la misma cantidad.
-        if (max1 != max2) {
-            for (TipoOpinion op : this.opiniones.keySet()) {
-                if (maxNum < this.opiniones.get(op)) {
-                    maxNum = this.opiniones.get(op);
-                    maxOp = op;
-                }
-            }
-        }
-
-        // Si existiera un empate o el diccionario está vacío, retorna "No definido"
-        // Caso contrario, dependiendo de la Opinión en maxOp, retorna cualquiera del switch
-        return (maxOp == null) ? "No definido" : maxOp.imprimirTipo();
+        return "No definido"; // fallback
     }
-
     /**
      * Agregua una opinión al diccionario de Opiniones, agregando 1 al valor que estaba
      * o setteandolo en 1 si no existía.

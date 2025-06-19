@@ -17,10 +17,16 @@ import unq.integrador.enums.TipoOpinion;
 public class MuestraLibreTest {
     private IEstadoDeMuestra estado;
     private IMuestra muestra;
+    private Opinion op1;
+    private Opinion op2;
+    private Opinion op3;
 
     @BeforeEach
     public void setUp() {
         muestra = mock(IMuestra.class);
+        op1 = mock(Opinion.class);
+        op3 = mock(Opinion.class);
+        op2 = mock(Opinion.class);
         estado = new MuestraLibre(muestra);
     }
 
@@ -32,83 +38,99 @@ public class MuestraLibreTest {
     @Test
     public void testResultadoActualConDistintasOpiniones() {
         // Se agrega 1 opinión
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_INFESTANS);
+        when(op2.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
 
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
+        estado.agregarOpinionBasico(op1);
         assertEquals("Vinchuca Infestans", estado.resultadoActual());
         
         // Se agregan 2 opinión, pero el resultado actual sigue siendo la chincha  
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        estado.agregarOpinionBasico(op1);
+        estado.agregarOpinionBasico(op2);
         assertEquals("Vinchuca Infestans", estado.resultadoActual());
         
         // Se agregan 2 opinión, pero el resultado más actual cambia por imagen poco clara  
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        estado.agregarOpinionBasico(op2);
+        estado.agregarOpinionBasico(op2);
         assertEquals("Imagen poco clara", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualConEmpate() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_INFESTANS);
+        when(op2.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
+
+        estado.agregarOpinionBasico(op1);
+        estado.agregarOpinionBasico(op2);
         assertEquals("No definido", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualConEmpateAmpliado() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.NINGUNA));
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.NINGUNA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_INFESTANS);
+        when(op2.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
+        when(op3.getTipo()).thenReturn(TipoOpinion.NINGUNA);
+        estado.agregarOpinionBasico(op1);
+        estado.agregarOpinionBasico(op1);
+        estado.agregarOpinionBasico(op2);
+        estado.agregarOpinionBasico(op3);
+        estado.agregarOpinionBasico(op3);
         assertEquals("No definido", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaGuasayana() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_GUASAYANA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_GUASAYANA);
+        estado.agregarOpinionBasico(op1);
         assertEquals("Vinchuca Guasayana", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaInfestans() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_INFESTANS));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_INFESTANS);
+        estado.agregarOpinionBasico(op1);
         assertEquals("Vinchuca Infestans", estado.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsVinchucaSordida() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.VINCHUCA_SORDIDA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_SORDIDA);
+        estado.agregarOpinionBasico(op1);
         assertEquals("Vinchuca Sordida", estado.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsChinchaFoliada() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.CHINCHA_FOLIADA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.CHINCHA_FOLIADA);
+        estado.agregarOpinionBasico(op1);
         assertEquals("Chincha Foliada", estado.resultadoActual());
     }
     
     @Test
     public void testResultadoActualEsPhtiaChinche() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.PHTIA_CHINCHE));
+        when(op1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
+        estado.agregarOpinionBasico(op1);
         assertEquals("Phtia Chinche", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsNinguna() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.NINGUNA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.NINGUNA);
+        estado.agregarOpinionBasico(op1);
         assertEquals("Ninguna", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsImagenPocoClara() {
-        estado.agregarOpinionBasico(new Opinion(TipoOpinion.IMAGEN_POCO_CLARA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
+        estado.agregarOpinionBasico(op1);
         assertEquals("Imagen poco clara", estado.resultadoActual());
     }
 
     @Test
     public void testAgregarOpinionExpertoEntoncesCambiaElTipoDeestado() {
-        estado.agregarOpinionExperto(new Opinion(TipoOpinion.NINGUNA));
+        when(op1.getTipo()).thenReturn(TipoOpinion.NINGUNA);
+        estado.agregarOpinionExperto(op1);
         verify(muestra).setEstado(any(MuestraExperto.class));
     }
 }

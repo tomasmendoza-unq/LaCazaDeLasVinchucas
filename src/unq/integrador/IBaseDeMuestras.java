@@ -12,5 +12,6 @@ import unq.integrador.impls.FiltroMuestras;
 public interface IBaseDeMuestras {
 	public void cargarMuestra(IMuestra muestra) ;
 	public void RegistrarZona(IZonaDeCobertura zonaDeCobertura);
+    public void cargarMuestraVerificada(IMuestra muestra);
 	public List<IMuestra> filtrarMuestras(FiltroMuestras filtro);
 }

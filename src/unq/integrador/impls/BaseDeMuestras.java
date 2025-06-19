@@ -18,7 +18,9 @@ import java.util.List;
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public class BaseDeMuestras implements IBaseDeMuestras {
-    private List<IMuestra> muestrasRegistradas;
+
+    private List<IMuestra> muestrasNoVerificadas;
+    //private List<IMuestra> muestrasVerificadas;
     private List<IZonaDeCobertura> zonaDeCoberturas;
 
     /**
@@ -27,8 +29,9 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      * IZonaDeCobertura
      */
     public BaseDeMuestras(){
-        muestrasRegistradas = new ArrayList<>();
-        zonaDeCoberturas    = new ArrayList<>();
+        muestrasNoVerificadas = new ArrayList<>();
+        //muestrasVerificadas = new ArrayList<>();
+        zonaDeCoberturas = new ArrayList<>();
     }
 
     /**
@@ -40,7 +43,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      */
     @Override
     public void cargarMuestra(IMuestra muestra) {
-        muestrasRegistradas.add(muestra);
+        muestrasNoVerificadas.add(muestra);
         this.zonasPertenecientesA(muestra.getUbicacion())
             .forEach(zonaDeCobertura -> zonaDeCobertura.cargarMuestra(muestra));
     }
@@ -52,6 +55,18 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      */
     public void RegistrarZona(IZonaDeCobertura zonaDeCobertura){
         zonaDeCoberturas.add(zonaDeCobertura);
+    }
+
+    @Override
+    public void cargarMuestraVerificada(IMuestra muestra) {
+        this.removerMuestra(muestra);
+        //muestrasVerificadas.add(muestra);
+        this.zonasPertenecientesA(muestra.getUbicacion())
+                .forEach(zonaDeCobertura -> zonaDeCobertura.notificarNuevaMuestraVerificada(muestra));
+    }
+
+    private void removerMuestra(IMuestra muestra) {
+        muestrasNoVerificadas.remove(muestra);
     }
 
     /**
@@ -76,7 +91,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
     @Override
     public List<IMuestra> filtrarMuestras(FiltroMuestras filtro) {
         List<IMuestra> resultado = 
-        muestrasRegistradas.stream()
+        muestrasNoVerificadas.stream()
         .filter(filtro.getPredicate())
         .toList();
         

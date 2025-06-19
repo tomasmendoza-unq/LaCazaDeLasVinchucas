@@ -41,10 +41,10 @@ public class Usuario implements IUsuario {
 	 * Método para opinar sobre una muestra dada
 	 * 
 	 * @param muestra Muestra dada sobre la que se agrega la opinión
-	 * @param opinion Opinión que será agregada a la muestra
+	 * @param tipoOpinion TipoOpinion que será agregada a la muestra
 	 */
-	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) {
-		opinion.setID(this.id);
+	public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) {
+		Opinion opinion = new Opinion(tipoOpinion, this.id);
 		this.rango.opinarSobreUnaMuestra(muestra,opinion);
 		this.opinionList.add(opinion);
     }
@@ -56,7 +56,7 @@ public class Usuario implements IUsuario {
 	 * @param ubicacion Representa la ubicación en la que se mandó la muestra
 	 */
 	public void enviarMuestra(String fotografia, IUbicacion ubicacion) {
-		IMuestra muestra = new Muestra(this.id, fotografia, ubicacion);
+		IMuestra muestra = new Muestra(this.id, fotografia, ubicacion,bdm);
 		this.bdm.cargarMuestra(muestra);
 		this.publicaciones.add(muestra);
 	}
@@ -125,15 +125,6 @@ public class Usuario implements IUsuario {
 			return publicaciones.contains(muestra);
 		}
 
-	/**
-	 * Getter de id del usuario
-	 * 
-	 * @return ID del usuario
-	 */
-	@Override
-	public int getID() {
-		return this.id;
-	}
 
 	/**
 	 * Método que indica si el usuario tiene la cantidad de publicaciones
@@ -179,6 +170,10 @@ public class Usuario implements IUsuario {
 			opinionList.stream()
 			.filter(op -> op.getFechaDeCreacion().isAfter(LocalDate.now().minusDays(30)))
 			.count();
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	/**

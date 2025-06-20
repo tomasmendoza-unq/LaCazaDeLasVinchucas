@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class BaseDeMuestras implements IBaseDeMuestras {
 
-    private List<IMuestra> muestrasNoVerificadas;
+    private List<IMuestra> muestrasRegistradas;
     private List<IZonaDeCobertura> zonaDeCoberturas;
 
     /**

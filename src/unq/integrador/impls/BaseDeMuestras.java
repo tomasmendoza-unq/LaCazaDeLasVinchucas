@@ -28,7 +28,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      * IZonaDeCobertura
      */
     public BaseDeMuestras(){
-        muestrasNoVerificadas = new ArrayList<>();
+        muestrasRegistradas = new ArrayList<>();
         zonaDeCoberturas = new ArrayList<>();
     }
 
@@ -41,7 +41,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      */
     @Override
     public void cargarMuestra(IMuestra muestra) {
-        muestrasNoVerificadas.add(muestra);
+        muestrasRegistradas.add(muestra);
         this.zonasPertenecientesA(muestra.getUbicacion())
             .forEach(zonaDeCobertura -> zonaDeCobertura.cargarMuestra(muestra));
     }
@@ -82,8 +82,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      */
     @Override
     public List<IMuestra> filtrarMuestras(FiltroMuestras filtro) {
-        List<IMuestra> resultado = 
-        muestrasNoVerificadas.stream()
+        List<IMuestra> resultado = muestrasRegistradas.stream()
         .filter(filtro.getPredicate())
         .toList();
         

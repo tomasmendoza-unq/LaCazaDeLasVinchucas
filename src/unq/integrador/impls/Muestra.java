@@ -1,7 +1,9 @@
-package unq.integrador;
+package unq.integrador.impls;
 
-import unq.integrador.impls.MuestraLibre;
-import unq.integrador.impls.Opinion;
+import unq.integrador.IBaseDeMuestras;
+import unq.integrador.IEstadoDeMuestra;
+import unq.integrador.IMuestra;
+import unq.integrador.IUbicacion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

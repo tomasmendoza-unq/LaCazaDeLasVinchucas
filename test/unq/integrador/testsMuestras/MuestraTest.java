@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import unq.integrador.*;
+import unq.integrador.impls.Muestra;
 import unq.integrador.impls.Opinion;
 
 public class MuestraTest {

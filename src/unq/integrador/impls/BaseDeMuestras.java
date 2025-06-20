@@ -61,10 +61,6 @@ public class BaseDeMuestras implements IBaseDeMuestras {
                 .forEach(zonaDeCobertura -> zonaDeCobertura.notificarNuevaMuestraVerificada(muestra));
     }
 
-    private void removerMuestra(IMuestra muestra) {
-        muestrasNoVerificadas.remove(muestra);
-    }
-
     /**
      * Método para buscar que zonas de la lista de zonas
      * coinciden con la ubicación de la muestra

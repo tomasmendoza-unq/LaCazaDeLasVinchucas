@@ -20,7 +20,6 @@ import java.util.List;
 public class BaseDeMuestras implements IBaseDeMuestras {
 
     private List<IMuestra> muestrasNoVerificadas;
-    //private List<IMuestra> muestrasVerificadas;
     private List<IZonaDeCobertura> zonaDeCoberturas;
 
     /**
@@ -30,7 +29,6 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      */
     public BaseDeMuestras(){
         muestrasNoVerificadas = new ArrayList<>();
-        //muestrasVerificadas = new ArrayList<>();
         zonaDeCoberturas = new ArrayList<>();
     }
 
@@ -59,8 +57,6 @@ public class BaseDeMuestras implements IBaseDeMuestras {
 
     @Override
     public void cargarMuestraVerificada(IMuestra muestra) {
-        this.removerMuestra(muestra);
-        //muestrasVerificadas.add(muestra);
         this.zonasPertenecientesA(muestra.getUbicacion())
                 .forEach(zonaDeCobertura -> zonaDeCobertura.notificarNuevaMuestraVerificada(muestra));
     }

@@ -17,7 +17,7 @@ public class OpinionTest {
     @BeforeEach
     public void setUp() {
         tp = TipoOpinion.NINGUNA;
-        op = new Opinion(tp, 2);
+        op = new Opinion(2, tp);
     }
 
     @Test

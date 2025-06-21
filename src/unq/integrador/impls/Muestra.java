@@ -22,26 +22,84 @@ public class Muestra implements IMuestra {
     private int userID;
     private String fotografia;
     private IUbicacion ubicacion;
-    private ArrayList<String> historial;
-    private LocalDate fechaCreacion;
-    private IEstadoDeMuestra estado;
     private IBaseDeMuestras bdm;
-    LocalDate fechaUltimaVotacion;
+    private LocalDate fechaCreacion;
+    private ArrayList<String> historial;
+    private IEstadoDeMuestra estado;
+    private LocalDate fechaUltimaVotacion;
     
     /**
      * Constructor de la clase Abstracta Muestra
      * @param id Representa el ID del usuario que publicó la muestra
      * @param fotografia Representa la fotografía del usuario que publicó la muestra
      * @param ubicacion Representa la ubicación de donde se publicó la muestra
+     * @param bdm Una base de muestras donde cargarse
      */
-    public Muestra(int id, String fotografia, IUbicacion ubicacion,IBaseDeMuestras bdm) {
-        this.userID         = id;
-        this.fotografia     = fotografia;
-        this.ubicacion      = ubicacion;
-        this.fechaCreacion  = LocalDate.now();
-        this.historial      = new ArrayList<String>();
-        this.estado         = new MuestraLibre(this);
-        this.bdm = bdm;
+    public Muestra(int id, String fotografia, IUbicacion ubicacion, IBaseDeMuestras bdm) {
+        this.userID        = id;
+        this.fotografia    = fotografia;
+        this.ubicacion     = ubicacion;
+        this.bdm           = bdm;
+        this.fechaCreacion = LocalDate.now();
+        this.historial     = new ArrayList<String>();
+        this.estado        = new MuestraLibre(this);
+    }
+
+    /* GETTERS y SETTERS */
+
+    /**
+     * Getter del ID del usuario que publicó la muestra
+     * 
+     * @return ID del usuario
+     */
+    public int getIDUsuario() {
+        return this.userID;
+    }
+    
+    /**
+     * Getter de la fotografía de la muestra
+     * 
+     * @return Un string que representa la fotografía
+     */
+    public String getFotografia() {
+        return this.fotografia;
+    }
+
+    /**
+     * Getter de la ubicación de la muestra
+     * 
+     * @return Ubicación de la muestra
+     */
+    public IUbicacion getUbicacion() {
+        return this.ubicacion;
+    }
+
+    /**
+     * Getter de la fecha de creación de la muestra
+     * 
+     * @return la fecha de creación de la muestra
+     */
+    public LocalDate getFechaCreacion() {
+        return this.fechaCreacion;
+    }
+    
+    /**
+     * Getter de la fecha de la última votación que se realizó en la muestra
+     * 
+     * @return LocalDate con la fecha de la última votación
+     */
+    @Override
+    public LocalDate getFechaUltimaVotacion() {
+        return this.fechaUltimaVotacion;
+    }
+    
+    /**
+     * Setter del estado de la muestra
+     * 
+     * @param estado Un estado nuevo por el que cambiar el anterior
+     */
+    public void setEstado(IEstadoDeMuestra estado) {
+        this.estado = estado;
     }
 
     /**
@@ -61,6 +119,7 @@ public class Muestra implements IMuestra {
      * 
      * @param op una opinión para agregar a la muestra
      * @see IEstadoDeMuestra
+     * @throws SinAccesoAMuestraException Dependiendo del estado de la muestra y el rango del usuario que llame este método 
      */
     public void agregarOpinionBasico(Opinion op) {
         this.estado.agregarOpinionBasico(op);
@@ -74,52 +133,12 @@ public class Muestra implements IMuestra {
      * 
      * @param op una opinión para agregar a la muestra
      * @see IEstadoDeMuestra
+     * @throws SinAccesoAMuestraException Dependiendo del estado de la muestra y el rango del usuario que llame este método 
      */
     public void agregarOpinionExperto(Opinion op) {
         this.estado.agregarOpinionExperto(op);
         this.agregarAlHistorial(op, "Experto");
         this.fechaUltimaVotacion = op.getFechaDeCreacion();
-    }
-
-    /**
-     * Getter de la fotografía de la muestra
-     * 
-     * @return Un string que representa la fotografía
-     */
-    public String getFotografia() {
-        return this.fotografia;
-    }
-
-    /**
-     * Getter de la ubicación de la muestra
-     * 
-     * @return Ubicación de la muestra
-     */
-    public IUbicacion getUbicacion() {
-        return this.ubicacion;
-    }
-
-    @Override
-    public void cargarMuestraVerificada() {
-        bdm.cargarMuestraVerificada(this);
-    }
-
-    /**
-     * Getter del ID del usuario que publicó la muestra
-     * 
-     * @return ID del usuario
-     */
-    public int getIDUsuario() {
-        return this.userID;
-    }
-    
-    /**
-     * Getter de la fecha de creación de la muestra
-     * 
-     * @return la fecha de creación de la muestra
-     */
-    public LocalDate getFechaCreacion() {
-        return this.fechaCreacion;
     }
 
     /**
@@ -144,17 +163,8 @@ public class Muestra implements IMuestra {
      * @param n Representa una posición posible entre los registros del historial
      * @return Un String que contiene quien votó, cuando, su categoría y cual fue su voto
      */
-    public String verRegistroN(int n) {
+    public String verRegistroNro(int n) {
         return this.historial.get(n-1);
-    }
-
-    /**
-     * Setter del estado de la muestra
-     * 
-     * @param estado Un estado nuevo por el que cambiar el anterior
-     */
-    public void setEstado(IEstadoDeMuestra estado) {
-        this.estado = estado;
     }
 
     /**
@@ -169,12 +179,11 @@ public class Muestra implements IMuestra {
     }
 
     /**
-     * Getter de la fecha de la última votación que se realizó en la muestra
+     * Método que avisa a la base de muestras que esta muestra quedó verificada
      * 
-     * @return LocalDate con la fecha de la última votación
      */
     @Override
-    public LocalDate getFechaUltimaVotacion() {
-        return this.fechaUltimaVotacion;
-    }  
+    public void cargarMuestraVerificada() {
+        this.bdm.cargarMuestraVerificada(this);
+    }
 }

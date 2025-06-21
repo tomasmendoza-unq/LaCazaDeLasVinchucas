@@ -40,7 +40,7 @@ public class Organizacion implements IOrganizacion{
    * @return La ubicación de la organización
    */
   public IUbicacion getUbicacion() {
-    return ubicacion;
+    return this.ubicacion;
   }
 
   /**
@@ -49,7 +49,7 @@ public class Organizacion implements IOrganizacion{
    * @return El tipo de la organización
    */
   public TipoOrganizacion getTipo() {
-    return tipo;
+    return this.tipo;
   }
 
   /**
@@ -58,7 +58,7 @@ public class Organizacion implements IOrganizacion{
    * @return La cantidad de empleados de la ubicación
    */
   public int getCantidadEmpleados() {
-    return empleados;
+    return this.empleados;
   }
 
   /**
@@ -100,7 +100,7 @@ public class Organizacion implements IOrganizacion{
    * @param muestra Muestra que se agregó en la zona de cobertura
    */
   public void recibirNotificacionMuestra(IZonaDeCobertura zona, IMuestra muestra){
-    funcionalidadMuestra.nuevoEvento(this, zona, muestra);
+    this.funcionalidadMuestra.nuevoEvento(this, zona, muestra);
   }
 
   /**
@@ -112,6 +112,6 @@ public class Organizacion implements IOrganizacion{
    * @param muestra Muestra que se validó en la zona de cobertura
    */
   public void recibirNotificacionValidacion(IZonaDeCobertura zona, IMuestra muestra){
-    funcionalidadValidacion.nuevoEvento(this, zona, muestra);
+    this.funcionalidadValidacion.nuevoEvento(this, zona, muestra);
   }
 }

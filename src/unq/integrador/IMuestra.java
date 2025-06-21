@@ -9,17 +9,17 @@ import unq.integrador.impls.Opinion;
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public interface IMuestra {
+    public int getIDUsuario();
+    public String getFotografia();
+    public IUbicacion getUbicacion();
+    public LocalDate getFechaCreacion();
+    public LocalDate getFechaUltimaVotacion();
+    public void setEstado(IEstadoDeMuestra estado);
     public String resultadoActual();
     public void agregarOpinionBasico(Opinion op);
     public void agregarOpinionExperto(Opinion op);
-    public String getFotografia();
-    public IUbicacion getUbicacion();
-    public void cargarMuestraVerificada();
-    public int getIDUsuario();
-    public LocalDate getFechaCreacion();
     public void agregarAlHistorial(Opinion op, String categoria);
-    public String verRegistroN(int n);
-    public void setEstado(IEstadoDeMuestra estado);
+    public String verRegistroNro(int n);
     public boolean esVerificada();
-    public LocalDate getFechaUltimaVotacion();
+    public void cargarMuestraVerificada();
 }

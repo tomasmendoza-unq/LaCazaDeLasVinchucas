@@ -27,7 +27,7 @@ public class UsuarioTest {
 		ubicacion = mock(IUbicacion.class);
 		baseDeMuestras = mock(IBaseDeMuestras.class);
 		rango = mock(IUsuarioRango.class);
-		usuario = new Usuario(baseDeMuestras,rango, 10);
+		usuario = new Usuario(10,rango, baseDeMuestras);
 		opinion = mock(Opinion.class);
 	}
 	

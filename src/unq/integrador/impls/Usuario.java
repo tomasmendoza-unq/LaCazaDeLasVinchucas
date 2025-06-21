@@ -29,13 +29,27 @@ public class Usuario implements IUsuario {
 	 * @param bdm Bases de muestra para almacenar todas las muestras
 	 * @param rango Categoría del usuario
 	 */
-	public Usuario(IBaseDeMuestras bdm, IUsuarioRango rango, int id) {
-		this.id = id;
-		this.bdm = bdm;
-		this.rango = rango;
-		this.opinionList = new ArrayList<Opinion>();
+	public Usuario(int id, IUsuarioRango rango, IBaseDeMuestras bdm) {
+		this.id 		   = id;
+		this.rango 		   = rango;
+		this.bdm 		   = bdm;
+		this.opinionList   = new ArrayList<Opinion>();
 		this.publicaciones = new ArrayList<IMuestra>();
 	}
+
+	/** Getter del id de usuario
+	 * 
+	 * @return un int que representa el id
+	 */
+	public int getId() {
+		return this.id;
+	}
+
+	/* 
+	 * 
+	 * MÉTODOS SOBRE MUESTRAS
+	 * 
+	 */
 
 	/**
 	 * Método para opinar sobre una muestra dada
@@ -44,22 +58,58 @@ public class Usuario implements IUsuario {
 	 * @param tipoOpinion TipoOpinion que será agregada a la muestra
 	 */
 	public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) {
-		Opinion opinion = new Opinion(tipoOpinion, this.id);
+		Opinion opinion = new Opinion(this.id, tipoOpinion);
 		this.rango.opinarSobreUnaMuestra(muestra,opinion);
 		this.opinionList.add(opinion);
     }
 
 	/**
-	 * Método para crear y enviar una muestra libre a la base de muestras
+	 * Método para crear y enviar una muestra a la base de muestras
 	 * 
 	 * @param fotografia Representa la foto que se subió como muestra
 	 * @param ubicacion Representa la ubicación en la que se mandó la muestra
 	 */
 	public void enviarMuestra(String fotografia, IUbicacion ubicacion) {
-		IMuestra muestra = new Muestra(this.id, fotografia, ubicacion,bdm);
+		IMuestra muestra = new Muestra(this.id, fotografia, ubicacion, bdm);
 		this.bdm.cargarMuestra(muestra);
 		this.publicaciones.add(muestra);
 	}
+
+	/**
+	 * Método para agregar una muestra a la lista de publicaciones
+	 *
+	 * @param muestra que representa la muestra que se agrega
+	 */
+	@Override
+	public void agregarMuestraPublicada(IMuestra muestra) {
+		this.publicaciones.add(muestra);
+	}
+
+	/**
+	 * Método para quitar una muestra de la lista de publicaciones
+	 *
+	 * @param muestra que representa la muestra a quitar
+	 */
+	@Override
+	public void quitarMuestra(IMuestra muestra) {
+		this.publicaciones.remove(muestra);
+	}
+
+	/*
+	* 	Metodo para verificar si publico una muestra dada
+	*
+	* @param muestra que representa la muestra a verificar
+	* */
+	@Override
+	public boolean publicoEstaMuestra(IMuestra muestra){
+		return publicaciones.contains(muestra);
+	}
+
+	/* 
+	 * 
+	 * MÉTODOS SOBRE RANGO DEL USUARIO
+	 * 
+	 */
 
 	/**
 	 * Método para cambiar el rango del usuario dependiendo de si cumple
@@ -95,36 +145,6 @@ public class Usuario implements IUsuario {
 	public boolean subeDeRango() {
 		return this.opinionesNecesarias() && this.publicacionesNecesarias();
 	}
-
-	/**
-	 * Método para quitar una muestra de la lista de publicaciones
-	 *
-	 * @param muestra que representa la muestra a quitar
-	 */
-	@Override
-	public void quitarMuestra(IMuestra muestra) {
-		this.publicaciones.remove(muestra);
-	}
-	/**
-	 * Método para agregar una muestra a la lista de publicaciones
-	 *
-	 * @param muestra que representa la muestra que se agrega
-	 */
-	@Override
-	public void agregarMuestraPublicada(IMuestra muestra) {
-		this.publicaciones.add(muestra);
-	}
-
-	/*
-	* 	Metodo para verificar si publico una muestra dada
-	*
-	* @param muestra que representa la muestra a verificar
-	* */
-		@Override
-		public boolean publicoEstaMuestra(IMuestra muestra){
-			return publicaciones.contains(muestra);
-		}
-
 
 	/**
 	 * Método que indica si el usuario tiene la cantidad de publicaciones
@@ -171,10 +191,12 @@ public class Usuario implements IUsuario {
 			.filter(op -> op.getFechaDeCreacion().isAfter(LocalDate.now().minusDays(30)))
 			.count();
 	}
-
-	public int getId() {
-		return id;
-	}
+	
+	/* 
+	 * 
+	 * MÉTODOS SOBRE FILTROS
+	 * 
+	 */
 
 	/**
 	 * Método para conseguir una lista de muestras que concuerden con el filtro pasado

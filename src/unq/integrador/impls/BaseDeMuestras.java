@@ -47,6 +47,18 @@ public class BaseDeMuestras implements IBaseDeMuestras {
     }
 
     /**
+     * Método que notifica a todas las zonas de cobertura que pertenecen
+     * a la ubicación de la muestra que esta se encuentra verificada
+     * 
+     * @param muestra Una muestra que esté verificada
+     */
+    @Override
+    public void cargarMuestraVerificada(IMuestra muestra) {
+        this.zonasPertenecientesA(muestra.getUbicacion())
+            .forEach(zonaDeCobertura -> zonaDeCobertura.notificarNuevaMuestraVerificada(muestra));
+    }
+
+    /**
      * Método para agregar una zona de cobertura a la lista de zonas
      * 
      * @param zonaDeCobertura Una zona a agregar
@@ -54,13 +66,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
     public void RegistrarZona(IZonaDeCobertura zonaDeCobertura){
         zonaDeCoberturas.add(zonaDeCobertura);
     }
-
-    @Override
-    public void cargarMuestraVerificada(IMuestra muestra) {
-        this.zonasPertenecientesA(muestra.getUbicacion())
-                .forEach(zonaDeCobertura -> zonaDeCobertura.notificarNuevaMuestraVerificada(muestra));
-    }
-
+    
     /**
      * Método para buscar que zonas de la lista de zonas
      * coinciden con la ubicación de la muestra

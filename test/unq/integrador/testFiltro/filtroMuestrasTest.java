@@ -44,7 +44,7 @@ public class filtroMuestrasTest {
 
         bdm = new BaseDeMuestras();
         rango = new UsuarioBasico();
-        user = new Usuario(bdm, rango, 0);
+        user = new Usuario(0, rango, bdm);
 
         muestra1 = mock(IMuestra.class);
         when(muestra1.resultadoActual()).thenReturn("Ninguna");

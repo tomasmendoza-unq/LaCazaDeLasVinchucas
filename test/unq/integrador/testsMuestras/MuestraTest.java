@@ -41,7 +41,7 @@ public class MuestraTest {
 
         assertEquals(
             "Usuario 1 opinó: Ninguna, en la fecha: " + LocalDate.now().toString() + ", con categoría: Básico", 
-            muestra.verRegistroN(1));
+            muestra.verRegistroNro(1));
     }
 
     @Test

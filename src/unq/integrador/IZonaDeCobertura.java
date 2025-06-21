@@ -1,15 +1,13 @@
 package unq.integrador;
 
-import unq.integrador.impls.Organizacion;
-
 public interface IZonaDeCobertura {
     public String getNombreDeCobertura();
     public IUbicacion getEpicentro();
     public double getRadioEnKm();
     public void cargarMuestra(IMuestra muestra);
-    void notificarNuevaMuestraVerificada(IMuestra muestra);
+    public void notificarNuevaMuestraVerificada(IMuestra muestra);
     public boolean seSolapaCon(IZonaDeCobertura zonaDeCobertura);
-    boolean contieneUbicacion(IUbicacion ubicacionMuestra);
-    void registrarOrganizacion(IOrganizacion organizacion);
-    void eliminarOrganizacion(IOrganizacion organizacion);
+    public boolean contieneUbicacion(IUbicacion ubicacionMuestra);
+    public void registrarOrganizacion(IOrganizacion organizacion);
+    public void eliminarOrganizacion(IOrganizacion organizacion);
 }

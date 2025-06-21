@@ -59,13 +59,13 @@ public class MuestraLibre implements IEstadoDeMuestra {
 
         return "No definido"; // fallback
     }
+
     /**
      * Agregua una opinión al diccionario de Opiniones, agregando 1 al valor que estaba
      * o setteandolo en 1 si no existía.
      * 
      * @param op una opinión para agregar al diccionario
      */
-    
     @Override
     public void agregarOpinionBasico(Opinion op) {
         this.opiniones.put(op.getTipo(), this.opiniones.getOrDefault(op.getTipo(), 0) + 1);

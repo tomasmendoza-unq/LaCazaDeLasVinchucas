@@ -15,8 +15,8 @@ import java.util.List;
 public class ZonaDeCobertura implements IZonaDeCobertura {
 
     private IUbicacion epicentro;
-    private double radioEnKm;
     private String nombreDeCobertura;
+    private double radioEnKm;
     private List<IMuestra> muestras;
     private List<IOrganizacion> organizacionesInteresadas;
 
@@ -28,21 +28,11 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
      * @param radioEnKm Representa la distancia en Km del epicentro a algún extremo de la zona
      */
     public ZonaDeCobertura(IUbicacion epicentro, String nombreDeCobertura, double radioEnKm) {
-        this.epicentro = epicentro;
-        this.muestras = new ArrayList<>();
-        this.nombreDeCobertura = nombreDeCobertura;
-        this.radioEnKm = radioEnKm;
+        this.epicentro                 = epicentro;
+        this.nombreDeCobertura         = nombreDeCobertura;
+        this.radioEnKm                 = radioEnKm;
+        this.muestras                  = new ArrayList<>();
         this.organizacionesInteresadas = new ArrayList<>();
-    }
-
-    /**
-     * Getter del nombre de la zona
-     *
-     * @return Nombre de la zona
-     */
-    @Override
-    public String getNombreDeCobertura() {
-        return nombreDeCobertura;
     }
 
     /**
@@ -52,7 +42,17 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
      */
     @Override
     public IUbicacion getEpicentro() {
-        return epicentro;
+        return this.epicentro;
+    }
+
+    /**
+     * Getter del nombre de la zona
+     *
+     * @return Nombre de la zona
+     */
+    @Override
+    public String getNombreDeCobertura() {
+        return this.nombreDeCobertura;
     }
 
     /**
@@ -62,7 +62,7 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
      */
     @Override
     public double getRadioEnKm() {
-        return radioEnKm;
+        return this.radioEnKm;
     }
 
     /**
@@ -72,17 +72,31 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
      */
     @Override
     public void cargarMuestra(IMuestra muestra) {
-        muestras.add(muestra);
+        this.muestras.add(muestra);
         this.notificarNuevaMuestra(muestra);
     }
 
+    /**
+     * Método que notifica a todas las organizaciones interesadas
+     * en la zona que se cargó una nueva muestra
+     * 
+     * @param muestra Una muestra nueva
+     */
     private void notificarNuevaMuestra(IMuestra muestra) {
-        organizacionesInteresadas.forEach(organizacion -> organizacion.recibirNotificacionMuestra(this, muestra));
+        this.organizacionesInteresadas
+        .forEach(organizacion -> organizacion.recibirNotificacionMuestra(this, muestra));
     }
 
+    /**
+     * Método que notifica a todas las organizaciones interesadas
+     * en la zona que se cargó una muestra quedó verificada
+     * 
+     * @param muestra Una muestra verificada
+     */
     @Override
     public void notificarNuevaMuestraVerificada(IMuestra muestra){
-        organizacionesInteresadas.forEach(organizacion -> organizacion.recibirNotificacionValidacion(this,muestra));
+        this.organizacionesInteresadas
+        .forEach(organizacion -> organizacion.recibirNotificacionValidacion(this,muestra));
     }
 
     /**
@@ -92,13 +106,20 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
      */
     @Override
     public boolean seSolapaCon(IZonaDeCobertura zonaDeCobertura) {
-        double distanciaA = epicentro.distanciaA(zonaDeCobertura.getEpicentro());
+        double distanciaA = this.epicentro.distanciaA(zonaDeCobertura.getEpicentro());
         return distanciaA <= (this.getRadioEnKm() + zonaDeCobertura.getRadioEnKm());
     }
 
+    /**
+     * Método que indica si una ubicación
+     * está contenida en el área de la zona
+     * 
+     * @param ubicacion Una ubicacion para comparar
+     * @return {@code true} si está contenida, {@code false} si está por fuera
+     */
     @Override
-    public boolean contieneUbicacion(IUbicacion ubicacionMuestra) {
-        return epicentro.distanciaA(ubicacionMuestra) <= radioEnKm;
+    public boolean contieneUbicacion(IUbicacion ubicacion) {
+        return this.epicentro.distanciaA(ubicacion) <= this.radioEnKm;
     }
     /**
      * Método para agregar una organización interesada
@@ -107,10 +128,17 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
      * @param organizacion Una organización a agregar
      */
 
+    /**
+     * Método para agregar una organización a
+     * la lista de organizaciones interesadas en la zona
+     * 
+     * @param organizacion Una organización interesada
+     */
     @Override
     public void registrarOrganizacion(IOrganizacion organizacion) {
-        organizacionesInteresadas.add(organizacion);
+        this.organizacionesInteresadas.add(organizacion);
     }
+    
     /**
      * Método para eliminar una organización interesada
      * en la zona de cobertura
@@ -119,8 +147,6 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
      */
     @Override
     public void eliminarOrganizacion(IOrganizacion organizacion) {
-        organizacionesInteresadas.remove(organizacion);
+        this.organizacionesInteresadas.remove(organizacion);
     }
-
-
 }

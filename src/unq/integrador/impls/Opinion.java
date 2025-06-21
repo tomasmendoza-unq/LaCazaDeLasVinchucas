@@ -10,44 +10,19 @@ import unq.integrador.enums.TipoOpinion;
  @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public class Opinion {
+    private int idUsuario;
     private TipoOpinion tipo;
     private LocalDate fechaDeCreacion;
-    private int idUsuario;
+
     /**
      * Constructor de las opiniones
      * @param tipo Que indica el tipo de voto que es del enum TipoOpinion
+     * @param id
      */
-    public Opinion(TipoOpinion tipo, int idUsuario) {
+    public Opinion(int id, TipoOpinion tipo) {
+        this.idUsuario = id;
         this.tipo = tipo;
         this.fechaDeCreacion = LocalDate.now();
-        this.idUsuario = idUsuario;
-    }
-
-    /**
-     * Getter del tipo de opinion
-     * 
-     * @return tipo de opinion del enum
-     */
-    public TipoOpinion getTipo() {
-        return this.tipo;
-    }
-    
-    /**
-     * Método para imprimir el tipo de voto en la opinión
-     * 
-     * @return Un String que representa el tipo de voto
-     */
-    public String imprimirTipo() {
-        return tipo.imprimirTipo();
-    }
-
-    /**
-     * Getter de la fecha de creación de la opinión
-     * 
-     * @return Fecha de creación
-     */
-    public LocalDate getFechaDeCreacion() {
-        return this.fechaDeCreacion;
     }
 
     /**
@@ -59,7 +34,30 @@ public class Opinion {
         return this.idUsuario;
     }
 
+    /**
+     * Getter del tipo de opinion
+     * 
+     * @return tipo de opinion del enum
+     */
+    public TipoOpinion getTipo() {
+        return this.tipo;
+    }
 
-
-
+    /**
+     * Getter de la fecha de creación de la opinión
+     * 
+     * @return Fecha de creación
+     */
+    public LocalDate getFechaDeCreacion() {
+        return this.fechaDeCreacion;
+    }
+    
+    /**
+     * Método para imprimir el tipo de voto en la opinión
+     * 
+     * @return Un String que representa el tipo de voto
+     */
+    public String imprimirTipo() {
+        return tipo.imprimirTipo();
+    }
 }

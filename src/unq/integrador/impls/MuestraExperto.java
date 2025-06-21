@@ -63,9 +63,19 @@ public class MuestraExperto implements IEstadoDeMuestra {
         TipoOpinion tipo = op.getTipo();
         this.opiniones.put(tipo, this.opiniones.getOrDefault(tipo, 0) + 1);
 
+        this.verificaLaMuestra(tipo);
+    }
+
+    /**
+     * Método que se encarga de cambiar el estado de la muestra si
+     * la opinión de dos expertos coincide
+     * 
+     * @param tipo Tipo por el cual se consulta si dos expertos opinaron
+     */
+    private void verificaLaMuestra(TipoOpinion tipo) {
         if (this.opiniones.get(tipo) == 2) {            
             MuestraVerificada muestraNueva = new MuestraVerificada(tipo);
-            muestra.cargarMuestraVerificada();
+            this.muestra.cargarMuestraVerificada();
             this.muestra.setEstado(muestraNueva);
         }
     }

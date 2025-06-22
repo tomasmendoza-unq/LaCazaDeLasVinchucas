@@ -37,24 +37,17 @@ public class MuestraLibre implements IEstadoDeMuestra {
      */
     @Override
     public String resultadoActual() {
-        if (opiniones.isEmpty()) {
-            return "No definido";
-        }
-
         int max = opiniones.values().stream().max(Integer::compareTo).orElse(0);
 
         // contar cuántas opiniones tienen la cantidad máxima
         long cantidadMaximos = opiniones.values().stream().filter(v -> v == max).count();
 
-        if (cantidadMaximos > 1) {
-            return "No definido";
-        }
-
-        // obtener la única clave con valor máximo
-        for (TipoOpinion op : opiniones.keySet()) {
-            if (opiniones.get(op) == max) {
-                return op.imprimirTipo();
-            }
+        if (cantidadMaximos == 1) {
+            // obtener la única clave con valor máximo
+            return opiniones.keySet().stream()
+                            .filter(op -> opiniones.get(op) == max)
+                            .findFirst().orElse(null)
+                            .imprimirTipo();
         }
 
         return "No definido"; // fallback

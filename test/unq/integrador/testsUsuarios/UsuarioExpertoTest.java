@@ -27,7 +27,7 @@ public class UsuarioExpertoTest {
 
   @Test
   public void UsuarioExpertoOpinaSobreUnaMuestraLibre() {
-  usuario.opinarSobreUnaMuestra(muestra,opinion);
+    usuario.opinarSobreUnaMuestra(muestra,opinion);
 
     verify(muestra).agregarOpinionExperto(opinion);
   }

@@ -1,6 +1,8 @@
 package unq.integrador.testsMuestras;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ public class MuestraTest {
     public void setUp() {
         ubicacion = mock(IUbicacion.class);
         baseDeMuestras = mock(IBaseDeMuestras.class);
-        muestra = new Muestra(1, "Foto", ubicacion,baseDeMuestras);
+        muestra = new Muestra(1, "Foto", ubicacion, baseDeMuestras);
     }
 
     @Test
@@ -86,9 +88,24 @@ public class MuestraTest {
     }
 
     @Test
-    public void testCargarMuestraVerificada(){
+    public void testCargarMuestraVerificada() {
         muestra.cargarMuestraVerificada();
 
         verify(baseDeMuestras).cargarMuestraVerificada(muestra);
+    }
+
+    @Test
+    public void testLaMuestraNoEstaVerificada() {
+        assertFalse(muestra.esVerificada());
+    }
+
+    @Test
+    public void testLaMuestraEstaVerificada() {
+        Opinion op = mock(Opinion.class);
+        when(op.getFechaDeCreacion()).thenReturn(LocalDate.now());
+        muestra.agregarOpinionExperto(op);
+        muestra.agregarOpinionExperto(op);
+
+        assertTrue(muestra.esVerificada());
     }
 }

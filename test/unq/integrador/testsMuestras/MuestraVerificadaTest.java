@@ -2,6 +2,7 @@ package unq.integrador.testsMuestras;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,12 +32,11 @@ public class MuestraVerificadaTest {
     
     @Test
     public void testEsMuestraVerificada() {
-        assertEquals(true, estado.esVerificada());
+        assertTrue(estado.esVerificada());
     }
     
     @Test
     public void testAgregarUnaOpinionBasicaLanzaExcepcion() {
-        // muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.NINGUNA);
         Executable accion = () -> estado.agregarOpinionBasico(opinion);
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
         
@@ -45,7 +45,6 @@ public class MuestraVerificadaTest {
     
     @Test
     public void testAgregarUnaOpinionExpertoLanzaExcepcion() {
-        // muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.NINGUNA);
         Executable accion = () -> estado.agregarOpinionExperto(opinion);
         SinAccesoAMuestraException exception = assertThrows(SinAccesoAMuestraException.class, accion);
         

@@ -109,6 +109,13 @@ public class filtroMuestrasTest {
         // Se comprueba que los elementos sean las muestras 1 y 3
         assertEquals(1, muestras.get(0).getIDUsuario());
         assertEquals(3, muestras.get(1).getIDUsuario());
+        
+        assertEquals(true, f1.test(muestra1));
+        assertEquals(false, f1.test(muestra2));
+        assertEquals(true, f1.test(muestra3));
+        assertEquals(false, f1.test(muestra4));
+        assertEquals(false, f1.test(muestra5));
+        assertEquals(false, f1.test(muestra6));
     }
 
     // Filtros de fecha de creación

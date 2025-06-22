@@ -4,7 +4,10 @@ import unq.integrador.IBaseDeMuestras;
 import unq.integrador.IMuestra;
 import unq.integrador.IUbicacion;
 import unq.integrador.IZonaDeCobertura;
+import unq.integrador.enums.Lapso;
+import unq.integrador.enums.TipoOpinion;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
 
     private List<IMuestra> muestrasRegistradas;
     private List<IZonaDeCobertura> zonaDeCoberturas;
+    private FiltroDeMuestrasFactory filtroFactory;
 
     /**
      * Constructor de BaseDeMuestras
@@ -30,6 +34,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
     public BaseDeMuestras(){
         muestrasRegistradas = new ArrayList<>();
         zonaDeCoberturas = new ArrayList<>();
+        filtroFactory = new FiltroDeMuestrasFactory();
     }
 
     /**
@@ -94,4 +99,71 @@ public class BaseDeMuestras implements IBaseDeMuestras {
         
         return resultado;
     }
+
+    /**
+	 * Método para crear un filtro indicando el nivel de verificación que debería tener la muestra
+	 * 
+	 * @param nivel Un booleano que indica si se quiere que la muestra esté verificada o no
+	 * @return Un filtro con el criterio dado
+	 */
+    @Override
+    public FiltroMuestras crearFiltroParaNivelDeVerificacion(boolean nivel) {
+        return nivel 
+        ? this.filtroFactory.crearFiltroParaMuestrasVerificadas()
+        : this.filtroFactory.crearFiltroParaMuestrasVotadas();
+    }
+
+    /**
+	 * Método para crear un filtro indicando desde una fecha que muestras se quieren.
+	 * Si las que se crearon después, antes o ese mismo día
+	 * 
+	 * @param lapso Un lapso que indica a que momento corresponde la búsqueda
+	 * @param fecha Una fecha que indica desde donde se tiene en cuenta el filtro 
+	 * @return Un filtro con el criterio dado
+	 */
+    @Override
+    public FiltroMuestras crearFiltroParaFechaDeCreacion(Lapso lapso, LocalDate fecha) {
+        switch (lapso) {
+			case DESPUES:
+                return this.filtroFactory.crearFiltroParaFechaDeCreacionDespuesDe(fecha);
+            case ANTES:
+                return this.filtroFactory.crearFiltroParaFechaDeCreacionAnteriorA(fecha);
+			default:
+                return this.filtroFactory.crearFiltroParaFechaDeCreacionIgualA(fecha);
+		}
+    }
+
+    /**
+	 * Método para crear un filtro indicando desde una fecha que muestras se 
+	 * quieren en base a la última votación que recibieron e indicando si
+	 * se crearon después, antes o ese mismo día.
+	 * 
+	 * @param lapso Un lapso que indica a que momento corresponde la búsqueda
+	 * @param fecha Una fecha que indica desde donde se tiene en cuenta el filtro 
+	 * @return Un filtro con el criterio dado
+	 */
+    @Override
+    public FiltroMuestras crearFiltroParaFechaDeUltimaVotacion(Lapso lapso, LocalDate fecha) {
+		switch (lapso) {
+			case DESPUES:
+                return this.filtroFactory.crearFiltroParaFechaDeUltimaVotacionDespuesDe(fecha);
+			case ANTES:
+                return this.filtroFactory.crearFiltroParaFechaDeUltimaVotacionAnteriorA(fecha);
+			default:
+                return this.filtroFactory.crearFiltroParaFechaDeUltimaVotacionIgualA(fecha);
+		}
+    }
+
+    /**
+	 * Método para crear un filtro basado en el insecto que se registra en la muestra
+	 * 
+	 * @param tipo Un tipo de opinión que se pueda llegar a dar en la muestra.
+	 * @return Un filtro con el criterio dado
+	 */
+    @Override
+    public FiltroMuestras crearFiltroParaInsectoDetectado(TipoOpinion tipo) {
+        return this.filtroFactory.crearFiltroParaInsectoDetectado(tipo.imprimirTipo());
+    }
+
+    
 }

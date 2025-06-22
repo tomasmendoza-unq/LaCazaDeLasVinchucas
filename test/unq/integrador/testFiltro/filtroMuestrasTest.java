@@ -1,6 +1,8 @@
 package unq.integrador.testFiltro;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -110,12 +112,12 @@ public class filtroMuestrasTest {
         assertEquals(1, muestras.get(0).getIDUsuario());
         assertEquals(3, muestras.get(1).getIDUsuario());
         
-        assertEquals(true, f1.test(muestra1));
-        assertEquals(false, f1.test(muestra2));
-        assertEquals(true, f1.test(muestra3));
-        assertEquals(false, f1.test(muestra4));
-        assertEquals(false, f1.test(muestra5));
-        assertEquals(false, f1.test(muestra6));
+        assertTrue(f1.test(muestra1));
+        assertFalse(f1.test(muestra2));
+        assertTrue(f1.test(muestra3));
+        assertFalse(f1.test(muestra4));
+        assertFalse(f1.test(muestra5));
+        assertFalse(f1.test(muestra6));
     }
 
     // Filtros de fecha de creación

@@ -1,7 +1,10 @@
 package unq.integrador;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import unq.integrador.enums.Lapso;
+import unq.integrador.enums.TipoOpinion;
 import unq.integrador.impls.FiltroMuestras;
 
 /**
@@ -14,4 +17,9 @@ public interface IBaseDeMuestras {
     public void cargarMuestraVerificada(IMuestra muestra);
 	public void RegistrarZona(IZonaDeCobertura zonaDeCobertura);
 	public List<IMuestra> filtrarMuestras(FiltroMuestras filtro);
+	
+    public FiltroMuestras crearFiltroParaNivelDeVerificacion(boolean nivel);
+    public FiltroMuestras crearFiltroParaFechaDeCreacion(Lapso lapso, LocalDate fecha);
+    public FiltroMuestras crearFiltroParaFechaDeUltimaVotacion(Lapso lapso, LocalDate fecha);
+    public FiltroMuestras crearFiltroParaInsectoDetectado(TipoOpinion tipo);
 }

@@ -215,9 +215,7 @@ public class Usuario implements IUsuario {
 	 * @return Un filtro con el criterio dado
 	 */
 	public FiltroMuestras crearFiltroParaNivelDeVerificacion(boolean nivel) {
-		return nivel 
-		? new FiltroMuestras(f -> f.esVerificada()) // Para muestras verificadas
-		: new FiltroMuestras(f -> !f.esVerificada()); // Para muestras votadas
+		return this.bdm.crearFiltroParaNivelDeVerificacion(nivel);
 	}
 
 	/**
@@ -229,14 +227,7 @@ public class Usuario implements IUsuario {
 	 * @return Un filtro con el criterio dado
 	 */
 	public FiltroMuestras crearFiltroParaFechaDeCreacion(Lapso lapso, LocalDate fecha) {
-		switch (lapso) {
-			case DESPUES:
-				return new FiltroMuestras(f -> f.getFechaCreacion().isAfter(fecha));
-			case ANTES:
-				return new FiltroMuestras(f -> f.getFechaCreacion().isBefore(fecha));
-			default:
-				return new FiltroMuestras(f -> f.getFechaCreacion().equals(fecha));
-		}
+		return this.bdm.crearFiltroParaFechaDeCreacion(lapso, fecha);
 	}
 
 	/**
@@ -249,14 +240,7 @@ public class Usuario implements IUsuario {
 	 * @return Un filtro con el criterio dado
 	 */
 	public FiltroMuestras crearFiltroParaFechaDeUltimaVotacion(Lapso lapso, LocalDate fecha) {
-		switch (lapso) {
-			case DESPUES:
-				return new FiltroMuestras(f -> f.getFechaUltimaVotacion().isAfter(fecha));
-			case ANTES:
-				return new FiltroMuestras(f -> f.getFechaUltimaVotacion().isBefore(fecha));
-			default:
-				return new FiltroMuestras(f -> f.getFechaUltimaVotacion().equals(fecha));
-		}
+		return this.bdm.crearFiltroParaFechaDeUltimaVotacion(lapso, fecha);
 	}
 
 	/**
@@ -266,8 +250,6 @@ public class Usuario implements IUsuario {
 	 * @return Un filtro con el criterio dado
 	 */
 	public FiltroMuestras crearFiltroParaInsectoDetectado(TipoOpinion tipo) {
-		return new FiltroMuestras(
-			f -> f.resultadoActual().equalsIgnoreCase(tipo.imprimirTipo())
-			);
+		return this.bdm.crearFiltroParaInsectoDetectado(tipo);
 	}
 }

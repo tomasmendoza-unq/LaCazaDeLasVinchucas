@@ -31,6 +31,11 @@ public class MuestraLibreTest {
     }
 
     @Test
+    public void testNoEsMuestraVerificada() {
+        assertEquals(false, estado.esVerificada());
+    }
+
+    @Test
     public void testResultadoActualSinOpiniones() {
         assertEquals("No definido", estado.resultadoActual());
     }

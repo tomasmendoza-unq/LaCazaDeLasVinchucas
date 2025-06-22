@@ -30,6 +30,11 @@ public class MuestraVerificadaTest {
     }
     
     @Test
+    public void testEsMuestraVerificada() {
+        assertEquals(true, estado.esVerificada());
+    }
+    
+    @Test
     public void testAgregarUnaOpinionBasicaLanzaExcepcion() {
         // muestra = new MuestraVerificada(owner, "Foto", ubicacion, historial, TipoOpinion.NINGUNA);
         Executable accion = () -> estado.agregarOpinionBasico(opinion);

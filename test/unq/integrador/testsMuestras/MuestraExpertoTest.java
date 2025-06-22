@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +29,11 @@ public class MuestraExpertoTest {
         op2 = mock(Opinion.class);
         muestra = mock(IMuestra.class);
         estado = new MuestraExperto(muestra);
+    }
+
+    @Test
+    public void testNoEsMuestraVerificada() {
+        assertEquals(false, estado.esVerificada());
     }
 
     @Test

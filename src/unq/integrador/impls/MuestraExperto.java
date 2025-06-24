@@ -85,9 +85,10 @@ public class MuestraExperto implements IEstadoDeMuestra {
      * opinar en las muestras que ya opinaron expertos.
      * 
      * @param op una opinión.
+     * @throws SinAccesoAMuestraException 
      */
     @Override
-    public void agregarOpinionBasico(Opinion op) {
+    public void agregarOpinionBasico(Opinion op) throws SinAccesoAMuestraException {
         throw new SinAccesoAMuestraException("Un usuario básico no puede opinar en una muestra con opiniones de expertos");
     }
 

@@ -3,6 +3,9 @@ package unq.integrador.impls;
 import unq.integrador.*;
 import unq.integrador.enums.Lapso;
 import unq.integrador.enums.TipoOpinion;
+import unq.integrador.error.SinAccesoAMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,10 +59,18 @@ public class Usuario implements IUsuario {
 	 * 
 	 * @param muestra Muestra dada sobre la que se agrega la opinión
 	 * @param tipoOpinion TipoOpinion que será agregada a la muestra
+	 * @throws SinAccesoAMuestraException 
+	 * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException 
+	 * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException 
 	 */
 	public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) {
 		Opinion opinion = new Opinion(this.id, tipoOpinion);
-		this.rango.opinarSobreUnaMuestra(muestra,opinion);
+		try {
+			this.rango.opinarSobreUnaMuestra(muestra,opinion);
+		} catch (UnUsuarioNoPuedeOpinarEnSuMuestraException | UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException
+				| SinAccesoAMuestraException e) {
+			e.getMessage();
+		}
 		this.opinionList.add(opinion);
     }
 

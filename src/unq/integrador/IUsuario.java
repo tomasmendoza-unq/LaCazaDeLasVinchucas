@@ -14,7 +14,7 @@ import unq.integrador.impls.FiltroMuestras;
  */
 public interface IUsuario {
     public int getId();
-    public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) ;
+    public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion);
     public void enviarMuestra(String fotografia, IUbicacion ubicacion);
     public void agregarMuestraPublicada(IMuestra muestra);
     public void quitarMuestra(IMuestra muestra);

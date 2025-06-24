@@ -38,7 +38,7 @@ public class MuestraVerificada implements IEstadoDeMuestra {
      * @param op Una opinión que ya no se agrega porque la muestra está verificada.
      */
     @Override
-    public void agregarOpinionBasico(Opinion op) {
+    public void agregarOpinionBasico(Opinion op)  throws SinAccesoAMuestraException {
         throw new SinAccesoAMuestraException("Los usuarios no pueden opinar en una muestra verificada");
     }
     
@@ -48,7 +48,7 @@ public class MuestraVerificada implements IEstadoDeMuestra {
      * @param op Una opinión que ya no se agrega porque la muestra está verificada.
      */
     @Override
-    public void agregarOpinionExperto(Opinion op) {
+    public void agregarOpinionExperto(Opinion op) throws SinAccesoAMuestraException {
         throw new SinAccesoAMuestraException("Los usuarios no pueden opinar en una muestra verificada");
     }
 

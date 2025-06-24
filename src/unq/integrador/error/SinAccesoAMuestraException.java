@@ -1,6 +1,6 @@
 package unq.integrador.error;
 
-public class SinAccesoAMuestraException extends RuntimeException {
+public class SinAccesoAMuestraException extends Exception {
     public SinAccesoAMuestraException() {
         super();
     }

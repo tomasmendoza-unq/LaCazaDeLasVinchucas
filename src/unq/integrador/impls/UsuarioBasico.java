@@ -1,7 +1,7 @@
 package unq.integrador.impls;
 
 import unq.integrador.IMuestra;
-import unq.integrador.IUsuarioRango;
+import unq.integrador.IUsuario;
 import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
@@ -11,7 +11,7 @@ import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraExceptio
  * 
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
-public class UsuarioBasico implements IUsuarioRango {
+public class UsuarioBasico extends UsuarioRango {
 
     /**
      * Método para que un usuario de categoría básica
@@ -27,4 +27,16 @@ public class UsuarioBasico implements IUsuarioRango {
     public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
         muestra.agregarOpinionBasico(opinion);
     }
+
+    /**
+     * Método para que un usuario determine su proximo rango
+     *
+     * @param usuario Usuario al cual se le modifica el rango
+     * @return rango para settear al usuario dado
+     */
+    @Override
+    protected UsuarioRango determinarRango(IUsuario usuario) {
+        return usuario.subeDeRango() ? new UsuarioExperto() : this;
+    }
+
 }

@@ -21,7 +21,7 @@ public class Usuario implements IUsuario {
 
 	private int id;
 	private IBaseDeMuestras bdm;
-	private IUsuarioRango rango;
+	private UsuarioRango rango;
 	private List<Opinion> opinionList;
 	private List<IMuestra> publicaciones;
 	
@@ -30,9 +30,21 @@ public class Usuario implements IUsuario {
 	 * 
 	 * @param id Identificador del usuario
 	 * @param bdm Bases de muestra para almacenar todas las muestras
-	 * @param rango Categoría del usuario
 	 */
-	public Usuario(int id, IUsuarioRango rango, IBaseDeMuestras bdm) {
+	public Usuario(int id, IBaseDeMuestras bdm) {
+		this.id 		   = id;
+		this.bdm 		   = bdm;
+		this.opinionList   = new ArrayList<Opinion>();
+		this.publicaciones = new ArrayList<IMuestra>();
+	}
+	/**
+	 * Constructor de Usuario
+	 *
+	 * @param id Identificador del usuario
+	 * @param rango Categoría del usuario
+	 * @param bdm Bases de muestra para almacenar todas las muestras
+	 */
+	public Usuario(int id,UsuarioRango rango, IBaseDeMuestras bdm) {
 		this.id 		   = id;
 		this.rango 		   = rango;
 		this.bdm 		   = bdm;
@@ -123,23 +135,15 @@ public class Usuario implements IUsuario {
 	 * las condiciones mínimas
 	 */
 	public void determinarRango(){
-		this.rango = this.subeDeRango() ? this.setExperto() : this.setBasico();
+		rango.determinarSiguienteRango(this);
 	}
 
 	/**
 	 * Devuelve un usuario de categoría básica
-	 * @return Un usuario de categoría básica
+	 * @param usuarioRango proximo rango de usuario
 	 */
-	private IUsuarioRango setBasico() {
-		return new UsuarioBasico();
-	}
-
-	/**
-	 * Devuelve un usuario de categoría experto
-	 * @return Un usuario de categoría experto
-	 */
-	private IUsuarioRango setExperto() {
-		return new UsuarioExperto();
+	public void setProximoRango(UsuarioRango usuarioRango) {
+		this.rango = usuarioRango;
 	}
 
 	/**

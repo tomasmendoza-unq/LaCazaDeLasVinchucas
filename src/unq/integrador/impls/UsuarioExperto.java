@@ -27,16 +27,6 @@ public class UsuarioExperto extends UsuarioRango {
 	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
 		muestra.agregarOpinionExperto(opinion);
 	}
-	/**
-	 * Método para que un usuario de categoría experto
-	 * determine su proximo rango
-	 *
-	 * @param usuario Usuario al cual se le modifica el rango
-	 */
-	@Override
-	public void determinarSiguienteRango(IUsuario usuario) {
-		usuario.setProximoRango(this.determinarRango(usuario));
-	}
 
 	protected UsuarioRango determinarRango(IUsuario usuario) {
 		return usuario.subeDeRango() ? this : new UsuarioBasico();

@@ -1,7 +1,6 @@
 package unq.integrador.testsMuestras;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -39,57 +38,57 @@ public class MuestraExpertoTest {
     @Test
     public void testResultadoActualEsVinchucaGuasayana() {
         when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_GUASAYANA);
-        estado.agregarOpinionExperto(op1);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
         assertEquals("Vinchuca Guasayana", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaInfestans() {
         when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_INFESTANS);
-        estado.agregarOpinionExperto(op1);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
         assertEquals("Vinchuca Infestans", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsVinchucaSordida() {
         when(op1.getTipo()).thenReturn(TipoOpinion.VINCHUCA_SORDIDA);
-        estado.agregarOpinionExperto(op1);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
         assertEquals("Vinchuca Sordida", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsChinchaFoliada() {
         when(op1.getTipo()).thenReturn(TipoOpinion.CHINCHA_FOLIADA);
-        estado.agregarOpinionExperto(op1);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
         assertEquals("Chincha Foliada", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsPhtiaChinche() {
         when(op1.getTipo()).thenReturn(TipoOpinion.PHTIA_CHINCHE);
-        estado.agregarOpinionExperto(op1);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
         assertEquals("Phtia Chinche", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsNinguna() {
         when(op1.getTipo()).thenReturn(TipoOpinion.NINGUNA);
-        estado.agregarOpinionExperto(op1);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
         assertEquals("Ninguna", estado.resultadoActual());
     }
 
     @Test
     public void testResultadoActualEsImagenPocoClara() {
         when(op1.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
-        estado.agregarOpinionExperto(op1);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
         assertEquals("Imagen poco clara", estado.resultadoActual());
     }
     @Test
     public void testHayEmpateEntoncesNoEstaDefinido() {
         when(op1.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
         when(op2.getTipo()).thenReturn(TipoOpinion.NINGUNA);
-        estado.agregarOpinionExperto(op1);
-        estado.agregarOpinionExperto(op2);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op2));
         assertEquals("No definido", estado.resultadoActual());
     }
 
@@ -106,8 +105,8 @@ public class MuestraExpertoTest {
     public void testAgrearDosOpinionesExpertasIgualesVerificaLaestado() {
         when(op1.getTipo()).thenReturn(TipoOpinion.NINGUNA);
         when(op2.getTipo()).thenReturn(TipoOpinion.NINGUNA);
-        estado.agregarOpinionExperto(op1);
-        estado.agregarOpinionExperto(op2);
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op1));
+         assertDoesNotThrow(() -> estado.agregarOpinionExperto(op2));
         verify(muestra).setEstado(any(MuestraVerificada.class));
         verify(muestra).cargarMuestraVerificada();
     }

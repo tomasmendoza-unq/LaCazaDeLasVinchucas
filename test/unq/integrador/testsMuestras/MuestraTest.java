@@ -1,8 +1,6 @@
 package unq.integrador.testsMuestras;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
@@ -36,7 +34,7 @@ public class MuestraTest {
         assertEquals(ubicacion, muestra.getUbicacion());
         assertEquals(LocalDate.now(), muestra.getFechaCreacion());
 
-        muestra.agregarOpinionBasico(op);
+         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op));
         
         assertEquals(LocalDate.now(), muestra.getFechaUltimaVotacion());
     }
@@ -53,7 +51,7 @@ public class MuestraTest {
         assertEquals("No definido", muestra.resultadoActual());
 
         // Al agregar la opinión el resultado cambia
-        muestra.agregarOpinionBasico(op);
+         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op));
         assertEquals("Ninguna", muestra.resultadoActual());
 
         // Se cambia el tipo de la opinión
@@ -61,8 +59,8 @@ public class MuestraTest {
         when(op.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
 
         // Al agregar más opiniones de otro tipo el resultado vuelve a cambiar
-        muestra.agregarOpinionBasico(op);
-        muestra.agregarOpinionBasico(op);
+         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op));
+         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op));
         assertEquals("Imagen poco clara", muestra.resultadoActual());
 
 
@@ -74,13 +72,13 @@ public class MuestraTest {
         when(op.getID()).thenReturn(1);
         when(op.imprimirTipo()).thenReturn("Ninguna");
         when(op.getFechaDeCreacion()).thenReturn(LocalDate.now());
-        muestra.agregarOpinionBasico(op);
+         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op));
 
         assertEquals(
             "Usuario 1 opinó: Ninguna, en la fecha: " + LocalDate.now().toString() + ", con categoría: Básico", 
             muestra.verRegistroNro(1));
         
-        muestra.agregarOpinionExperto(op);
+         assertDoesNotThrow(() -> muestra.agregarOpinionExperto(op));
 
         assertEquals(
             "Usuario 1 opinó: Ninguna, en la fecha: " + LocalDate.now().toString() + ", con categoría: Experto", 
@@ -103,8 +101,8 @@ public class MuestraTest {
     public void testLaMuestraEstaVerificada() {
         Opinion op = mock(Opinion.class);
         when(op.getFechaDeCreacion()).thenReturn(LocalDate.now());
-        muestra.agregarOpinionExperto(op);
-        muestra.agregarOpinionExperto(op);
+         assertDoesNotThrow(() -> muestra.agregarOpinionExperto(op));
+         assertDoesNotThrow(() -> muestra.agregarOpinionExperto(op));
 
         assertTrue(muestra.esVerificada());
     }

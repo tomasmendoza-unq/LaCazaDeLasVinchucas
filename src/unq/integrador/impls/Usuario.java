@@ -63,14 +63,10 @@ public class Usuario implements IUsuario {
 	 * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException 
 	 * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException 
 	 */
-	public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) {
+	public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
 		Opinion opinion = new Opinion(this.id, tipoOpinion);
-		try {
-			this.rango.opinarSobreUnaMuestra(muestra,opinion);
-		} catch (UnUsuarioNoPuedeOpinarEnSuMuestraException | UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException
-				| SinAccesoAMuestraException e) {
-			e.getMessage();
-		}
+
+		this.rango.opinarSobreUnaMuestra(muestra,opinion);
 		this.opinionList.add(opinion);
     }
 

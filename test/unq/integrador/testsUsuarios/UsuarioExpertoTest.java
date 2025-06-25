@@ -1,5 +1,6 @@
 package unq.integrador.testsUsuarios;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import unq.integrador.IMuestra;
 import unq.integrador.error.SinAccesoAMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.UsuarioExperto;
 
@@ -26,21 +29,19 @@ public class UsuarioExpertoTest {
   }
 
   @Test
-  public void UsuarioExpertoOpinaSobreUnaMuestraLibre() {
-    usuario.opinarSobreUnaMuestra(muestra,opinion);
+  public void UsuarioExpertoOpinaSobreUnaMuestraLibre() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+    assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestra,opinion));
 
     verify(muestra).agregarOpinionExperto(opinion);
   }
 
   @Test
-  public void UsuarioExpertoOpinaSobreUnaMuestraCerrada() {
+  public void UsuarioExpertoOpinaSobreUnaMuestraCerrada() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
 
     doThrow(new SinAccesoAMuestraException()).when(muestra).agregarOpinionExperto(opinion);
 
     assertThrows(SinAccesoAMuestraException.class, () -> {
       usuario.opinarSobreUnaMuestra(muestra,opinion);
     });
-
-
   }
 }

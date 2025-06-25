@@ -15,18 +15,14 @@ import org.junit.jupiter.api.Test;
 import unq.integrador.IBaseDeMuestras;
 import unq.integrador.IMuestra;
 import unq.integrador.IUsuario;
-import unq.integrador.IUsuarioRango;
 import unq.integrador.enums.Lapso;
 import unq.integrador.enums.TipoOpinion;
-import unq.integrador.impls.BaseDeMuestras;
-import unq.integrador.impls.FiltroMuestras;
-import unq.integrador.impls.Usuario;
-import unq.integrador.impls.UsuarioBasico;
+import unq.integrador.impls.*;
 
 public class filtroMuestrasTest {
     IUsuario user;
     IBaseDeMuestras bdm;
-    IUsuarioRango rango;
+    UsuarioRango rango;
 
     FiltroMuestras f1;
     FiltroMuestras f2;

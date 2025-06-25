@@ -9,6 +9,7 @@ import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.FiltroMuestras;
+import unq.integrador.impls.UsuarioRango;
 
 /**
  * Interfaz de Usuarios
@@ -24,6 +25,7 @@ public interface IUsuario {
     public boolean publicoEstaMuestra(IMuestra muestra);
     public void determinarRango();
     public boolean subeDeRango();
+    public void setProximoRango(UsuarioRango usuarioRango);
     public List<IMuestra> buscarMuestra(FiltroMuestras filtro);
     public FiltroMuestras crearFiltroParaNivelDeVerificacion(boolean nivel);
     public FiltroMuestras crearFiltroParaFechaDeCreacion(Lapso op, LocalDate fecha);

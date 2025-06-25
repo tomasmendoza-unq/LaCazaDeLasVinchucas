@@ -11,6 +11,7 @@ import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Usuario;
+import unq.integrador.impls.UsuarioRango;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.*;
 public class UsuarioTest {
 	
 	IUsuario usuario;
-	IUsuarioRango rango;
+	UsuarioRango rango;
 	IMuestra muestra;
 	IBaseDeMuestras baseDeMuestras;
 	IUbicacion ubicacion;
@@ -29,8 +30,9 @@ public class UsuarioTest {
 		muestra = mock(IMuestra.class);
 		ubicacion = mock(IUbicacion.class);
 		baseDeMuestras = mock(IBaseDeMuestras.class);
-		rango = mock(IUsuarioRango.class);
-		usuario = new Usuario(10,rango, baseDeMuestras);
+		rango = mock(UsuarioRango.class);
+		usuario = new Usuario(10, baseDeMuestras);
+		usuario.setProximoRango(rango);
 		opinion = mock(Opinion.class);
 	}
 	
@@ -84,9 +86,9 @@ public class UsuarioTest {
 		));
 	}
 
+
 	@Test
 	public void usuarioSubeDeRangoCuandoTieneMasDe10PublicacionesY20OpinionesEn30Dias() {
-
 		assertFalse(usuario.subeDeRango());
 
 		for (int i = 0; i < 10; i++) {
@@ -101,6 +103,8 @@ public class UsuarioTest {
 		assertTrue(usuario.subeDeRango());
 
 		usuario.determinarRango();
+
+		verify(rango).determinarSiguienteRango(usuario);
 	}
 	@Test
 	public void usuarioNoSubeDeRangoCuandoNoCumpleCondiciones() {

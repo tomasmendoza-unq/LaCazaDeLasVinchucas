@@ -55,7 +55,6 @@ public class UsuarioTest {
 
 		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(captor.capture(), any(Opinion.class));
 
-
 		usuario.enviarMuestra("10", ubicacion);
 
 		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> usuario.opinarSobreUnaMuestra(captor.capture(), any(TipoOpinion.class)));

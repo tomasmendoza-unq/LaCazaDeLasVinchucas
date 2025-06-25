@@ -15,7 +15,7 @@ public abstract class UsuarioRango {
      *
      * @param usuario Usuario al cual se le modifica el rango
      */
-    public void determinarSiguienteRango(IUsuario usuario) {
+    public final void determinarSiguienteRango(IUsuario usuario) {
         usuario.setProximoRango(this.determinarRango(usuario));
     }
 

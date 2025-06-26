@@ -2,7 +2,12 @@ package unq.integrador.impls;
 
 import unq.integrador.IUsuario;
 
+/*
+ * Clase que representa a los usuarios que son especialistas
+ * aquellos que nunca cambian su rango dentro de la aplicación
+ */
 public class UsuarioEspecialista extends UsuarioExperto{
+    
     /**
      * Método para que un usuario determine su proximo rango
      *

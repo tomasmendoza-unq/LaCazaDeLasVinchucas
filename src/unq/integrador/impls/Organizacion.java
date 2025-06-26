@@ -6,7 +6,7 @@ import unq.integrador.enums.TipoOrganizacion;
 /**
  * Clase que representa a las Organizaciones
  * 
- @author Díaz Marcos, Mendoza Tomas, Monteros Dario
+ * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public class Organizacion implements IOrganizacion{
   private IUbicacion ubicacion;

@@ -3,7 +3,6 @@ package unq.integrador;
 import java.time.LocalDate;
 
 import unq.integrador.error.SinAccesoAMuestraException;
-import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.Opinion;
 
@@ -19,8 +18,8 @@ public interface IMuestra {
     public LocalDate getFechaUltimaVotacion();
     public void setEstado(IEstadoDeMuestra estado);
     public String resultadoActual();
-    public void agregarOpinionBasico(Opinion op) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException;
-    public void agregarOpinionExperto(Opinion op) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException;
+    public void agregarOpinionBasico(Opinion op) throws  UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException;
+    public void agregarOpinionExperto(Opinion op) throws  UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException;
     public void agregarAlHistorial(Opinion op, String categoria);
     public String verRegistroNro(int n);
     public boolean esVerificada();

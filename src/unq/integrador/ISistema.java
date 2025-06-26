@@ -13,7 +13,7 @@ import unq.integrador.impls.FiltroMuestras;
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public interface ISistema {
-	public void cargarMuestra(IMuestra muestra, IUsuario usuario) ;
+	public void cargarMuestra(IMuestra muestra, IUsuario usuario);
     public void notificarVerificacion(IMuestra muestra);
 	public void RegistrarZona(IZonaDeCobertura zonaDeCobertura);
 	public List<IMuestra> filtrarMuestras(FiltroMuestras filtro);

@@ -66,16 +66,25 @@ public class Usuario implements IUsuario {
 	 * Método para opinar sobre una muestra dada
 	 * 
 	 * @param muestra Muestra dada sobre la que se agrega la opinión
-	 * @param tipoOpinion TipoOpinion que será agregada a la muestra
+	 * @param opinion Opinion sobre una muestra
 	 * @throws SinAccesoAMuestraException 
 	 * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException 
 	 * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException 
 	 */
-	public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		Opinion opinion = new Opinion(this.id, tipoOpinion);
+	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+		this.verificarSiOpinoSobreLaMuestra(muestra);
+		this.verificarSiPublicoLaMuestra(muestra);
 		this.rango.opinarSobreUnaMuestra(muestra,opinion);
 		this.opinionList.add(opinion);
     }
+
+	private void verificarSiPublicoLaMuestra(IMuestra muestra) throws UnUsuarioNoPuedeOpinarEnSuMuestraException {
+		if(publicaciones.contains(muestra)) throw new UnUsuarioNoPuedeOpinarEnSuMuestraException("Un usuario no puede opinar sobre una muestra publicada por él mismo");
+	}
+
+	private void verificarSiOpinoSobreLaMuestra(IMuestra muestra) {
+		if (publicaciones.contains(muestra));
+	}
 
 
 	/**

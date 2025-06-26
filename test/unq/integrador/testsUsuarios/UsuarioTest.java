@@ -34,54 +34,25 @@ public class UsuarioTest {
 		usuario = new Usuario(10);
 		usuario.setProximoRango(rango);
 		opinion = mock(Opinion.class);
+		when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now());
 	}
 
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestra() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		usuario.opinarSobreUnaMuestra(muestra,TipoOpinion.IMAGEN_POCO_CLARA);
-		verify(rango).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
-				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
-						op.getID() == usuario.getId()
-		));
+		usuario.opinarSobreUnaMuestra(muestra,opinion);
+		verify(rango).opinarSobreUnaMuestra(muestra, opinion);
 	}
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		when(opinion.getTipo()).thenReturn(TipoOpinion.VINCHUCA_SORDIDA);
-		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(
-				muestra, opinion);
-
-
-		usuario.publicoEstaMuestra(muestra);
-
-		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class,
-				() -> usuario.opinarSobreUnaMuestra(muestra,  TipoOpinion.VINCHUCA_SORDIDA)
-		);
-
+		usuario.agregarMuestraPublicada(muestra);
+		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> usuario.opinarSobreUnaMuestra(muestra,opinion));
 	}
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestraDosVeces() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		doNothing()
-				.doThrow(new UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException())
-				.when(rango).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
-						op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
-								op.getID() == usuario.getId()
-				));
 
-		usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
-
-		assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class, () -> {
-			usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
-		});
-
-		// eq -> se espera que la muestra sea la misma que envio el usuario
-		// argthat -> esperamos un argumento op tal que su tipo de opinión sea IMAGEN_POCO_CLARA y su ID coincida con el del usuario."
-		verify(rango, times(2)).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
-				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
-						op.getID() == usuario.getId()
-		));
 	}
 
 
@@ -97,7 +68,7 @@ public class UsuarioTest {
 
 		for (int i = 0; i < 20; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
-			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA));
+			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, opinion));
 		}
 
 		assertTrue(usuario.subeDeRango());
@@ -113,12 +84,12 @@ public class UsuarioTest {
 		for (int i = 0; i < 5; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
 			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
-			usuario.publicoEstaMuestra(muestra);
+			usuario.agregarMuestraPublicada(muestraMock);
 		}
 
 		for (int i = 0; i < 10; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
-			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA));
+			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, opinion));
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -132,7 +103,7 @@ public class UsuarioTest {
 
 		for (int i = 0; i < 20; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
-			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA));
+			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, opinion));
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -144,7 +115,7 @@ public class UsuarioTest {
 		for (int i = 0; i < 10; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
 			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
-			usuario.publicoEstaMuestra(muestra);
+			usuario.agregarMuestraPublicada(muestraMock);
 		}
 
 		assertFalse(usuario.subeDeRango());

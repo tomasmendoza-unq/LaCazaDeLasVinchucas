@@ -5,7 +5,6 @@ import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.IMuestra;
 import unq.integrador.IUbicacion;
 import unq.integrador.error.SinAccesoAMuestraException;
-import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 
 import java.time.LocalDate;
@@ -124,7 +123,7 @@ public class Muestra implements IMuestra {
      * @see IEstadoDeMuestra
      * @throws SinAccesoAMuestraException Dependiendo del estado de la muestra y el rango del usuario que llame este método 
      */
-    public void agregarOpinionBasico(Opinion op)  throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
+    public void agregarOpinionBasico(Opinion op) throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
         revisarOpinionPorID(op.getID());
         this.estado.agregarOpinionBasico(op);
         this.agregarAlHistorial(op, "Básico");
@@ -137,11 +136,10 @@ public class Muestra implements IMuestra {
      * 
      * @param op una opinión para agregar a la muestra
      * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException Si un usuario opina por segunda vez
-     * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException Si el dueño de la muestra opina
      * @throws SinAccesoAMuestraException Dependiendo del estado de la muestra y el rango del usuario que llame este método 
      * @see IEstadoDeMuestra
      */
-    public void agregarOpinionExperto(Opinion op) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
+    public void agregarOpinionExperto(Opinion op) throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
         this.revisarOpinionPorID(op.getID());
         this.estado.agregarOpinionExperto(op);
         this.agregarAlHistorial(op, "Experto");
@@ -153,15 +151,10 @@ public class Muestra implements IMuestra {
      * o es el mismo dueño quien quiere opinar
      * 
      * @param id Un int que representa el id de un usuario
-     * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException
      * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException
      */
-    private void revisarOpinionPorID(int id) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-        // Si el id coincide con el dueño de la muestra
-        if (id == this.userID) {
-            throw new UnUsuarioNoPuedeOpinarEnSuMuestraException("Un usuario no puede opinar sobre una muestra publicada por él mismo");
-        }
-        
+    private void revisarOpinionPorID(int id) throws  UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+
         // Si el id coincide con el de alguien que ya haya votado
         if (this.historial.stream().anyMatch(l -> l.startsWith("Usuario " + id + " "))) {
             throw new UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException("Un usuario no puede opinar dos veces en una muestra");

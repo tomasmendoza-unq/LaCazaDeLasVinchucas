@@ -9,6 +9,7 @@ import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.FiltroMuestras;
+import unq.integrador.impls.Opinion;
 import unq.integrador.impls.UsuarioRango;
 
 /**
@@ -18,7 +19,7 @@ import unq.integrador.impls.UsuarioRango;
  */
 public interface IUsuario {
     public int getId();
-    public void opinarSobreUnaMuestra(IMuestra muestra, TipoOpinion tipoOpinion) throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
+    public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
     public void agregarMuestraPublicada(IMuestra muestra);
     public boolean publicoEstaMuestra(IMuestra muestra);
     public void determinarRango();

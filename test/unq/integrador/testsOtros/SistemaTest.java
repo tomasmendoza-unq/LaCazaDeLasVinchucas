@@ -3,8 +3,13 @@ package unq.integrador.testsOtros;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import unq.integrador.*;
+import unq.integrador.error.SinAccesoAMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
+import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Sistema;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class SistemaTest {
@@ -12,6 +17,7 @@ public class SistemaTest {
     ISistema sistema;
     IUsuario usuario;
     IMuestra muestra1;
+    Opinion opinion;
     IUbicacion ubicacionMuestra;
     IZonaDeCobertura zonaDeCobertura;
     IZonaDeCobertura zonaDeCobertura2;
@@ -21,6 +27,7 @@ public class SistemaTest {
         sistema = new Sistema();
         usuario = mock(IUsuario.class);
         muestra1 = mock(IMuestra.class);
+        opinion = mock(Opinion.class);
         ubicacionMuestra = mock(IUbicacion.class);
         zonaDeCobertura = mock(IZonaDeCobertura.class);
         zonaDeCobertura2 = mock(IZonaDeCobertura.class);
@@ -44,6 +51,42 @@ public class SistemaTest {
         verify(zonaDeCobertura2).cargarMuestra(muestra1);
         verify(usuario).agregarMuestraPublicada(muestra1);
 
+    }
+
+    @Test
+    public void usuarioOpinaSobreLaMuestra() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+        sistema.opinarSobre(muestra1,usuario,opinion);
+        verify(usuario).opinarSobreUnaMuestra(muestra1,opinion);
+    }
+
+    @Test
+    public void usuarioNoPuedeOpinarEnSuMuestra() throws Exception {
+        doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class)
+                .when(usuario).opinarSobreUnaMuestra(muestra1, opinion);
+
+        assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class,
+                () -> sistema.opinarSobre(muestra1, usuario, opinion)
+        );
+    }
+
+    @Test
+    public void usuarioNoPuedeOpinarNuevamenteSobreLaMismaMuestra() throws Exception {
+        doThrow(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class)
+                .when(usuario).opinarSobreUnaMuestra(muestra1, opinion);
+
+        assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class,
+                () -> sistema.opinarSobre(muestra1, usuario, opinion)
+        );
+    }
+
+    @Test
+    public void usuarioNoTieneAccesoALaMuestra() throws Exception {
+        doThrow(SinAccesoAMuestraException.class)
+                .when(usuario).opinarSobreUnaMuestra(muestra1, opinion);
+
+        assertThrows(SinAccesoAMuestraException.class,
+                () -> sistema.opinarSobre(muestra1, usuario, opinion)
+        );
     }
 
     @Test

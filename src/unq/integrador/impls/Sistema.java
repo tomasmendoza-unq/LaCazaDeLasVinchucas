@@ -3,6 +3,9 @@ package unq.integrador.impls;
 import unq.integrador.*;
 import unq.integrador.enums.Lapso;
 import unq.integrador.enums.TipoOpinion;
+import unq.integrador.error.SinAccesoAMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,6 +48,18 @@ public class Sistema implements ISistema {
         muestrasRegistradas.add(muestra);
         usuario.agregarMuestraPublicada(muestra);
         this.notificarCargaDeUnaMuestra(muestra);
+    }
+
+    /**
+     * Método para opinar sobre una muestra dada con el usuario dado y la opinion dada.
+     *
+     * @param muestra Una muestra sobre la cual se opina
+     * @param usuario usuario que opina sobre opinion
+     * @param opinion opinion que se agrega al usuario
+     */
+    @Override
+    public void opinarSobre(IMuestra muestra, IUsuario usuario, Opinion opinion) throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+        usuario.opinarSobreUnaMuestra(muestra,opinion);
     }
 
     /**

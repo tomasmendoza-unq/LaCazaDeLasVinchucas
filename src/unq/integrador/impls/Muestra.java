@@ -1,6 +1,6 @@
 package unq.integrador.impls;
 
-import unq.integrador.IBaseDeMuestras;
+import unq.integrador.ISistema;
 import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.IMuestra;
 import unq.integrador.IUbicacion;
@@ -25,7 +25,7 @@ public class Muestra implements IMuestra {
     private int userID;
     private String fotografia;
     private IUbicacion ubicacion;
-    private IBaseDeMuestras bdm;
+    private ISistema sistema;
     private LocalDate fechaCreacion;
     private ArrayList<String> historial;
     private IEstadoDeMuestra estado;
@@ -36,13 +36,13 @@ public class Muestra implements IMuestra {
      * @param id Representa el ID del usuario que publicó la muestra
      * @param fotografia Representa la fotografía del usuario que publicó la muestra
      * @param ubicacion Representa la ubicación de donde se publicó la muestra
-     * @param bdm Una base de muestras donde cargarse
+     * @param sistema Una base de muestras donde cargarse
      */
-    public Muestra(int id, String fotografia, IUbicacion ubicacion, IBaseDeMuestras bdm) {
+    public Muestra(int id, String fotografia, IUbicacion ubicacion, ISistema sistema) {
         this.userID        = id;
         this.fotografia    = fotografia;
         this.ubicacion     = ubicacion;
-        this.bdm           = bdm;
+        this.sistema = sistema;
         this.fechaCreacion = LocalDate.now();
         this.historial     = new ArrayList<String>();
         this.estado        = new MuestraLibre(this);
@@ -211,6 +211,6 @@ public class Muestra implements IMuestra {
      */
     @Override
     public void cargarMuestraVerificada() {
-        this.bdm.cargarMuestraVerificada(this);
+        this.sistema.notificarVerificacion(this);
     }
 }

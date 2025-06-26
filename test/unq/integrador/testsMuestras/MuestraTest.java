@@ -15,7 +15,7 @@ import unq.integrador.impls.Opinion;
 public class MuestraTest {
     private IMuestra muestra;
     private IUbicacion ubicacion;
-    private IBaseDeMuestras baseDeMuestras;
+    private ISistema baseDeMuestras;
     private Opinion op1;
     private Opinion op2;
     private Opinion op3;
@@ -27,7 +27,7 @@ public class MuestraTest {
         op1 = mock(Opinion.class);
         op2 = mock(Opinion.class);
         op3 = mock(Opinion.class);
-        baseDeMuestras = mock(IBaseDeMuestras.class);
+        baseDeMuestras = mock(ISistema.class);
         muestra = new Muestra(1, "Foto", ubicacion, baseDeMuestras);
         when(op1.getID()).thenReturn(40);
         when(op1.imprimirTipo()).thenReturn("Ninguna");
@@ -93,7 +93,7 @@ public class MuestraTest {
     public void testCargarMuestraVerificada() {
         muestra.cargarMuestraVerificada();
 
-        verify(baseDeMuestras).cargarMuestraVerificada(muestra);
+        verify(baseDeMuestras).notificarVerificacion(muestra);
     }
 
     @Test

@@ -1,19 +1,19 @@
 package unq.integrador.impls;
 
-import unq.integrador.IBaseDeMuestras;
+import unq.integrador.ISistema;
 import unq.integrador.IUbicacion;
 import unq.integrador.IZonaDeCobertura;
 import unq.integrador.IZonaDeCoberturaFactory;
 
 public class ZonaDeCoberturaFactory implements IZonaDeCoberturaFactory {
-    private IBaseDeMuestras baseDeMuestras;
+    private ISistema baseDeMuestras;
 
     /**
      * Constructor de ZonaDeCoberturFactory
      * 
      * @param baseDeMuestras Una base de muestras
      */
-    public ZonaDeCoberturaFactory(IBaseDeMuestras baseDeMuestras){
+    public ZonaDeCoberturaFactory(ISistema baseDeMuestras){
         this.baseDeMuestras = baseDeMuestras;
     }
 

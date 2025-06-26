@@ -2,17 +2,15 @@ package unq.integrador.testsOtros;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unq.integrador.IBaseDeMuestras;
-import unq.integrador.IMuestra;
-import unq.integrador.IUbicacion;
-import unq.integrador.IZonaDeCobertura;
-import unq.integrador.impls.BaseDeMuestras;
+import unq.integrador.*;
+import unq.integrador.impls.Sistema;
 
 import static org.mockito.Mockito.*;
 
 public class BaseDeMuestrasTest {
 
-    IBaseDeMuestras baseDeMuestras;
+    ISistema sistema;
+    IUsuario usuario;
     IMuestra muestra1;
     IUbicacion ubicacionMuestra;
     IZonaDeCobertura zonaDeCobertura;
@@ -20,7 +18,8 @@ public class BaseDeMuestrasTest {
 
     @BeforeEach
     public void setUp(){
-        baseDeMuestras = new BaseDeMuestras();
+        sistema = new Sistema();
+        usuario = mock(IUsuario.class);
         muestra1 = mock(IMuestra.class);
         ubicacionMuestra = mock(IUbicacion.class);
         zonaDeCobertura = mock(IZonaDeCobertura.class);
@@ -33,10 +32,10 @@ public class BaseDeMuestrasTest {
         when(zonaDeCobertura.contieneUbicacion(ubicacionMuestra)).thenReturn(false);
         when(zonaDeCobertura2.contieneUbicacion(ubicacionMuestra)).thenReturn(true);
 
-        baseDeMuestras.RegistrarZona(zonaDeCobertura);
-        baseDeMuestras.RegistrarZona(zonaDeCobertura2);
+        sistema.RegistrarZona(zonaDeCobertura);
+        sistema.RegistrarZona(zonaDeCobertura2);
 
-        baseDeMuestras.cargarMuestra(muestra1);
+        sistema.cargarMuestra(muestra1,usuario);
 
         verify(muestra1).getUbicacion();
         verify(zonaDeCobertura).contieneUbicacion(ubicacionMuestra);
@@ -52,10 +51,10 @@ public class BaseDeMuestrasTest {
         when(zonaDeCobertura.contieneUbicacion(ubicacionMuestra)).thenReturn(false);
         when(zonaDeCobertura2.contieneUbicacion(ubicacionMuestra)).thenReturn(true);
 
-        baseDeMuestras.RegistrarZona(zonaDeCobertura);
-        baseDeMuestras.RegistrarZona(zonaDeCobertura2);
+        sistema.RegistrarZona(zonaDeCobertura);
+        sistema.RegistrarZona(zonaDeCobertura2);
 
-        baseDeMuestras.cargarMuestraVerificada(muestra1);
+        sistema.notificarVerificacion(muestra1);
 
         verify(muestra1).getUbicacion();
         verify(zonaDeCobertura).contieneUbicacion(ubicacionMuestra);

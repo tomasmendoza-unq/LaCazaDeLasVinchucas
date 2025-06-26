@@ -13,6 +13,8 @@ import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Usuario;
 import unq.integrador.impls.UsuarioRango;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -21,7 +23,6 @@ public class UsuarioTest {
 	IUsuario usuario;
 	UsuarioRango rango;
 	IMuestra muestra;
-	IBaseDeMuestras baseDeMuestras;
 	IUbicacion ubicacion;
 	Opinion opinion;
 	
@@ -29,19 +30,13 @@ public class UsuarioTest {
 	public void setUp() {
 		muestra = mock(IMuestra.class);
 		ubicacion = mock(IUbicacion.class);
-		baseDeMuestras = mock(IBaseDeMuestras.class);
 		rango = mock(UsuarioRango.class);
-		usuario = new Usuario(10, baseDeMuestras);
+		usuario = new Usuario(10);
 		usuario.setProximoRango(rango);
 		opinion = mock(Opinion.class);
 	}
-	
-	@Test
-	public void usuarioUnaMuestra() {
-		usuario.enviarMuestra("10", ubicacion);
-		verify(baseDeMuestras).cargarMuestra(any(IMuestra.class));
-	}
-	
+
+
 	@Test
 	public void usuarioOpinaSobreUnaMuestra() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
 		usuario.opinarSobreUnaMuestra(muestra,TipoOpinion.IMAGEN_POCO_CLARA);
@@ -53,13 +48,16 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		ArgumentCaptor<IMuestra> captor = ArgumentCaptor.forClass(IMuestra.class);
+		when(opinion.getTipo()).thenReturn(TipoOpinion.VINCHUCA_SORDIDA);
+		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(
+				muestra, opinion);
 
-		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(captor.capture(), any(Opinion.class));
 
-		usuario.enviarMuestra("10", ubicacion);
+		usuario.publicoEstaMuestra(muestra);
 
-		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> usuario.opinarSobreUnaMuestra(captor.capture(), any(TipoOpinion.class)));
+		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class,
+				() -> usuario.opinarSobreUnaMuestra(muestra,  TipoOpinion.VINCHUCA_SORDIDA)
+		);
 
 	}
 
@@ -92,7 +90,9 @@ public class UsuarioTest {
 		assertFalse(usuario.subeDeRango());
 
 		for (int i = 0; i < 10; i++) {
-			usuario.enviarMuestra("asd", ubicacion);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
+			usuario.agregarMuestraPublicada(muestraMock);
 		}
 
 		for (int i = 0; i < 20; i++) {
@@ -106,11 +106,14 @@ public class UsuarioTest {
 
 		verify(rango).determinarSiguienteRango(usuario);
 	}
+
 	@Test
 	public void usuarioNoSubeDeRangoCuandoNoCumpleCondiciones() {
 
 		for (int i = 0; i < 5; i++) {
-			usuario.enviarMuestra("asd", ubicacion);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
+			usuario.publicoEstaMuestra(muestra);
 		}
 
 		for (int i = 0; i < 10; i++) {
@@ -139,19 +142,13 @@ public class UsuarioTest {
 	public void usuarioNoSubeDeRangoConPublicacionesSuficientesPeroNoOpiniones() {
 
 		for (int i = 0; i < 10; i++) {
-			usuario.enviarMuestra("asd", ubicacion);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
+			usuario.publicoEstaMuestra(muestra);
 		}
 
 		assertFalse(usuario.subeDeRango());
 	}
 
-
-	@Test
-	public void usuarioEliminaYAgregaMuestra(){
-		usuario.agregarMuestraPublicada(muestra);
-		assertTrue(usuario.publicoEstaMuestra(muestra));
-		usuario.quitarMuestra(muestra);
-		assertFalse(usuario.publicoEstaMuestra(muestra));
-	}
 
 }

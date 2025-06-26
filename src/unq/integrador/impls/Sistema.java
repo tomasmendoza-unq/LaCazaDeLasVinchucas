@@ -1,9 +1,6 @@
 package unq.integrador.impls;
 
-import unq.integrador.IBaseDeMuestras;
-import unq.integrador.IMuestra;
-import unq.integrador.IUbicacion;
-import unq.integrador.IZonaDeCobertura;
+import unq.integrador.*;
 import unq.integrador.enums.Lapso;
 import unq.integrador.enums.TipoOpinion;
 
@@ -20,36 +17,46 @@ import java.util.List;
  * 
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
-public class BaseDeMuestras implements IBaseDeMuestras {
+public class Sistema implements ISistema {
 
     private List<IMuestra> muestrasRegistradas;
     private List<IZonaDeCobertura> zonaDeCoberturas;
     private FiltroDeMuestrasFactory filtroFactory;
 
     /**
-     * Constructor de BaseDeMuestras
+     * Constructor de Sistema
      * Tus únicos dos atributos son ArrayList, uno de IMuestra y otro de
      * IZonaDeCobertura
      */
-    public BaseDeMuestras(){
+    public Sistema(){
         muestrasRegistradas = new ArrayList<>();
         zonaDeCoberturas = new ArrayList<>();
         filtroFactory = new FiltroDeMuestrasFactory();
     }
 
     /**
-     * Método para añador una muestra a la lista de muestras de la base.
-     * Además, de una lista de zonas de cobertura que están sobre la ubicación de las muestras
-     * les añade la misma a cada una.
+     * Método para añadir una muestra a la lista de muestras de la base, cargando la muestra al usuario dado.
      * 
      * @param muestra Una muestra para agregar
+     * @param usuario usuario que agrego la muestra
      */
     @Override
-    public void cargarMuestra(IMuestra muestra) {
+    public void cargarMuestra(IMuestra muestra, IUsuario usuario) {
         muestrasRegistradas.add(muestra);
-        this.zonasPertenecientesA(muestra.getUbicacion())
-            .forEach(zonaDeCobertura -> zonaDeCobertura.cargarMuestra(muestra));
+        usuario.agregarMuestraPublicada(muestra);
+        this.notificarCargaDeUnaMuestra(muestra);
     }
+
+    /**
+     * Metodo para cargar la muestra a las zonas de cobertura que se ubique en el radio.
+     *
+     * @param muestra muestra a agregar a la zona
+     */
+    private void notificarCargaDeUnaMuestra(IMuestra muestra) {
+        this.zonasPertenecientesA(muestra.getUbicacion())
+                .forEach(zonaDeCobertura -> zonaDeCobertura.cargarMuestra(muestra));
+    }
+
 
     /**
      * Método que notifica a todas las zonas de cobertura que pertenecen
@@ -58,7 +65,7 @@ public class BaseDeMuestras implements IBaseDeMuestras {
      * @param muestra Una muestra que esté verificada
      */
     @Override
-    public void cargarMuestraVerificada(IMuestra muestra) {
+    public void notificarVerificacion(IMuestra muestra) {
         this.zonasPertenecientesA(muestra.getUbicacion())
             .forEach(zonaDeCobertura -> zonaDeCobertura.notificarNuevaMuestraVerificada(muestra));
     }

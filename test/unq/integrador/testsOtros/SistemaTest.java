@@ -7,7 +7,7 @@ import unq.integrador.impls.Sistema;
 
 import static org.mockito.Mockito.*;
 
-public class BaseDeMuestrasTest {
+public class SistemaTest {
 
     ISistema sistema;
     IUsuario usuario;
@@ -27,7 +27,7 @@ public class BaseDeMuestrasTest {
     }
 
     @Test
-    public void seCargaUnaMuestraALaBaseDeDatos(){
+    public void seCargaUnaMuestraAlSistema(){
         when(muestra1.getUbicacion()).thenReturn(ubicacionMuestra);
         when(zonaDeCobertura.contieneUbicacion(ubicacionMuestra)).thenReturn(false);
         when(zonaDeCobertura2.contieneUbicacion(ubicacionMuestra)).thenReturn(true);
@@ -42,6 +42,7 @@ public class BaseDeMuestrasTest {
         verify(zonaDeCobertura2).contieneUbicacion(ubicacionMuestra);
         verify(zonaDeCobertura, never()).cargarMuestra(muestra1);
         verify(zonaDeCobertura2).cargarMuestra(muestra1);
+        verify(usuario).agregarMuestraPublicada(muestra1);
 
     }
 

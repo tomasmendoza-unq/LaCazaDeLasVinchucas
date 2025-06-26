@@ -2,8 +2,6 @@ package unq.integrador.testsUsuarios;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.mockito.ArgumentCaptor;
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
@@ -14,6 +12,9 @@ import unq.integrador.impls.Usuario;
 import unq.integrador.impls.UsuarioRango;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class UsuarioTest {
@@ -52,25 +53,24 @@ public class UsuarioTest {
 	}
 
 	@Test
-	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		ArgumentCaptor<IMuestra> captor = ArgumentCaptor.forClass(IMuestra.class);
-
-		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(captor.capture(), any(Opinion.class));
-
-		usuario.enviarMuestra("10", ubicacion);
-
-		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> usuario.opinarSobreUnaMuestra(captor.capture(), any(TipoOpinion.class)));
-
+	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
+		doThrow(new UnUsuarioNoPuedeOpinarEnSuMuestraException())
+		.when(rango).opinarSobreUnaMuestra(any(IMuestra.class), any(Opinion.class));
+		
+		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class,
+			() -> usuario.opinarSobreUnaMuestra(muestra, null));
 	}
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestraDosVeces() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
 		doNothing()
-				.doThrow(new UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException())
-				.when(rango).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
-						op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
-								op.getID() == usuario.getId()
-				));
+		.doThrow(new UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException())
+		.when(rango).opinarSobreUnaMuestra(eq(muestra), 
+			argThat(op ->
+				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
+				op.getID() == usuario.getId()
+			)
+		);
 
 		usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
 

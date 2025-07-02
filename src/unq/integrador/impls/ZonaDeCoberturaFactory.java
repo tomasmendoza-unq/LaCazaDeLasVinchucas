@@ -6,15 +6,15 @@ import unq.integrador.IZonaDeCobertura;
 import unq.integrador.IZonaDeCoberturaFactory;
 
 public class ZonaDeCoberturaFactory implements IZonaDeCoberturaFactory {
-    private ISistema baseDeMuestras;
+    private ISistema sistema;
 
     /**
      * Constructor de ZonaDeCoberturFactory
      * 
-     * @param baseDeMuestras Una base de muestras
+     * @param sistema referencia hacia el sistema
      */
-    public ZonaDeCoberturaFactory(ISistema baseDeMuestras){
-        this.baseDeMuestras = baseDeMuestras;
+    public ZonaDeCoberturaFactory(ISistema sistema){
+        this.sistema = sistema;
     }
 
     /**
@@ -29,7 +29,7 @@ public class ZonaDeCoberturaFactory implements IZonaDeCoberturaFactory {
     @Override
     public IZonaDeCobertura crearZona(IUbicacion epicentro, String nombreDeCobertura, double radioEnKm) {
         IZonaDeCobertura zonaDeCobertura = new ZonaDeCobertura(epicentro,nombreDeCobertura,radioEnKm);
-        this.baseDeMuestras.RegistrarZona(zonaDeCobertura);
+        this.sistema.RegistrarZona(zonaDeCobertura);
         return zonaDeCobertura;
     }
 }

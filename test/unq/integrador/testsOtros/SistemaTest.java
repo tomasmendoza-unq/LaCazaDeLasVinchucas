@@ -9,7 +9,7 @@ import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraExceptio
 import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Sistema;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class SistemaTest {
@@ -18,6 +18,7 @@ public class SistemaTest {
     IUsuario usuario;
     IMuestra muestra1;
     Opinion opinion;
+    IFiltroMuestra filtro;
     IUbicacion ubicacionMuestra;
     IZonaDeCobertura zonaDeCobertura;
     IZonaDeCobertura zonaDeCobertura2;
@@ -27,6 +28,7 @@ public class SistemaTest {
         sistema = new Sistema();
         usuario = mock(IUsuario.class);
         muestra1 = mock(IMuestra.class);
+        filtro = mock(IFiltroMuestra.class);
         opinion = mock(Opinion.class);
         ubicacionMuestra = mock(IUbicacion.class);
         zonaDeCobertura = mock(IZonaDeCobertura.class);
@@ -106,6 +108,20 @@ public class SistemaTest {
         verify(zonaDeCobertura, never()).notificarNuevaMuestraVerificada(muestra1);
         verify(zonaDeCobertura2).notificarNuevaMuestraVerificada(muestra1);
 
+    }
+
+    @Test
+    public void recibeUnFitro(){
+        IMuestra muestra2 = mock(IMuestra.class);
+
+        sistema.cargarMuestra(muestra1,usuario);
+        sistema.cargarMuestra(muestra2,usuario);
+
+        when(filtro.verificar(muestra1)).thenReturn(true);
+        when(filtro.verificar(muestra2)).thenReturn(false);
+
+        assertTrue(sistema.filtrarMuestras(filtro).contains(muestra1));
+        assertFalse(sistema.filtrarMuestras(filtro).contains(muestra2));
     }
 
 }

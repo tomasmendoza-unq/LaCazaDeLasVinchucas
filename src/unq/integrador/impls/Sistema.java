@@ -110,7 +110,7 @@ public class Sistema implements ISistema {
      */
     @Override
     public List<IMuestra> filtrarMuestras(IFiltroMuestra filtro) {
-        return muestrasRegistradas.stream().filter(filtro::test).toList();
+        return muestrasRegistradas.stream().filter(filtro::verificar).toList();
     }
 
     

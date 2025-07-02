@@ -6,7 +6,11 @@ import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 
-
+/**
+ * Clase abstracta que representa el rango de los usuarios
+ * Desde esta clase se delega a UsuarioBasico, UsuarioExperto
+ * y UsuarioEspecialista
+ */
 public abstract class UsuarioRango {
 
     public abstract void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion, IUsuario usuario) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException;

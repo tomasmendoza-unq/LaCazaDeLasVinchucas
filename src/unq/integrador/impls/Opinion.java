@@ -7,7 +7,7 @@ import unq.integrador.enums.TipoOpinion;
 /**
  * Clase que representa las opiniones de los usuarios en muestras
  * 
- @author Díaz Marcos, Mendoza Tomas, Monteros Dario
+ * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public class Opinion {
     private TipoOpinion tipo;

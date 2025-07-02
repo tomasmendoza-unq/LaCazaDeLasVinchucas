@@ -22,14 +22,14 @@ public class SinAccesoAMuestraExceptionTest {
     
     @Test
     public void testConstructorConCausa() {
-        Throwable causa = new RuntimeException("Causa");
+        Throwable causa = new Exception("Causa");
         assertThrows(SinAccesoAMuestraException.class, () -> { 
             throw new SinAccesoAMuestraException(causa); });
     }
 
     @Test
     public void testConstructorConMensajeYCausa() {
-        Throwable causa = new RuntimeException("Causa");
+        Throwable causa = new Exception("Causa");
         assertThrows(SinAccesoAMuestraException.class, () -> { 
             throw new SinAccesoAMuestraException("Mensaje", causa); });
     }

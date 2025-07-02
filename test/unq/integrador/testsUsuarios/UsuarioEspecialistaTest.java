@@ -23,7 +23,7 @@ public class UsuarioEspecialistaTest {
     public void setUp() {
         muestra = mock(IMuestra.class);
         usuarioRango = new UsuarioEspecialista();
-        usuario = mock(IUsuario.class);
+        usuario = mock(Usuario.class);
         opinion = mock(Opinion.class);
     }
 

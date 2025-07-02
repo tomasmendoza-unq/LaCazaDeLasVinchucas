@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import unq.integrador.IFiltroMuestra;
 import unq.integrador.IMuestra;
-import unq.integrador.impls.FiltroAnd;
-import unq.integrador.impls.FiltroCompuesto;
+import unq.integrador.impls.filtros.FiltroAnd;
+import unq.integrador.impls.filtros.FiltroCompuesto;
 
 import java.util.ArrayList;
 import java.util.List;

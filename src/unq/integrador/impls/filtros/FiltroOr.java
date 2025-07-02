@@ -1,4 +1,4 @@
-package unq.integrador.impls;
+package unq.integrador.impls.filtros;
 
 import unq.integrador.IFiltroMuestra;
 import unq.integrador.IMuestra;

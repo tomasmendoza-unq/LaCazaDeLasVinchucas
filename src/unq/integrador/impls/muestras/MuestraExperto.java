@@ -1,10 +1,11 @@
-package unq.integrador.impls;
+package unq.integrador.impls.muestras;
 
 import java.util.HashMap;
 
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
+import unq.integrador.impls.Opinion;
 
 /**
  * Esta clase representa el estado de las muestras en las que solo pueden

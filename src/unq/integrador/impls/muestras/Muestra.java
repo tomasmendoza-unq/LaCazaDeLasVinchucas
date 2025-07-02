@@ -1,9 +1,10 @@
-package unq.integrador.impls;
+package unq.integrador.impls.muestras;
 
 import unq.integrador.*;
 import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
+import unq.integrador.impls.Opinion;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class Muestra implements IMuestra {
     private IUbicacion ubicacion;
     private ISistema sistema;
     private LocalDate fechaCreacion;
-    private Map<IUsuario,Opinion> historial;
+    private Map<IUsuario, Opinion> historial;
     private IEstadoDeMuestra estado;
     private LocalDate fechaUltimaVotacion;
     

@@ -15,5 +15,5 @@ public class FechaIgualTest {
     public void setUp(){
         fechaIgual = new FechaIgual(LocalDate.now());
     }
-    
+
 }

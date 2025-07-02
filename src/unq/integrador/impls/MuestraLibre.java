@@ -18,9 +18,7 @@ public class MuestraLibre implements IEstadoDeMuestra {
     private IMuestra muestra;
     /**
      * Constructor de la clase MuestraLibre
-     * @param user usuario que publicó la muestra
-     * @param fotografia fotografía del usuario que publicó la muestra
-     * @param ubicacion ubicación del usuario que publicó la muestra
+     * @param muestra muestra la cual pertenece el estado
      */
     public MuestraLibre(IMuestra muestra) {
         this.opiniones = new HashMap<>();

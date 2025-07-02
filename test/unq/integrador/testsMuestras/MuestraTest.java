@@ -9,13 +9,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
+import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.Muestra;
 import unq.integrador.impls.Opinion;
 
 public class MuestraTest {
     private IMuestra muestra;
+    private IUsuario usuario1;
+    private IUsuario usuario2;
+    private IUsuario usuario3;
+    private IUsuario owner;
     private IUbicacion ubicacion;
-    private IBaseDeMuestras baseDeMuestras;
+    private ISistema baseDeMuestras;
     private Opinion op1;
     private Opinion op2;
     private Opinion op3;
@@ -27,17 +33,18 @@ public class MuestraTest {
         op1 = mock(Opinion.class);
         op2 = mock(Opinion.class);
         op3 = mock(Opinion.class);
-        baseDeMuestras = mock(IBaseDeMuestras.class);
-        muestra = new Muestra(1, "Foto", ubicacion, baseDeMuestras);
-        when(op1.getID()).thenReturn(40);
+        usuario1 = mock(IUsuario.class);
+        usuario2 = mock(IUsuario.class);
+        usuario3 = mock(IUsuario.class);
+        owner = mock(IUsuario.class);
+        baseDeMuestras = mock(ISistema.class);
+        muestra = new Muestra( owner,"Foto", ubicacion, baseDeMuestras);
         when(op1.imprimirTipo()).thenReturn("Ninguna");
         when(op1.getTipo()).thenReturn(TipoOpinion.NINGUNA);
         when(op1.getFechaDeCreacion()).thenReturn(LocalDate.now());
-        when(op2.getID()).thenReturn(20);
         when(op2.imprimirTipo()).thenReturn("Imagen poco clara");
         when(op2.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
         when(op2.getFechaDeCreacion()).thenReturn(LocalDate.now());
-        when(op3.getID()).thenReturn(10);
         when(op3.imprimirTipo()).thenReturn("Imagen poco clara");
         when(op3.getTipo()).thenReturn(TipoOpinion.IMAGEN_POCO_CLARA);
         when(op3.getFechaDeCreacion()).thenReturn(LocalDate.now());
@@ -45,13 +52,14 @@ public class MuestraTest {
 
     @Test
     public void testGetters() {
-        assertEquals(1, muestra.getIDUsuario());
         assertEquals("Foto", muestra.getFotografia());
         assertEquals(ubicacion, muestra.getUbicacion());
         assertEquals(LocalDate.now(), muestra.getFechaCreacion());
+        assertEquals(owner, muestra.getOwner());
 
-         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op1));
-        
+        assertDoesNotThrow(() -> muestra.agregarOpinionBasico(usuario1,op1));
+        assertEquals(op1, muestra.getHistorial().get(usuario1));
+
         assertEquals(LocalDate.now(), muestra.getFechaUltimaVotacion());
     }
 
@@ -62,38 +70,41 @@ public class MuestraTest {
         assertEquals("No definido", muestra.resultadoActual());
 
         // Al agregar la opinión el resultado cambia
-        assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op1));
+        assertDoesNotThrow(() -> muestra.agregarOpinionBasico(usuario1,op1));
         assertEquals("Ninguna", muestra.resultadoActual());
 
 
         // Al agregar más opiniones de otro tipo el resultado vuelve a cambiar
-         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op2));
-         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op3));
+         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(usuario2,op2));
+         assertDoesNotThrow(() -> muestra.agregarOpinionBasico(usuario3,op3));
         assertEquals("Imagen poco clara", muestra.resultadoActual());
 
 
     }
 
     @Test
-    public void testAgregarAlHistorial() {
-        assertDoesNotThrow(() -> muestra.agregarOpinionBasico(op1));
+    public void muestraRecibeUnaOpinionDelQueLaPublico(){
+        assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> muestra.agregarOpinionBasico(owner,op1));
+        assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> muestra.agregarOpinionExperto(owner,op1));
+    }
 
-        assertEquals(
-            "Usuario 40 opinó: Ninguna, en la fecha: " + LocalDate.now().toString() + ", con categoría: Básico",
-            muestra.verRegistroNro(1));
-        
-        assertDoesNotThrow(() -> muestra.agregarOpinionExperto(op2));
+    @Test
+    public void muestraRecibeUnaOpinionDeUnUsuarioBasicoQueYaOpinio(){
+        assertDoesNotThrow(() -> muestra.agregarOpinionBasico(usuario1,op1));
+        assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class, () -> muestra.agregarOpinionBasico(usuario1,op1));
+    }
 
-        assertEquals(
-            "Usuario 20 opinó: Imagen poco clara, en la fecha: " + LocalDate.now().toString() + ", con categoría: Experto",
-            muestra.verRegistroNro(2));
+    @Test
+    public void muestraRecibeUnaOpinionDeUnUsuarioExpertoQueYaOpinio(){
+        assertDoesNotThrow(() -> muestra.agregarOpinionExperto(usuario1,op1));
+        assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class, () -> muestra.agregarOpinionExperto(usuario1,op1));
     }
 
     @Test
     public void testCargarMuestraVerificada() {
         muestra.cargarMuestraVerificada();
 
-        verify(baseDeMuestras).cargarMuestraVerificada(muestra);
+        verify(baseDeMuestras).notificarVerificacion(muestra);
     }
 
     @Test
@@ -103,8 +114,8 @@ public class MuestraTest {
 
     @Test
     public void testLaMuestraEstaVerificada() {
-        assertDoesNotThrow(() -> muestra.agregarOpinionExperto(op3));
-        assertDoesNotThrow(() -> muestra.agregarOpinionExperto(op2));
+        assertDoesNotThrow(() -> muestra.agregarOpinionExperto(usuario1,op3));
+        assertDoesNotThrow(() -> muestra.agregarOpinionExperto(usuario2,op2));
 
         assertTrue(muestra.esVerificada());
     }

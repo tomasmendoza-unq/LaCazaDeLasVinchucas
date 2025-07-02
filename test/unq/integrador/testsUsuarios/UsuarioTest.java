@@ -11,6 +11,8 @@ import unq.integrador.impls.Opinion;
 import unq.integrador.impls.Usuario;
 import unq.integrador.impls.UsuarioRango;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -22,7 +24,6 @@ public class UsuarioTest {
 	IUsuario usuario;
 	UsuarioRango rango;
 	IMuestra muestra;
-	IBaseDeMuestras baseDeMuestras;
 	IUbicacion ubicacion;
 	Opinion opinion;
 	
@@ -30,61 +31,34 @@ public class UsuarioTest {
 	public void setUp() {
 		muestra = mock(IMuestra.class);
 		ubicacion = mock(IUbicacion.class);
-		baseDeMuestras = mock(IBaseDeMuestras.class);
 		rango = mock(UsuarioRango.class);
-		usuario = new Usuario(10, baseDeMuestras);
+		usuario = new Usuario(rango);
 		usuario.setProximoRango(rango);
 		opinion = mock(Opinion.class);
+		when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now());
 	}
-	
-	@Test
-	public void usuarioUnaMuestra() {
-		usuario.enviarMuestra("10", ubicacion);
-		verify(baseDeMuestras).cargarMuestra(any(IMuestra.class));
-	}
-	
+
+
 	@Test
 	public void usuarioOpinaSobreUnaMuestra() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		usuario.opinarSobreUnaMuestra(muestra,TipoOpinion.IMAGEN_POCO_CLARA);
-		verify(rango).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
-				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
-						op.getID() == usuario.getId()
-		));
+		usuario.opinarSobreUnaMuestra(muestra,opinion);
+		verify(rango).opinarSobreUnaMuestra(muestra, opinion, usuario);
 	}
 
 	@Test
-	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
-		doThrow(new UnUsuarioNoPuedeOpinarEnSuMuestraException())
-		.when(rango).opinarSobreUnaMuestra(any(IMuestra.class), any(Opinion.class));
-		
-		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class,
-			() -> usuario.opinarSobreUnaMuestra(muestra, null));
+	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(muestra,opinion,usuario);
+		usuario.agregarMuestraPublicada(muestra);
+		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> usuario.opinarSobreUnaMuestra(muestra,opinion));
 	}
-
 	@Test
-	public void usuarioOpinaSobreUnaMuestraDosVeces() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		doNothing()
-		.doThrow(new UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException())
-		.when(rango).opinarSobreUnaMuestra(eq(muestra), 
-			argThat(op ->
-				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
-				op.getID() == usuario.getId()
-			)
-		);
-
-		usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
-
-		assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class, () -> {
-			usuario.opinarSobreUnaMuestra(muestra, TipoOpinion.IMAGEN_POCO_CLARA);
-		});
-
-		// eq -> se espera que la muestra sea la misma que envio el usuario
-		// argthat -> esperamos un argumento op tal que su tipo de opinión sea IMAGEN_POCO_CLARA y su ID coincida con el del usuario."
-		verify(rango, times(2)).opinarSobreUnaMuestra(eq(muestra), argThat(op ->
-				op.getTipo() == TipoOpinion.IMAGEN_POCO_CLARA &&
-						op.getID() == usuario.getId()
-		));
+	public void usuarioOpinaSobreUnaMuestraQueYaVoto() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+		doThrow(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class).when(rango).opinarSobreUnaMuestra(muestra,opinion,usuario);
+		usuario.agregarMuestraPublicada(muestra);
+		assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class, () -> usuario.opinarSobreUnaMuestra(muestra,opinion));
 	}
+
+
 
 
 	@Test
@@ -92,12 +66,14 @@ public class UsuarioTest {
 		assertFalse(usuario.subeDeRango());
 
 		for (int i = 0; i < 10; i++) {
-			usuario.enviarMuestra("asd", ubicacion);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
+			usuario.agregarMuestraPublicada(muestraMock);
 		}
 
 		for (int i = 0; i < 20; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
-			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA));
+			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, opinion));
 		}
 
 		assertTrue(usuario.subeDeRango());
@@ -106,16 +82,19 @@ public class UsuarioTest {
 
 		verify(rango).determinarSiguienteRango(usuario);
 	}
+
 	@Test
 	public void usuarioNoSubeDeRangoCuandoNoCumpleCondiciones() {
 
 		for (int i = 0; i < 5; i++) {
-			usuario.enviarMuestra("asd", ubicacion);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
+			usuario.agregarMuestraPublicada(muestraMock);
 		}
 
 		for (int i = 0; i < 10; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
-			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA));
+			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, opinion));
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -129,7 +108,7 @@ public class UsuarioTest {
 
 		for (int i = 0; i < 20; i++) {
 			IMuestra muestraMock = mock(IMuestra.class);
-			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, TipoOpinion.IMAGEN_POCO_CLARA));
+			assertDoesNotThrow(() -> usuario.opinarSobreUnaMuestra(muestraMock, opinion));
 		}
 
 		assertFalse(usuario.subeDeRango());
@@ -139,19 +118,13 @@ public class UsuarioTest {
 	public void usuarioNoSubeDeRangoConPublicacionesSuficientesPeroNoOpiniones() {
 
 		for (int i = 0; i < 10; i++) {
-			usuario.enviarMuestra("asd", ubicacion);
+			IMuestra muestraMock = mock(IMuestra.class);
+			when(muestraMock.getFechaCreacion()).thenReturn(LocalDate.now());
+			usuario.agregarMuestraPublicada(muestraMock);
 		}
 
 		assertFalse(usuario.subeDeRango());
 	}
 
-
-	@Test
-	public void usuarioEliminaYAgregaMuestra(){
-		usuario.agregarMuestraPublicada(muestra);
-		assertTrue(usuario.publicoEstaMuestra(muestra));
-		usuario.quitarMuestra(muestra);
-		assertFalse(usuario.publicoEstaMuestra(muestra));
-	}
 
 }

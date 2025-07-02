@@ -34,10 +34,10 @@ public class UsuarioExpertoTest {
   }
 
   @Test
-  public void UsuarioExpertoOpinaSobreUnaMuestraLibre() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-    assertDoesNotThrow(() -> usuarioRango.opinarSobreUnaMuestra(muestra,opinion));
+  public void UsuarioExpertoOpinaSobreUnaMuestraLibre() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException {
+    assertDoesNotThrow(() -> usuarioRango.opinarSobreUnaMuestra(muestra,opinion, usuario));
 
-    verify(muestra).agregarOpinionExperto(opinion);
+    verify(muestra).agregarOpinionExperto(usuario,opinion);
   }
 
   @Test
@@ -62,12 +62,12 @@ public class UsuarioExpertoTest {
 
 
   @Test
-  public void UsuarioExpertoOpinaSobreUnaMuestraCerrada() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+  public void UsuarioExpertoOpinaSobreUnaMuestraCerrada() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException {
 
-    doThrow(new SinAccesoAMuestraException()).when(muestra).agregarOpinionExperto(opinion);
+    doThrow(new SinAccesoAMuestraException()).when(muestra).agregarOpinionExperto(usuario,opinion);
 
     assertThrows(SinAccesoAMuestraException.class, () -> {
-      usuarioRango.opinarSobreUnaMuestra(muestra,opinion);
+      usuarioRango.opinarSobreUnaMuestra(muestra,opinion, usuario);
     });
   }
 }

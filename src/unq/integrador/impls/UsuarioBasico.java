@@ -16,16 +16,17 @@ public class UsuarioBasico extends UsuarioRango {
     /**
      * Método para que un usuario de categoría básica
      * opine de esa forma en una muestra dada
-     * 
+     *
      * @param muestra Muestra sobre la que se opina
      * @param opinion Opinión que se agrega a la muestra
-     * @throws SinAccesoAMuestraException 
-     * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException 
-     * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException 
+     * @param usuario
+     * @throws SinAccesoAMuestraException
+     * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException
+     * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException
      */
     @Override
-    public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
-        muestra.agregarOpinionBasico(opinion);
+    public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion, IUsuario usuario) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
+        muestra.agregarOpinionBasico(usuario,opinion);
     }
 
     /**

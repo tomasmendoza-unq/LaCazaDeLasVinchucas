@@ -17,7 +17,7 @@ public class OpinionTest {
     @BeforeEach
     public void setUp() {
         tp = TipoOpinion.NINGUNA;
-        op = new Opinion(2, tp);
+        op = new Opinion( tp);
     }
 
     @Test
@@ -28,7 +28,6 @@ public class OpinionTest {
         assertEquals(TipoOpinion.NINGUNA, op.getTipo());
         
         assertEquals("Ninguna", op.imprimirTipo());
-        assertEquals(2, op.getID());
     }
 
 }

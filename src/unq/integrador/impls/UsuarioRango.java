@@ -13,7 +13,7 @@ import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraExceptio
  */
 public abstract class UsuarioRango {
 
-    public abstract void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException;
+    public abstract void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion, IUsuario usuario) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException;
     /**
      * Método para que un usuario determine su proximo rango
      *

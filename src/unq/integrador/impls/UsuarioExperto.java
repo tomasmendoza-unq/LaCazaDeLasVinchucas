@@ -16,16 +16,17 @@ public class UsuarioExperto extends UsuarioRango {
 	/**
      * Método para que un usuario de categoría experta
      * opine de esa forma en una muestra dada
-     * 
+     *
      * @param muestra Muestra sobre la que se opina
      * @param opinion Opinión que se agrega a la muestra
-	 * @throws SinAccesoAMuestraException 
-	 * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException 
-	 * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException 
+     * @param usuario
+     * @throws SinAccesoAMuestraException
+     * @throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException
+     * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException
      */
 	@Override
-	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
-		muestra.agregarOpinionExperto(opinion);
+	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion, IUsuario usuario) throws UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException {
+		muestra.agregarOpinionExperto(usuario,opinion);
 	}
 
 	protected UsuarioRango determinarRango(IUsuario usuario) {

@@ -2,7 +2,7 @@ package unq.integrador.testsOtros;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unq.integrador.IBaseDeMuestras;
+import unq.integrador.ISistema;
 import unq.integrador.IUbicacion;
 import unq.integrador.IZonaDeCobertura;
 import unq.integrador.IZonaDeCoberturaFactory;
@@ -15,12 +15,12 @@ public class ZonaDeCoberturaFactoryTest {
 
     IUbicacion epicentro;
     IZonaDeCoberturaFactory factory;
-    IBaseDeMuestras baseDeMuestras;
+    ISistema baseDeMuestras;
 
     @BeforeEach
     public void setUp(){
         epicentro = mock(IUbicacion.class);
-        baseDeMuestras = mock(IBaseDeMuestras.class);
+        baseDeMuestras = mock(ISistema.class);
         factory = new ZonaDeCoberturaFactory(baseDeMuestras);
     }
 

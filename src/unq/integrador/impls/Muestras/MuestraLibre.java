@@ -1,9 +1,10 @@
-package unq.integrador.impls;
+package unq.integrador.impls.Muestras;
 
 import java.util.HashMap;
 
 import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
+import unq.integrador.impls.Opinion;
 
 /**
  * Esta clase representa las muestras libres, que son aquellas en

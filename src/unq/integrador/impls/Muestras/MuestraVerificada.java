@@ -1,8 +1,9 @@
-package unq.integrador.impls;
+package unq.integrador.impls.Muestras;
 
 import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
+import unq.integrador.impls.Opinion;
 
 /**
  * Esta clase representa las muestras verificadas, que son aquellas en

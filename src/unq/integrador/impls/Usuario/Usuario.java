@@ -1,9 +1,10 @@
-package unq.integrador.impls;
+package unq.integrador.impls.Usuario;
 
 import unq.integrador.*;
 import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
+import unq.integrador.impls.Opinion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

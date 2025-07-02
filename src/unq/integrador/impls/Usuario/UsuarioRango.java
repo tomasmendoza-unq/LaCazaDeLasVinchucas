@@ -1,10 +1,11 @@
-package unq.integrador.impls;
+package unq.integrador.impls.Usuario;
 
 import unq.integrador.IMuestra;
 import unq.integrador.IUsuario;
 import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
+import unq.integrador.impls.Opinion;
 
 /**
  * Clase abstracta que representa el rango de los usuarios

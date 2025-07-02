@@ -15,9 +15,9 @@ import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.Opinion;
-import unq.integrador.impls.Usuario;
-import unq.integrador.impls.UsuarioBasico;
-import unq.integrador.impls.UsuarioExperto;
+import unq.integrador.impls.Usuario.Usuario;
+import UsuarioBasico;
+import unq.integrador.impls.Usuario.UsuarioExperto;
 
 public class UsuarioExpertoTest {
   UsuarioExperto usuarioRango;

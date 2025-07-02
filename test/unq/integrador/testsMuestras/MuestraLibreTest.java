@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.IMuestra;
-import unq.integrador.impls.MuestraExperto;
-import unq.integrador.impls.MuestraLibre;
+import unq.integrador.impls.Muestras.MuestraExperto;
+import unq.integrador.impls.Muestras.MuestraLibre;
 import unq.integrador.impls.Opinion;
 import unq.integrador.enums.TipoOpinion;
 

@@ -10,8 +10,8 @@ import org.junit.jupiter.api.function.Executable;
 
 import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.IMuestra;
-import unq.integrador.impls.MuestraExperto;
-import unq.integrador.impls.MuestraVerificada;
+import unq.integrador.impls.Muestras.MuestraExperto;
+import unq.integrador.impls.Muestras.MuestraVerificada;
 import unq.integrador.impls.Opinion;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;

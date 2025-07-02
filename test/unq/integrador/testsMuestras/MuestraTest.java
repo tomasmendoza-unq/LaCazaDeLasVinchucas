@@ -11,7 +11,7 @@ import unq.integrador.*;
 import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
-import unq.integrador.impls.Muestras.Muestra;
+import unq.integrador.impls.muestras.Muestra;
 import unq.integrador.impls.Opinion;
 
 public class MuestraTest {

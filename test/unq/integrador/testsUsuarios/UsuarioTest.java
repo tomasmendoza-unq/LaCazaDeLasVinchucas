@@ -7,8 +7,8 @@ import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
 import unq.integrador.impls.Opinion;
-import unq.integrador.impls.Usuario.Usuario;
-import unq.integrador.impls.Usuario.UsuarioRango;
+import unq.integrador.impls.usuario.Usuario;
+import unq.integrador.impls.usuario.UsuarioRango;
 
 import java.time.LocalDate;
 

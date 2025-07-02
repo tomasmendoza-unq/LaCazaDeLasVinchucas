@@ -1,4 +1,4 @@
-package unq.integrador.impls.Usuario;
+package unq.integrador.impls.usuario;
 
 import unq.integrador.IUsuario;
 

@@ -1,4 +1,4 @@
-package unq.integrador.impls.Muestras;
+package unq.integrador.impls.muestras;
 
 import unq.integrador.IEstadoDeMuestra;
 import unq.integrador.enums.TipoOpinion;

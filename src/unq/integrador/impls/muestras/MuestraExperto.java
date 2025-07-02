@@ -1,4 +1,4 @@
-package unq.integrador.impls.Muestras;
+package unq.integrador.impls.muestras;
 
 import java.util.HashMap;
 

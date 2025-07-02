@@ -1,12 +1,12 @@
-package unq.integrador.impls.Filtros;
+package unq.integrador.impls.filtros;
 
 import unq.integrador.IMuestra;
 import unq.integrador.enums.TipoOpinion;
 
-public class FiltroTipoDeInsecto extends FiltroBasico{
+public class FiltroPorTipoDeInsecto extends FiltroBasico{
     private TipoOpinion tipoOpinion;
 
-    public FiltroTipoDeInsecto(TipoOpinion tipoOpinion) {
+    public FiltroPorTipoDeInsecto(TipoOpinion tipoOpinion) {
         this.tipoOpinion = tipoOpinion;
     }
 

@@ -1,8 +1,9 @@
 package unq.integrador.impls.filtros;
 
+import unq.integrador.IFiltroMuestra;
 import unq.integrador.impls.filtros.estrategias.EstrategiaComparacionFecha;
 
-public abstract class FiltroPorFecha extends FiltroBasico{
+public abstract class FiltroPorFecha implements IFiltroMuestra {
     protected EstrategiaComparacionFecha estrategiaComparacionFecha;
 
     public FiltroPorFecha(EstrategiaComparacionFecha estrategiaComparacionFecha) {

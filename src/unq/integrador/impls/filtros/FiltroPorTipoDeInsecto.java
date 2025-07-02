@@ -1,9 +1,10 @@
 package unq.integrador.impls.filtros;
 
+import unq.integrador.IFiltroMuestra;
 import unq.integrador.IMuestra;
 import unq.integrador.enums.TipoOpinion;
 
-public class FiltroPorTipoDeInsecto extends FiltroBasico{
+public class FiltroPorTipoDeInsecto implements IFiltroMuestra {
     private TipoOpinion tipoOpinion;
 
     public FiltroPorTipoDeInsecto(TipoOpinion tipoOpinion) {

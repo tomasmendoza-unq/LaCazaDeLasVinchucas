@@ -10,29 +10,18 @@ import unq.integrador.enums.TipoOpinion;
  @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */
 public class Opinion {
-    private int idUsuario;
     private TipoOpinion tipo;
     private LocalDate fechaDeCreacion;
 
     /**
      * Constructor de las opiniones
      * @param tipo Que indica el tipo de voto que es del enum TipoOpinion
-     * @param id
      */
-    public Opinion(int id, TipoOpinion tipo) {
-        this.idUsuario = id;
+    public Opinion( TipoOpinion tipo) {
         this.tipo = tipo;
         this.fechaDeCreacion = LocalDate.now();
     }
 
-    /**
-     * Getter del ID del usuario que publicó la opinión
-     *
-     * @return El ID de un usuario que publicó una opinión concreta
-     */
-    public int getID() {
-        return this.idUsuario;
-    }
 
     /**
      * Getter del tipo de opinion

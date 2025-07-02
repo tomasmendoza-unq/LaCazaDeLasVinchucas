@@ -1,8 +1,6 @@
 package unq.integrador.impls;
 
 import unq.integrador.*;
-import unq.integrador.enums.Lapso;
-import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
@@ -19,43 +17,22 @@ import java.util.List;
  */
 public class Usuario implements IUsuario {
 
-	private int id;
+
 	private UsuarioRango rango;
 	private List<Opinion> opinionList;
 	private List<IMuestra> publicaciones;
 	
-	/**
-	 * Constructor de Usuario
-	 * 
-	 * @param id Identificador del usuario
-	 */
-	public Usuario(int id) {
-		this.id 		   = id;
-		this.opinionList   = new ArrayList<Opinion>();
-		this.publicaciones = new ArrayList<IMuestra>();
-	}
+
 	/**
 	 * Constructor de Usuario
 	 *
-	 * @param id Identificador del usuario
 	 * @param rango Categoría del usuario
-	 * @param bdm Bases de muestra para almacenar todas las muestras
 	 */
-	public Usuario(int id,UsuarioRango rango, ISistema bdm) {
-		this.id 		   = id;
+	public Usuario(UsuarioRango rango) {
 		this.rango 		   = rango;
 		this.opinionList   = new ArrayList<Opinion>();
 		this.publicaciones = new ArrayList<IMuestra>();
 	}
-
-	/** Getter del id de usuario
-	 * 
-	 * @return un int que representa el id
-	 */
-	public int getId() {
-		return this.id;
-	}
-
 	/* 
 	 * 
 	 * MÉTODOS SOBRE MUESTRAS
@@ -72,20 +49,9 @@ public class Usuario implements IUsuario {
 	 * @throws UnUsuarioNoPuedeOpinarEnSuMuestraException 
 	 */
 	public void opinarSobreUnaMuestra(IMuestra muestra, Opinion opinion) throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		this.verificarSiOpinoSobreLaMuestra(muestra);
-		this.verificarSiPublicoLaMuestra(muestra);
-		this.rango.opinarSobreUnaMuestra(muestra,opinion);
+		this.rango.opinarSobreUnaMuestra(muestra,opinion, this);
 		this.opinionList.add(opinion);
     }
-
-	private void verificarSiPublicoLaMuestra(IMuestra muestra) throws UnUsuarioNoPuedeOpinarEnSuMuestraException {
-		if(publicaciones.contains(muestra)) throw new UnUsuarioNoPuedeOpinarEnSuMuestraException("Un usuario no puede opinar sobre una muestra publicada por él mismo");
-	}
-
-	private void verificarSiOpinoSobreLaMuestra(IMuestra muestra) {
-		if (publicaciones.contains(muestra));
-	}
-
 
 	/**
 	 * Método para agregar una muestra a la lista de publicaciones
@@ -95,16 +61,6 @@ public class Usuario implements IUsuario {
 	@Override
 	public void agregarMuestraPublicada(IMuestra muestra) {
 		this.publicaciones.add(muestra);
-	}
-
-	/*
-	* 	Metodo para verificar si publico una muestra dada
-	*
-	* @param muestra que representa la muestra a verificar
-	* */
-	@Override
-	public boolean publicoEstaMuestra(IMuestra muestra){
-		return publicaciones.contains(muestra);
 	}
 
 	/* 

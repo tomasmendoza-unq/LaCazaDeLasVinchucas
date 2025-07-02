@@ -34,9 +34,9 @@ public class UsuarioBasicoTest {
   @Test
     public void UsuarioBasicoOpinaSobreUnaMuestraLibre() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
 
-      assertDoesNotThrow(() -> usuarioRango.opinarSobreUnaMuestra(muestra, opinion));
+      assertDoesNotThrow(() -> usuarioRango.opinarSobreUnaMuestra(muestra, opinion, usuario));
 
-      verify(muestra).agregarOpinionBasico(opinion);
+      verify(muestra).agregarOpinionBasico(usuario,opinion);
     }
 
     @Test
@@ -66,12 +66,12 @@ public class UsuarioBasicoTest {
 
     doThrow(new SinAccesoAMuestraException())
                   .when(muestra)
-                  .agregarOpinionBasico(opinion);
+                  .agregarOpinionBasico(usuario,opinion);
 
 
       assertThrows(SinAccesoAMuestraException.class, 
-        () -> usuarioRango.opinarSobreUnaMuestra(muestra, opinion));
+        () -> usuarioRango.opinarSobreUnaMuestra(muestra, opinion, usuario));
 
-      assertDoesNotThrow(() ->verify(muestra).agregarOpinionBasico(opinion));
+      assertDoesNotThrow(() ->verify(muestra).agregarOpinionBasico(usuario,opinion));
     }
 }

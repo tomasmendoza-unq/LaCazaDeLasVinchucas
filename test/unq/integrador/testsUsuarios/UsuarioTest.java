@@ -3,9 +3,7 @@ package unq.integrador.testsUsuarios;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.mockito.ArgumentCaptor;
 import unq.integrador.*;
-import unq.integrador.enums.TipoOpinion;
 import unq.integrador.error.SinAccesoAMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarEnSuMuestraException;
 import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException;
@@ -31,7 +29,7 @@ public class UsuarioTest {
 		muestra = mock(IMuestra.class);
 		ubicacion = mock(IUbicacion.class);
 		rango = mock(UsuarioRango.class);
-		usuario = new Usuario(10);
+		usuario = new Usuario(rango);
 		usuario.setProximoRango(rango);
 		opinion = mock(Opinion.class);
 		when(opinion.getFechaDeCreacion()).thenReturn(LocalDate.now());
@@ -41,19 +39,23 @@ public class UsuarioTest {
 	@Test
 	public void usuarioOpinaSobreUnaMuestra() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
 		usuario.opinarSobreUnaMuestra(muestra,opinion);
-		verify(rango).opinarSobreUnaMuestra(muestra, opinion);
+		verify(rango).opinarSobreUnaMuestra(muestra, opinion, usuario);
 	}
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(muestra,opinion,usuario);
 		usuario.agregarMuestraPublicada(muestra);
 		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> usuario.opinarSobreUnaMuestra(muestra,opinion));
 	}
-
 	@Test
-	public void usuarioOpinaSobreUnaMuestraDosVeces() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-
+	public void usuarioOpinaSobreUnaMuestraQueYaVoto() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
+		doThrow(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class).when(rango).opinarSobreUnaMuestra(muestra,opinion,usuario);
+		usuario.agregarMuestraPublicada(muestra);
+		assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class, () -> usuario.opinarSobreUnaMuestra(muestra,opinion));
 	}
+
+
 
 
 	@Test

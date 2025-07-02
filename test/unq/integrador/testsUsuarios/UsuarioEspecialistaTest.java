@@ -23,15 +23,15 @@ public class UsuarioEspecialistaTest {
     public void setUp() {
         muestra = mock(IMuestra.class);
         usuarioRango = new UsuarioEspecialista();
-        usuario = mock(Usuario.class);
+        usuario = mock(IUsuario.class);
         opinion = mock(Opinion.class);
     }
 
     @Test
     public void UsuarioEspecialistaOpinaSobreUnaMuestraLibre() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-        assertDoesNotThrow(() -> usuarioRango.opinarSobreUnaMuestra(muestra,opinion));
+        assertDoesNotThrow(() -> usuarioRango.opinarSobreUnaMuestra(muestra,opinion, usuario));
 
-        verify(muestra).agregarOpinionExperto(opinion);
+        verify(muestra).agregarOpinionExperto(usuario,opinion);
     }
 
     @Test
@@ -58,10 +58,10 @@ public class UsuarioEspecialistaTest {
     @Test
     public void UsuarioEspecialistaOpinaSobreUnaMuestraCerrada() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
 
-        doThrow(new SinAccesoAMuestraException()).when(muestra).agregarOpinionExperto(opinion);
+        doThrow(new SinAccesoAMuestraException()).when(muestra).agregarOpinionExperto(usuario, opinion);
 
         assertThrows(SinAccesoAMuestraException.class, () -> {
-            usuarioRango.opinarSobreUnaMuestra(muestra,opinion);
+            usuarioRango.opinarSobreUnaMuestra(muestra,opinion, usuario);
         });
     }
 

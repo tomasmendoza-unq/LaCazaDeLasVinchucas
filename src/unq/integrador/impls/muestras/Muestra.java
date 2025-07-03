@@ -37,7 +37,7 @@ public class Muestra implements IMuestra {
      * @param ubicacion Representa la ubicación de donde se publicó la muestra
      * @param sistema Una base de muestras donde cargarse
      */
-    public Muestra(IUsuario owner,String fotografia, IUbicacion ubicacion, ISistema sistema) {
+    public Muestra(IUsuario owner, String fotografia, IUbicacion ubicacion, ISistema sistema) {
         this.owner         = owner;
         this.fotografia    = fotografia;
         this.ubicacion     = ubicacion;
@@ -91,7 +91,6 @@ public class Muestra implements IMuestra {
     public Map<IUsuario, Opinion> getHistorial() {
         return historial;
     }
-
 
     /**
      * Getter de la fecha de la última votación que se realizó en la muestra
@@ -183,7 +182,6 @@ public class Muestra implements IMuestra {
     private void agregarAlHistorial(IUsuario usuario, Opinion op) {
         historial.put(usuario, op);
     }
-
 
     /**
      * Método para indicar si la muestra está verificada

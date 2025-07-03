@@ -17,7 +17,7 @@ public class Opinion {
      * Constructor de las opiniones
      * @param tipo Que indica el tipo de voto que es del enum TipoOpinion
      */
-    public Opinion( TipoOpinion tipo) {
+    public Opinion(TipoOpinion tipo) {
         this.tipo = tipo;
         this.fechaDeCreacion = LocalDate.now();
     }

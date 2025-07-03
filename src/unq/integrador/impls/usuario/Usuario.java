@@ -18,11 +18,9 @@ import java.util.List;
  */
 public class Usuario implements IUsuario {
 
-
 	private UsuarioRango rango;
 	private List<Opinion> opinionList;
 	private List<IMuestra> publicaciones;
-	
 
 	/**
 	 * Constructor de Usuario

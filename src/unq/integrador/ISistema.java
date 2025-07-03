@@ -8,7 +8,7 @@ import unq.integrador.error.UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraExceptio
 import unq.integrador.impls.Opinion;
 
 /**
- * Interfaz de la base de muestras
+ * Interfaz del sistema
  * 
  * @author Díaz Marcos, Mendoza Tomas, Monteros Dario
  */

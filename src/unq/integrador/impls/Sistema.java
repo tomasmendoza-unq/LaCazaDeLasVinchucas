@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase que representa las bases de muestras
+ * Clase que representa el sistema principal
  * que registran todas las muestras que se crean.
  * <br><br>
  * Adicionalmente avisando a las zonas de cobertura 

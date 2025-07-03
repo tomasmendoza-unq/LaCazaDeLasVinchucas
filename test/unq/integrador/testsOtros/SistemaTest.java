@@ -63,7 +63,7 @@ public class SistemaTest {
 
     @Test
     public void usuarioNoPuedeOpinarEnSuMuestra() throws Exception {
-        doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class)
+        doThrow(new UnUsuarioNoPuedeOpinarEnSuMuestraException())
                 .when(usuario).opinarSobreUnaMuestra(muestra1, opinion);
 
         assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class,
@@ -73,7 +73,7 @@ public class SistemaTest {
 
     @Test
     public void usuarioNoPuedeOpinarNuevamenteSobreLaMismaMuestra() throws Exception {
-        doThrow(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class)
+        doThrow(new UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException())
                 .when(usuario).opinarSobreUnaMuestra(muestra1, opinion);
 
         assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class,
@@ -83,7 +83,7 @@ public class SistemaTest {
 
     @Test
     public void usuarioNoTieneAccesoALaMuestra() throws Exception {
-        doThrow(SinAccesoAMuestraException.class)
+        doThrow(new SinAccesoAMuestraException())
                 .when(usuario).opinarSobreUnaMuestra(muestra1, opinion);
 
         assertThrows(SinAccesoAMuestraException.class,

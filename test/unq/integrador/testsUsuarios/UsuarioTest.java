@@ -13,8 +13,6 @@ import unq.integrador.impls.usuario.UsuarioRango;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class UsuarioTest {
@@ -45,15 +43,23 @@ public class UsuarioTest {
 
 	@Test
 	public void usuarioOpinaSobreUnaMuestraQuePublicoYFalla() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		doThrow(UnUsuarioNoPuedeOpinarEnSuMuestraException.class).when(rango).opinarSobreUnaMuestra(muestra,opinion,usuario);
+		doThrow(new UnUsuarioNoPuedeOpinarEnSuMuestraException())
+		.when(rango).opinarSobreUnaMuestra(muestra, opinion, usuario);
+
 		usuario.agregarMuestraPublicada(muestra);
-		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, () -> usuario.opinarSobreUnaMuestra(muestra,opinion));
+
+		assertThrows(UnUsuarioNoPuedeOpinarEnSuMuestraException.class, 
+			() -> usuario.opinarSobreUnaMuestra(muestra, opinion));
 	}
 	@Test
 	public void usuarioOpinaSobreUnaMuestraQueYaVoto() throws SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException, UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException {
-		doThrow(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class).when(rango).opinarSobreUnaMuestra(muestra,opinion,usuario);
+		doThrow(new UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException())
+		.when(rango).opinarSobreUnaMuestra(muestra, opinion, usuario);
+		
 		usuario.agregarMuestraPublicada(muestra);
-		assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class, () -> usuario.opinarSobreUnaMuestra(muestra,opinion));
+		
+		assertThrows(UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException.class,
+			() -> usuario.opinarSobreUnaMuestra(muestra, opinion));
 	}
 
 

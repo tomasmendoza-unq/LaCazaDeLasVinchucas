@@ -151,7 +151,7 @@ public class Muestra implements IMuestra {
     public void agregarOpinionExperto(IUsuario usuario, Opinion op) throws UnUsuarioNoPuedeOpinarNuevamenteEnUnaMuestraException, SinAccesoAMuestraException, UnUsuarioNoPuedeOpinarEnSuMuestraException {
         this.revisarOpinion(usuario);
         this.estado.agregarOpinionExperto(op);
-        this.agregarAlHistorial(usuario,op);
+        this.agregarAlHistorial(usuario, op);
         this.fechaUltimaVotacion = op.getFechaDeCreacion();
     }
 
@@ -197,7 +197,7 @@ public class Muestra implements IMuestra {
     }
 
     /**
-     * Método que avisa a la base de muestras que esta muestra quedó verificada
+     * Método que avisa al sistema principal que esta muestra quedó verificada
      * 
      */
     @Override
